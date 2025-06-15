@@ -42,8 +42,8 @@ export const specialisationModules = {
         ]
       }
     },
-  //completed till here
-    'robotics': {
+
+    'robotics': { //figure this one out
       label: 'Robotics',
       core: ['EE2024', 'ME2142'],
       electives: {
@@ -54,21 +54,28 @@ export const specialisationModules = {
 
     'space-tech': {
         label: 'Space Technology',
-        core: ['EE2024', 'ME2142'],
+        core: ['EE3105', ['EE4002D', 'EE4002R']],
         electives: {
-          choose: 3,
-          from: ['ME4243', 'EE4024', 'EE3001', 'ME4401', 'CS3242']
+          choose: 2,
+          from: ['EE3131C', 'EE3104C', 'EE3331C', 'EE4115', 'EE4218', 'EE4314', 'EE4503', 'EE4101']
         }
       },
 
-      
+  'transportation': {
+      label: 'Sustainable Electric Transportation',
+      core: ['EE4502', 'EE4503', 'EE4513'],
+      electives: {
+        choose: 2,
+        from: ['EE4501', 'EE4505', 'EE4438', 'EE4511']
+      }
+    },
   
     'data-eng': {
       label: 'Minor in Data Engineering',
-      core: ['BT2101', 'ST2334'],
+      core: ['EE3801', ['IT2002', 'CS2102'], 'EE4802/IE4213', 'CS4225'],
       electives: {
-        choose: 2,
-        from: ['DSA1101', 'CS2102', 'EE2211', 'IE2141', 'BT3103']
+        choose: 1,
+        from: ['BT4015', 'EE4115', 'EE4704', 'EE5907', 'IE4210', 'IE4211', 'IE4243']
       }
     },
   
