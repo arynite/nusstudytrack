@@ -2,7 +2,7 @@
 const nextConfig = {};
   experimental: { //test test
     turbopack: false,
-    serverComponentsExternalPackages: ["lightningcss"]
+    serverComponentsExternalPackages["lightningcss"]
   }
 
 export default nextConfig;
