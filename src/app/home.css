@@ -1,0 +1,72 @@
+  .logo-card {
+    border-radius: 100px;
+    padding-right: 50px;
+    justify-content: center;
+    
+  }
+  .home-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f4ff;
+    padding: 2rem;
+  }
+  
+  .home-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 480px;
+    width: 100%;
+  }
+  
+  .home-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #2563eb;
+    margin-bottom: 1rem;
+  }
+  
+  .home-message {
+    font-size: 1rem;
+    color: #2563eb;
+    margin-bottom: 2rem;
+  }
+  
+  
+  .home-button {
+    background: #2563eb;
+    color: white;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin-bottom: 12px;
+  }
+  
+  .home-button:hover {
+    background: #1e40af;
+  }
+  
+  .logout-button {
+    position: fixed;       
+    top: 20px;             
+    right: 20px;          
+    background-color: #d9534f;  
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1000;         
+    transition: background-color 0.2s;
+  }
+  
+  .logout-button:hover {
+    background-color: #c9302c;
+  }
+  

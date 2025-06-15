@@ -1,0 +1,92 @@
+/* Container */
+.create-container {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header */
+  .create-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .create-header img {
+    width: 125px;
+  }
+  
+  .create-header .titles {
+    margin-left: 20px;
+  }
+  
+  .create-header .titles h1 {
+    font-weight: bold;
+  }
+  
+  /* Questions */
+  .question {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  /* Selection Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  
+  .selection {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    text-align: center;
+    user-select: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .selection:hover {
+    background-color: #e6f7ff;
+  }
+  
+  .selection-active {
+    background-color: #d0f0fd;
+  }
+  
+  /* Checkbox Section */
+  .checkbox-item {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkbox-item label {
+    margin-left: 6px;
+    user-select: none;
+  }
+  
+  /* Submit Button */
+  .submit-container {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .submit-button {
+    padding: 10px 20px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #1e40af;
+  }
+  
