@@ -23,7 +23,7 @@
   gap: 30px;
 }
 
-.no-plans-message {
+.no-timetable-yet-msg {
   font-size: 1.5rem;
   text-align: center;
   margin-bottom: 20px;
@@ -34,7 +34,7 @@
   justify-content: center;
 }
 
-.submit-button {
+.generate-timetable-button {
   padding: 12px 24px;
   background-color: #2563eb; 
   color: white;
@@ -45,6 +45,6 @@
   transition: background-color 0.3s;
 }
 
-.submit-button:hover {
+.generate-timetable-button:hover {
   background-color: #1d4ed8;
 }
