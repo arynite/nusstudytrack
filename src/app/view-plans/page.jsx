@@ -23,10 +23,7 @@ export default function ViewPlans() {
         <h1 className="no-plans-message">Oh no plans yet, generate table?</h1>
         
         <div className="button-container">
-          <button 
-            className="submit-button" 
-            onClick={() => router.push('/create-plan')}
-          >
+          <button className="submit-button" onClick={() => router.push('/create-plan')}>
             Generate timetable!
           </button>
         </div>
