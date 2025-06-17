@@ -22,9 +22,6 @@ export default function ViewPlans() {
         <h1>Oh no plans yet, generate table?</h1>
       </div>
       
-      <div className="content">
-        <p>This is the view plans page.</p>
-      </div>
     </div>
   )
 }
