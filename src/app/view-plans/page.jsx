@@ -22,6 +22,12 @@ export default function ViewPlans() {
         <h1>Oh no plans yet, generate table?</h1>
       </div>
       
+        <div className="submit-container">
+          <button className="submit-button" type="submit">
+            Generate timetable!
+          </button>
+        </div>
+
     </div>
   )
 }
