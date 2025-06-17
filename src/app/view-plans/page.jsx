@@ -4,12 +4,21 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/utils/supabaseClient'
 import './view-plans.css'
+import Image from 'next/image'
 
 export default function ViewPlans() {
   return (
     <div className="view-container">
       <div className="header">
-        <img src="/nusstlogo.png" alt="Orbital Logo" />
+        <div className="logo-container">
+          <Image
+            src="/nusstlogo.png"
+            alt="NUStudyTrack logo"
+            width={150}
+            height={75}
+            className="logo"
+          />
+        </div>
         <h1>Oh no plans yet, generate table?</h1>
       </div>
       
