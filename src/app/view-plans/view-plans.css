@@ -1,6 +1,9 @@
 .view-container {
   padding: 20px;
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -20,12 +23,28 @@
   object-fit: contain;
 }
 
-.content {
-  margin-top: 100px;
-  padding: 20px;
-  text-align: center;
-}
-
 .header h1 {
   margin-left: 180px;
+}
+
+.button-container {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.submit-button {
+  padding: 12px 24px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #0052a3;
 }

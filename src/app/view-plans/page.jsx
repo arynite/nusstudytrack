@@ -1,12 +1,12 @@
 'use client'
-
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/utils/supabaseClient'
 import './view-plans.css'
 import Image from 'next/image'
 
 export default function ViewPlans() {
+  const router = useRouter()
+
   return (
     <div className="view-container">
       <div className="header">
@@ -22,12 +22,14 @@ export default function ViewPlans() {
         <h1>Oh no plans yet, generate table?</h1>
       </div>
 
-        <div className="submit-container">
-          <button className="submit-button" type="submit">
-            Generate timetable!
-          </button>
-        </div>
-
+      <div className="button-container">
+        <button 
+          className="submit-button" 
+          onClick={() => router.push('/create-plan')}
+        >
+          Generate timetable!
+        </button>
+      </div>
     </div>
   )
 }
