@@ -9,23 +9,27 @@ export default function ViewPlans() {
 
   return (
     <div className="view-container">
-      <div className="header">
-        <div className="logo-container">
-          <Image
-            src="/nusstlogo.png"
-            alt="NUStudyTrack logo"
-            width={250}
-            height={150}
-            className="logo"
-          />
-        </div>
-        <h1><b>Oh no plans yet, generate table?</b></h1>
+      <div className="logo-container">
+        <Image
+          src="/nusstlogo.png"
+          alt="NUStudyTrack logo"
+          width={250}
+          height={150}
+          className="logo"
+        />
       </div>
 
-      <div className="button-container">
-        <button className="submit-button" onClick={() => router.push('/create-plan')}>
-          Generate timetable!
-        </button>
+      <div className="content-container">
+        <h1 className="no-plans-message">Oh no plans yet, generate table?</h1>
+        
+        <div className="button-container">
+          <button 
+            className="submit-button" 
+            onClick={() => router.push('/create-plan')}
+          >
+            Generate timetable!
+          </button>
+        </div>
       </div>
     </div>
   )
