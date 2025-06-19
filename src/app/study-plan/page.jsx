@@ -32,6 +32,12 @@ export default function StudyPlan() {
   const rc = searchParams.get('rc')
   const specialisations = searchParams.get('specialisations')?.split(',') || []
 
+  //
+  const handleViewTimetable = () => {
+  router.push(`/view-timetable?education=${encodeURIComponent(education)}&degreeLength=${degreeLength}&rc=${encodeURIComponent(rc)}&specialisations=${specialisations.join(',')}`)
+  }
+  //
+
   return (
     <div className="studyplan-container">
       <h2 className="studyplan-title">Your Submitted Study Plan</h2>
@@ -51,12 +57,14 @@ export default function StudyPlan() {
 
       <br />
       <hr />
-/**/ */
+
+      //
       <div className="button-container">
         <button className="view-timetable-button" onClick={handleViewTimetable}>
           View Timetables
         </button>
       </div>
+      //
     </div>
   )
 }
