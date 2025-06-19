@@ -57,14 +57,11 @@ export default function StudyPlan() {
 
       <br />
       <hr />
-
-      //
       <div className="button-container">
         <button className="view-timetable-button" onClick={handleViewTimetable}>
           View Timetables
         </button>
       </div>
-      //
     </div>
   )
 }
