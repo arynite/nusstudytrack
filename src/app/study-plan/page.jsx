@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import './study-plan.css'
@@ -16,6 +17,7 @@ const specialisationLabels = {
 }
 
 export default function StudyPlan() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const [mounted, setMounted] = useState(false)
 
@@ -34,8 +36,9 @@ export default function StudyPlan() {
 
   //
   const handleViewTimetable = () => {
-  router.push(`/view-timetable?education=${encodeURIComponent(education)}&degreeLength=${degreeLength}&rc=${encodeURIComponent(rc)}&specialisations=${specialisations.join(',')}`)
+    router.push('/view-timetable') // Test without params first
   }
+  
   //
 
   return (
