@@ -36,7 +36,7 @@ export default function StudyPlan() {
 
   //
   const handleViewTimetable = () => {
-    router.push('/view-timetable') // Test without params first
+    router.push('/view-timetable')
   }
   
   //
