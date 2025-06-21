@@ -4,6 +4,10 @@ import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import './study-plan.css'
+import { generateTimetable } from '@/utils/generateTimetable'
+import { flattenModules } from '@/utils/flattenModules'
+import { eeMajorRequirements } from '@/utils/requirements'
+import { specialisationModules } from '@/utils/requirements'
 
 const specialisationLabels = {
   'adv-electronics': 'Advanced Electronics',
@@ -26,25 +30,32 @@ export default function StudyPlan() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [mounted, setMounted] = useState(false)
+  const [plannedSemesters, setPlannedSemesters] = useState([])
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  if (!mounted) {
-    return null 
-  }
+  if (!mounted) return null
 
   const education = searchParams.get('education')
-  const degreeLength = searchParams.get('degreeLength')
+  const degreeLength = Number(searchParams.get('degreeLength') || '4')
   const rc = searchParams.get('rc')
   const specialisations = searchParams.get('specialisations')?.split(',').filter(Boolean) || []
   const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
 
-  const handleViewTimetable = () => {
-    router.push('/view-timetable')
+  const handleViewTimetable = async () => {
+    const flattenedModules = flattenModules(eeMajorRequirements, specialisations, specialisationModules)
+
+    try {
+      const timetable = await generateTimetable(flattenedModules, degreeLength * 2)
+      console.log('Generated Timetable:', timetable)
+      setPlannedSemesters(timetable)
+    } catch (err) {
+      console.error('Failed to generate timetable', err)
+    }
   }
-  
+
   return (
     <div className="studyplan-container">
       <h2 className="studyplan-title">Your Submitted Study Plan</h2>
@@ -71,9 +82,27 @@ export default function StudyPlan() {
       <hr />
       <div className="button-container">
         <button className="view-timetable-button" onClick={handleViewTimetable}>
-          View Timetables
+          View Timetable
         </button>
       </div>
+
+      {plannedSemesters.length > 0 && (
+        <div className="timetable-container mt-6">
+          <h3 className="studyplan-title">Suggested Semester Plan</h3>
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            {plannedSemesters.map((semester, idx) => (
+              <div key={idx} className="semester-card border p-4 rounded shadow">
+                <h4 className="font-semibold mb-2">Semester {idx + 1}</h4>
+                <ul className="list-disc pl-5 text-sm">
+                  {semester.map((mod) => (
+                    <li key={mod}>{mod}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

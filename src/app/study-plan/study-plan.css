@@ -59,4 +59,12 @@
 .view-timetable-button:hover {
   background-color: #1e3a8a;
 }
+
+.timetable-container {
+    margin-top: 2rem;
+  }
+  
+  .semester-card {
+    background-color: #f9fafb;
+  }
   
