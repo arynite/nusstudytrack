@@ -11,6 +11,12 @@ export default function CreatePlan() {
   const [degreeLength, setDegreeLength] = useState('')
   const [rc, setRc] = useState('')
 
+  const [exemptions, setExemptions] = useState({
+    'MA1301 (eg. NP CAEM)': false,
+    'ES1103': false,
+    'ES1000': false,
+  })
+
   const [specialisations, setSpecialisations] = useState({
     'adv-electronics': false,
     'industry4': false,
@@ -24,6 +30,13 @@ export default function CreatePlan() {
 
   const toggleSpecialisation = id => {
     setSpecialisations(prev => ({
+      ...prev,
+      [id]: !prev[id],
+    }))
+  }
+
+  const toggleExemption = id => {
+    setExemptions(prev => ({
       ...prev,
       [id]: !prev[id],
     }))
@@ -43,6 +56,7 @@ export default function CreatePlan() {
     }
 
     const selectedSpecialisations = Object.keys(specialisations).filter(key => specialisations[key])
+    const selectedExemptions = Object.keys(exemptions).filter(key => exemptions[key])
 
     const { error: insertError } = await supabase.from('study_plans').insert([
       {
@@ -50,6 +64,7 @@ export default function CreatePlan() {
         education,
         degree_length: parseFloat(degreeLength),
         rc,
+        exemptions: selectedExemptions,
         specialisations: selectedSpecialisations,
       }
     ])
@@ -59,7 +74,7 @@ export default function CreatePlan() {
       return
     }
 
-    router.push(`/study-plan?education=${encodeURIComponent(education)}&degreeLength=${degreeLength}&rc=${encodeURIComponent(rc)}&specialisations=${encodeURIComponent(selectedSpecialisations.join(','))}`)
+    router.push(`/study-plan?education=${encodeURIComponent(education)}&degreeLength=${degreeLength}&rc=${encodeURIComponent(rc)}&exemptions=${encodeURIComponent(selectedExemptions.join(','))}&specialisations=${encodeURIComponent(selectedSpecialisations.join(','))}`)
   }
 
   return (
@@ -128,9 +143,25 @@ export default function CreatePlan() {
             </tr>
           </tbody>
         </table>
-        <br></br>
+
+        <div className="question">
+          Are you exempted from any of these modules?
+        </div>
+        {Object.entries(exemptions).map(([id, checked]) => (
+          <div key={id} className="checkbox-item">
+            <input
+              type="checkbox"
+              id={id}
+              checked={checked}
+              onChange={() => toggleExemption(id)}
+            />
+            <label htmlFor={id}>{id}</label>
+          </div>
+        ))}
+
+        <br />
         <hr />
-        <div className="question"> 
+        <div className="question">
           Which Specialisations / Minor would you like to complete?
         </div>
 
