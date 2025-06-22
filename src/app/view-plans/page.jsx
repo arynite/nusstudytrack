@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/utils/supabaseClient'
+import { supabase } from '../../utils/supabaseClient'
 import './view-plans.css'
 import Image from 'next/image'
 

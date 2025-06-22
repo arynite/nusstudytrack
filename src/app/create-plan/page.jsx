@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/utils/supabaseClient'
+import { supabase } from '../../utils/supabaseClient'
 import './create-plan.css'
 
 export default function CreatePlan() {
