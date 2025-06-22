@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { eeMajorRequirements, specialisationModules } from '@/utils/requirements'
-import { flattenModules } from '@/utils/flattenmodules'
+import { flattenModules } from 'src/utils/flattenmodules'
 import { generateTimetable } from '@/utils/generateTimetable'
 
 
