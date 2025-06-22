@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import './study-plan.css'
 import { generateTimetable } from '@/utils/generateTimetable'
-import { flattenModules } from 'src/app/utils/flattenModules'
+import { flattenModules } from '@/utils/flattenModules'
 import { eeMajorRequirements } from '@/utils/requirements'
 import { specialisationModules } from '@/utils/requirements'
 
