@@ -13,7 +13,7 @@ export const eeMajorRequirements = {
         'MA1512',
         'MA1508E',
         'EG2401A',
-        'EG3611A', // Required only if JC
+        'EG3611A', // Required if JC
         'EE1111A',
         'EE2111A',
         'EE2012',

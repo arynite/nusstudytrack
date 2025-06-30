@@ -55,15 +55,12 @@ type SemesterModule = {
   export async function generateTimetable(
     modules: string[],
     semesters = 8
-  ): Promise<string[][]> {
-    // Fetch all module data in parallel
+  ): Promise<string[][]> { // fetch all module information in parallel
     const moduleInfos: Record<string, ModuleData> = {}
     await Promise.all(
       modules.map(async (mod) => {
-        try {
-          moduleInfos[mod] = await fetchModuleData(mod)
-        } catch {
-          // If fetch fails, just skip module
+        try {moduleInfos[mod] = await fetchModuleData(mod)
+        } catch { // just skips the mod if fails to fetch
           moduleInfos[mod] = {
             moduleCode: mod,
             semesterData: [],
