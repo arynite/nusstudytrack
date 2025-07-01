@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ts-run": "ts-node --esm src/utils/nusmodsApi.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",
@@ -22,5 +23,9 @@
     "eslint-config-next": "15.3.3",
     "tailwindcss": "^4",
     "tsx": "^4.20.3"
+  },
+  "ts-node":{
+    "esm": true,
+    "esperimentalSpecifierResolution": "node"
   }
 }
