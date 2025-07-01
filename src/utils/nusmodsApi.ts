@@ -22,11 +22,5 @@ export async function fetchAllModules(codes: string[], year: string = '2024-2025
   return results
 }
 
-(async () => {
-  try {
-    await fetchModuleData('CS1010E');
-    await fetchAllModules(['BN4203', 'EE3305/ME3243', 'EE4305']);
-  } catch (err) {
-    console.error('Test failed:', err);
-  }
-})();
+fetchModuleData('CS1010E');
+fetchAllModules(['BN4203', 'BN4601', 'EE3305/ME3243', 'EE4305', 'EE4308', 'EE4309','EE4705', 'EE4311','EE4312', 'EE4314', 'ME4242', 'ME4245', 'ME5406', 'MLE4228', 'RB4301']);
