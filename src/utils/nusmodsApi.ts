@@ -6,7 +6,7 @@ export async function fetchModuleData(code: string, year: string = '2024-2025') 
   if (!res.ok) throw new Error(`Failed to fetch module ${code}`)
   const data = await res.json()
   console.log(`Fetched module ${code}:`, data)
-  return res.json()
+  return data
 }
 
 export async function fetchAllModules(codes: string[], year: string = '2024-2025') {
