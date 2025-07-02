@@ -9,7 +9,6 @@ export function flattenModules(
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules
 ): string[] {
-  console.log("User inputs: ", specialisations);
   const modulesSet = new Set<string>() // a set to create course codes
 
   major.core.required.forEach((mod) => {
