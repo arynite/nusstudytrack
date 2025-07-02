@@ -9,24 +9,25 @@ export function flattenModules(
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules
 ): string[] {
-  const modulesSet = new Set<string>()
+  console.log("User inputs: ", specialisations);
+  const modulesSet = new Set<string>() // a set to create course codes
 
   major.core.required.forEach((mod) => {
-    if (Array.isArray(mod)) {
+    if (Array.isArray(mod)) { // loops through core mods, will choose core mods first
       modulesSet.add(mod[0])
-    } else {
+    } else { // or else it will just add the mod directly
       modulesSet.add(mod)
     }
   })
 
   specialisations.forEach((spec) => {
     const specData = specialisationModulesData[spec]
-    if (!specData) return
+    if (!specData) return // skip if users didnt choose this specialisation
 
-    if (specData.core) {
+    if (specData.core) { 
       specData.core.forEach((mod) => {
         if (Array.isArray(mod)) {
-          modulesSet.add(mod[0])
+          modulesSet.add(mod[0]) // picks core mods for specialisaiton first
         } else {
           modulesSet.add(mod)
         }
