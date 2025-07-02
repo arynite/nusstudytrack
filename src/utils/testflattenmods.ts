@@ -1,4 +1,4 @@
-// testFlattenModules.ts
+// testflattenmods.ts
 import { eeMajorRequirements, specialisationModules } from './requirements'
 import { flattenModules } from './flattenmodules'
 
