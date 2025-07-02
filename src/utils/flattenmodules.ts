@@ -1,5 +1,5 @@
 // takes graduation requirements from requirements.js
-// takes the specializations module data (specialisationModulesData)
+// takes user inputs like specialisations
 // outputs a list of mods that are required for graduation
 
 import { eeMajorRequirements, specialisationModules } from './requirements'
