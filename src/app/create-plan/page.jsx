@@ -5,11 +5,18 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '../../utils/supabaseClient'
 import './create-plan.css'
 
+// import flattenmods, req.js
+import { flattenModules } from '../../utils/flattenmodules'
+import { eeMajorRequirements, specialisationModules } from '../../utils/requirements'
+
 export default function CreatePlan() {
   const router = useRouter()
   const [education, setEducation] = useState('')
   const [degreeLength, setDegreeLength] = useState('')
   const [rc, setRc] = useState('')
+
+// new state for mods
+const [generatedModules, setGeneratedModules] = useState([])
 
   const [exemptions, setExemptions] = useState({
     'MA1301 (eg. NP CAEM)': false,
@@ -57,6 +64,18 @@ export default function CreatePlan() {
 
     const selectedSpecialisations = Object.keys(specialisations).filter(key => specialisations[key])
     const selectedExemptions = Object.keys(exemptions).filter(key => exemptions[key])
+    
+    // Generate required modules based on user selections
+    const requiredModules = flattenModules(
+      eeMajorRequirements,
+      selectedSpecialisations,
+      specialisationModules
+    )
+    
+    // Store mods to take in state
+    setGeneratedModules(requiredModules)
+    console.log("Mods to clear:", requiredModules)
+
 
     const { error: insertError } = await supabase.from('study_plans').insert([
       {
