@@ -1,3 +1,7 @@
+// takes graduation requirements from requirements.js
+// takes the specializations module data (specialisationModulesData)
+// outputs a list of mods that are required for graduation
+
 import { eeMajorRequirements, specialisationModules } from './requirements'
 
 export function flattenModules(
