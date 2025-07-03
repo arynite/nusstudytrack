@@ -19,6 +19,14 @@ export function flattenModules(
     }
   })
 
+  major.generalEducation.required.forEach((mod) => {
+    if (Array.isArray(mod)) { // loops through GE mods, will choose GE mods first
+      modulesSet.add(mod[0])
+    } else { // or else it will just add the mod directly
+      modulesSet.add(mod)
+    }
+  })
+
   specialisations.forEach((spec) => {
     const specData = specialisationModulesData[spec]
     if (!specData) return // skip if users didnt choose this specialisation
