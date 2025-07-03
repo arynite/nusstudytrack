@@ -21,6 +21,7 @@ const specialisationLabels = {
 }
 
 const exemptionLabels = {
+  'PC1201': 'PC1201',
   'MA1301 (eg. NP CAEM)': 'MA1301',
   'ES1103': 'ES1103',
   'ES1000': 'ES1000',

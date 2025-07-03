@@ -19,6 +19,7 @@ export default function CreatePlan() {
 const [generatedModules, setGeneratedModules] = useState([])
 
   const [exemptions, setExemptions] = useState({
+    'PC1201': false,
     'MA1301 (eg. NP CAEM)': false,
     'ES1103': false,
     'ES1000': false,
