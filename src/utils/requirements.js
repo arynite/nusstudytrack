@@ -2,6 +2,10 @@ function pickGEMods(GEmods) { // pick GE mods from GE mods list
   return GEmods[Math.floor(Math.random()*GEmods.length)]
 }
 
+console.log(pickGEMods(['GEN2000', 'GEN2001','GEN2002' ]))  // Communities and Engagement
+console.log(pickGEMods(['GESS1000','GESS1001','GESS1002' ]))  // Singapore Studies
+console.log(pickGEMods(['GEC1000','GEC1001','GEC1002' ]))  // Culture and Connections
+
 export const eeMajorRequirements = {
     label: 'Electrical Engineering Major',
   
