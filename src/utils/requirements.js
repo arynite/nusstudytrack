@@ -1,3 +1,7 @@
+function pickGEMods(mods) { // pick GE mods from GE mods list
+  return mods[Math.floor(Math.random()*mods.length)]
+}
+
 export const eeMajorRequirements = {
     label: 'Electrical Engineering Major',
   
@@ -151,5 +155,4 @@ export const specialisationModules = {
     }
   }
 }
-
   
