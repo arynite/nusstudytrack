@@ -49,8 +49,17 @@ export const eeMajorRequirements = {
         pickGEMods(['GESS1000','GESS1001','GESS1002' ]),  // Singapore Studies
         pickGEMods(['GEC1000','GEC1001','GEC1002' ])  // Culture and Connections
       ]
-    }
-  }
+    },
+
+    bridgingModules: {
+      label: 'Bridging Modules',
+      required:[
+        'PC1201', // Physics
+        'MA1301', // Mathematics
+        'ES1103', // Engineering Mathematics
+        'ES1000'  // Engineering Fundamentals
+      ]
+  }}
 
   const roboticsElectives = ['BN4203', 'BN4601', 'EE3305/ME3243', 'EE4305', 'EE4308', 'EE4309','EE4705', 'EE4311','EE4312', 'EE4314', 'ME4242', 'ME4245', 'ME5406', 'MLE4228', 'RB4301']
 

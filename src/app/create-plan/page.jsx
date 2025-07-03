@@ -70,7 +70,8 @@ const [generatedModules, setGeneratedModules] = useState([])
     const requiredModules = flattenModules(
       eeMajorRequirements,
       selectedSpecialisations,
-      specialisationModules
+      specialisationModules,
+      selectedExemptions
     )
     
     // Store mods to take in state

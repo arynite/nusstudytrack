@@ -8,6 +8,7 @@ export function flattenModules(
   major: typeof eeMajorRequirements,
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules,
+  selectedExemptions: string[] = []
 ): string[] {
   const modulesSet = new Set<string>() // a set to create course codes
 
@@ -26,6 +27,11 @@ export function flattenModules(
       modulesSet.add(mod)
     }
   })
+
+  major.bridgingModules.required.forEach((mod) => {
+    if (!selectedExemptions.includes(mod)) {
+      modulesSet.add(mod)
+    }})
 
   specialisations.forEach((spec) => {
     const specData = specialisationModulesData[spec]
