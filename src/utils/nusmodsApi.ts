@@ -23,4 +23,4 @@ export async function fetchAllModules(codes: string[], year: string = '2024-2025
 }
 
 fetchModuleData('GESS1025');
-fetchAllModules(['GEN1000', 'GEC1015']);
+fetchAllModules(['GEN2000', 'GEC1015']);
