@@ -7,7 +7,7 @@ import { eeMajorRequirements, specialisationModules } from './requirements'
 export function flattenModules(
   major: typeof eeMajorRequirements,
   specialisations: string[],
-  specialisationModulesData: typeof specialisationModules
+  specialisationModulesData: typeof specialisationModules,
 ): string[] {
   const modulesSet = new Set<string>() // a set to create course codes
 
