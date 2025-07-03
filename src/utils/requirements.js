@@ -41,7 +41,7 @@ export const eeMajorRequirements = {
         'GEA1000',     // Data Literacy
         'CS1010E',     // Digital Literacy
         'ES2631',      // Critique and Expression
-        'GEN1000',     // Communities and Engagement
+        'GEN2000',     // Communities and Engagement
         'GESS1025',    // Singapore Studies
         'GEC1015'      // Culture and Connections
       ]
