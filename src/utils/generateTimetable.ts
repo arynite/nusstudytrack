@@ -114,6 +114,12 @@ type SemesterModule = {
         if (!placed) continue
       }
     }
+
+    for (const mod of modulesToSchedule) {
+      for (let sem = 0; sem < semesters; sem++) {
+        if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+          timetable[sem].push(mod)
+          break}}}
   
     // Return timetable array, each element = array of module codes for that semester
     return timetable
