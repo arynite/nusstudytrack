@@ -53,10 +53,10 @@ type SemesterModule = {
    * @param semesters number of semesters (default 8)
    */
   export async function generateTimetable(
-    modules: string[],
-    semesters = 8
+    modules: string[],  // array of module codes
+    semesters = 8 // default at 8
   ): Promise<string[][]> { // fetch all module information in parallel
-    const moduleInfos: Record<string, ModuleData> = {}
+    const moduleInfos: Record<string, ModuleData> = {} // to fetch module details from NUSMODs API
     await Promise.all(
       modules.map(async (mod) => {
         try {moduleInfos[mod] = await fetchModuleData(mod)
@@ -73,8 +73,8 @@ type SemesterModule = {
     // Initialize empty timetable (array of semesters)
     const timetable: string[][] = Array.from({ length: semesters }, () => [])
   
-    const completedModules = new Set<string>()
-    let modulesToSchedule = new Set(modules)
+    const completedModules = new Set<string>() // check if modules are completed
+    let modulesToSchedule = new Set(modules) // modules that need to be scheduled
   
     // Limit max modules per semester (adjust as needed)
     const MAX_MODULES_PER_SEMESTER = 5
@@ -85,7 +85,7 @@ type SemesterModule = {
     while (modulesToSchedule.size > 0 && progress) {
       progress = false
   
-      for (const mod of Array.from(modulesToSchedule)) {
+      for (const mod of Array.from(modulesToSchedule)) { // checks for each unscheduled mod to see if they can be scheduled
         const info = moduleInfos[mod]
   
         // Parse prerequisites
