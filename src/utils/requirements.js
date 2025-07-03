@@ -22,10 +22,10 @@ export const eeMajorRequirements = {
         ['EE2026', 'EE2028'],
         'EE2027',
         'PC2020',
-        'TE1', // Technical Elective 1
-        'TE2', // Technical Elective 2
-        'TC1', // Technical Course 1
-        'TC2'  // Technical Course 2
+        'EE3131C', // Technical Elective 1
+        'EE3408C', // Technical Elective 2
+        'EE3331C', // Technical Course 1
+        'EE3431C'  // Technical Course 2
       ]
     },
   
