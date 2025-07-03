@@ -115,7 +115,7 @@ type SemesterModule = {
       }
     }
 
-    for (const mod of modulesToSchedule) {
+    for (const mod of modulesToSchedule) { // just place down those mods
       for (let sem = 0; sem < semesters; sem++) {
         if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
           timetable[sem].push(mod)
