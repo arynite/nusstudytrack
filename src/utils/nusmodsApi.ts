@@ -22,5 +22,5 @@ export async function fetchAllModules(codes: string[], year: string = '2024-2025
   return results
 }
 
-fetchModuleData('CS1010E');
-fetchAllModules(['BN4203', 'BN4601', 'EE3305/ME3243', 'EE4305', 'EE4308', 'EE4309','EE4705', 'EE4311','EE4312', 'EE4314', 'ME4242', 'ME4245', 'ME5406', 'MLE4228', 'RB4301']);
+fetchModuleData('GESS1025');
+fetchAllModules(['GEN1000', 'GEC1015']);
