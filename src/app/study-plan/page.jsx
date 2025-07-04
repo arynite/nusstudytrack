@@ -44,7 +44,6 @@ export default function StudyPlan() {
   const rc = searchParams.get('rc')
   const specialisations = searchParams.get('specialisations')?.split(',').filter(Boolean) || []
   const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
-  // const exemptions = (searchParams.get('exemptions') || '').split(',').filter(Boolean)
   const x = parseInt(searchParams.get('x') || '0', 10) //////
 
   const handleViewTimetable = async () => {
