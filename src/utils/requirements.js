@@ -1,6 +1,12 @@
-function pickMods(mods) { // pick mods from mods list, GEs and UEs
-  return mods[Math.floor(Math.random()*mods.length)]
+function pickMods(mods, number) { // pick mods from mods list, GEs and UEs
+  const result = [];
+  for (let i = 0; i < number; i++) {
+    const randomIndex = Math.floor(Math.random()*mods.length);
+    result.push(mods[randomIndex]);
+  }
+  return result;
 }
+
 
 export const eeMajorRequirements = {
     label: 'Electrical Engineering Major',
@@ -37,6 +43,8 @@ export const eeMajorRequirements = {
       label: 'Unrestricted Electives',
       note: 'Student must take sufficient UEMs to meet graduation MC requirements',
       choose: null // left flexible — will calculate based on total MCs taken
+
+
     },
   
     generalEducation: {
@@ -45,9 +53,9 @@ export const eeMajorRequirements = {
         'GEA1000',     // Data Literacy
         'CS1010E',     // Digital Literacy
         'ES2631',      // Critique and Expression
-        pickMods(['GEN2000', 'GEN2001','GEN2002' ]),  // Communities and Engagement
-        pickMods(['GESS1000','GESS1001','GESS1002' ]),  // Singapore Studies
-        pickMods(['GEC1000','GEC1001','GEC1002' ])  // Culture and Connections
+        pickMods(['GEN2000', 'GEN2001','GEN2002' ], 1),  // Communities and Engagement
+        pickMods(['GESS1000','GESS1001','GESS1002' ], 1),  // Singapore Studies
+        pickMods(['GEC1000','GEC1001','GEC1002' ], 1)  // Culture and Connections
       ]
     },
 
