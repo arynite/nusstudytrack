@@ -65,13 +65,24 @@ const [generatedModules, setGeneratedModules] = useState([])
 
     const selectedSpecialisations = Object.keys(specialisations).filter(key => specialisations[key])
     const selectedExemptions = Object.keys(exemptions).filter(key => exemptions[key])
+
+  let x;
+  const numSPN = selectedSpecialisations.length;
+  if (numSPN == 0) {
+    x = 40;
+  } else if (numSPN == 1) {
+    x = 20;
+  } else if (numSPN >= 2) {
+    x = 0;
+  }
     
     // Generate required modules based on user selections
     const requiredModules = flattenModules(
       eeMajorRequirements,
       selectedSpecialisations,
       specialisationModules,
-      selectedExemptions
+      selectedExemptions,
+      x // number of specialisations chosen
     )
     
     // Store mods to take in state
