@@ -8,7 +8,8 @@ export function flattenModules(
   major: typeof eeMajorRequirements,
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules,
-  selectedExemptions: string[] = []
+  selectedExemptions: string[] = [],
+  x: number
 ): string[] {
   const modulesSet = new Set<string>() // a set to create course codes
 
@@ -32,6 +33,13 @@ export function flattenModules(
     if (!selectedExemptions.includes(mod)) {
       modulesSet.add(mod)
     }})
+
+  if (major.technicalElectives && major.technicalElectives.required.length > 0) {
+    const modList = major.technicalElectives.required[0]; // Since it's wrapped in one array
+    if (Array.isArray(modList)) {
+      for (let i = 0; i < x && i < modList.length; i++) {
+        modulesSet.add(modList[i]);
+      }}}
 
   specialisations.forEach((spec) => {
     const specData = specialisationModulesData[spec]
