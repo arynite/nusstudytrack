@@ -33,9 +33,10 @@ export function flattenModules(
     if (!selectedExemptions.includes(mod)) {
       modulesSet.add(mod)
     }})
-
-  if (major.technicalElectives && major.technicalElectives.required.length > 0) {
-    const modList = major.technicalElectives.required[0]; // Since it's wrapped in one array
+    
+    
+  if (major.technicalElectives && Array.isArray(major.technicalElectives.required) && major.technicalElectives.required.length > 0) {
+    const modList = major.technicalElectives.required[0];
     if (Array.isArray(modList)) {
       for (let i = 0; i < x && i < modList.length; i++) {
         modulesSet.add(modList[i]);
