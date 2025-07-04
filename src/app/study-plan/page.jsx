@@ -45,6 +45,16 @@ export default function StudyPlan() {
   const specialisations = searchParams.get('specialisations')?.split(',').filter(Boolean) || []
   const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
 
+  let x;
+  const numSPN = selectedSpecialisations.length;
+  if (numSPN === 0) {
+    x = 40;
+  } else if (numSPN === 1) {
+    x = 20;
+  } else if (numSPN >= 2) {
+    x = 0;
+  }
+
   const handleViewTimetable = async () => {
     const flattenedModules = flattenModules(eeMajorRequirements, specialisations, specialisationModules)
 

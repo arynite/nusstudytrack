@@ -6,7 +6,6 @@ import { supabase } from '../../utils/supabaseClient'
 import './create-plan.css'
 
 // import flattenmods, req.js
-import dynamic from 'next/dynamic'
 import { flattenModules } from '../../utils/flattenmodules'
 import { eeMajorRequirements, specialisationModules } from '../../utils/requirements'
 
@@ -66,16 +65,6 @@ const [generatedModules, setGeneratedModules] = useState([])
 
     const selectedSpecialisations = Object.keys(specialisations).filter(key => specialisations[key])
     const selectedExemptions = Object.keys(exemptions).filter(key => exemptions[key])
-
-  let x;
-  const numSPN = selectedSpecialisations.length;
-  if (numSPN === 0) {
-    x = 40;
-  } else if (numSPN === 1) {
-    x = 20;
-  } else if (numSPN >= 2) {
-    x = 0;
-  }
     
     // Generate required modules based on user selections
     const requiredModules = flattenModules(
@@ -88,11 +77,7 @@ const [generatedModules, setGeneratedModules] = useState([])
     
     // Store mods to take in state
     setGeneratedModules(requiredModules)
-    const { pickMods } = await import('../../utils/pickMods')
-
-    const AllMods = pickMods(requiredModules, parseFloat(degreeLength))
-
-    console.log("Mods to take:", AllMods)
+    console.log("Mods to clear:", requiredModules)
 
 
     const { error: insertError } = await supabase.from('study_plans').insert([
