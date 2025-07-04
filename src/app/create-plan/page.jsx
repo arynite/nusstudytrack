@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
 import { supabase } from '../../utils/supabaseClient'
 import './create-plan.css'
 
@@ -19,14 +18,14 @@ export default function CreatePlan() {
 // new state for mods
 const [generatedModules, setGeneratedModules] = useState([])
 
-  const [exemptions = searchParams.get('exemptions')?.split(',') || [], setExemptions] = useState({
+  const [exemptions, setExemptions] = useState({
     'PC1201': false,
     'MA1301 (eg. NP CAEM)': false,
     'ES1103': false,
     'ES1000': false,
   })
 
-  const [specialisations = searchParams.get('specialisations')?.split(',') || [], setSpecialisations] = useState({
+  const [specialisations, setSpecialisations] = useState({
     'adv-electronics': false,
     'industry4': false,
     'iot': false,
