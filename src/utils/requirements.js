@@ -56,8 +56,8 @@ export const eeMajorRequirements = {
       required:[
         'PC1201', // Physics
         'MA1301', // Mathematics
-        'ES1103', // Engineering Mathematics
-        'ES1000'  // Engineering Fundamentals
+        'ES1103', // English
+        'ES1000'  // Fundamental english
       ]
   }}
 
