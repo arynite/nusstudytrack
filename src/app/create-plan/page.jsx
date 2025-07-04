@@ -6,6 +6,7 @@ import { supabase } from '../../utils/supabaseClient'
 import './create-plan.css'
 
 // import flattenmods, req.js
+import dynamic from 'next/dynamic'
 import { flattenModules } from '../../utils/flattenmodules'
 import { eeMajorRequirements, specialisationModules } from '../../utils/requirements'
 
@@ -87,7 +88,11 @@ const [generatedModules, setGeneratedModules] = useState([])
     
     // Store mods to take in state
     setGeneratedModules(requiredModules)
-    console.log("Mods to clear:", requiredModules)
+    const { pickMods } = await import('../../utils/pickMods')
+
+    const AllMods = pickMods(requiredModules, parseFloat(degreeLength))
+
+    console.log("Mods to take:", AllMods)
 
 
     const { error: insertError } = await supabase.from('study_plans').insert([
