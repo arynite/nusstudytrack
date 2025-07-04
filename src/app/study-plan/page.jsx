@@ -44,12 +44,9 @@ export default function StudyPlan() {
   const rc = searchParams.get('rc')
   const specialisations = searchParams.get('specialisations')?.split(',').filter(Boolean) || []
   const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
-  const x = parseInt(searchParams.get('x') || '0', 10) //////
 
   const handleViewTimetable = async () => {
-    const flattenedModules = flattenModules(eeMajorRequirements, specialisations, specialisationModules, x)
-
-    console.log('Mods to clear:', requiredModules)
+    const flattenedModules = flattenModules(eeMajorRequirements, specialisations, specialisationModules, exemptions, x)
 
     try {
       const timetable = await generateTimetable(flattenedModules, degreeLength * 2)
