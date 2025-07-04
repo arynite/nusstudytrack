@@ -59,7 +59,7 @@ export const eeMajorRequirements = {
       ]
     },
 
-    technicalElectives:{
+    technicalElectives:{ // Number of TE depends on number of specialisations chosen
       label: 'Technical Electives',
       required: [
         pickMods([['EE3131C','EE3408C','EE3331C','EE3431C','EE3731C','EE3104C','EE4204','EE4205','EE4210','EE4211','EE4216',
