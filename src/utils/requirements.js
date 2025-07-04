@@ -1,5 +1,5 @@
-function pickGEMods(GEmods) { // pick GE mods from GE mods list
-  return GEmods[Math.floor(Math.random()*GEmods.length)]
+function pickMods(mods) { // pick mods from mods list, GEs and UEs
+  return mods[Math.floor(Math.random()*mods.length)]
 }
 
 export const eeMajorRequirements = {
@@ -45,9 +45,9 @@ export const eeMajorRequirements = {
         'GEA1000',     // Data Literacy
         'CS1010E',     // Digital Literacy
         'ES2631',      // Critique and Expression
-        pickGEMods(['GEN2000', 'GEN2001','GEN2002' ]),  // Communities and Engagement
-        pickGEMods(['GESS1000','GESS1001','GESS1002' ]),  // Singapore Studies
-        pickGEMods(['GEC1000','GEC1001','GEC1002' ])  // Culture and Connections
+        pickMods(['GEN2000', 'GEN2001','GEN2002' ]),  // Communities and Engagement
+        pickMods(['GESS1000','GESS1001','GESS1002' ]),  // Singapore Studies
+        pickMods(['GEC1000','GEC1001','GEC1002' ])  // Culture and Connections
       ]
     },
 
