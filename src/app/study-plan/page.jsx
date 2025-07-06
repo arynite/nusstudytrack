@@ -3,8 +3,8 @@
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-import { useRouter } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
+//import { useRouter } from 'next/navigation'
+//import { useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import './study-plan.css'
 import { generateTimetable } from '../../utils/generateTimetable' // change from @
@@ -33,53 +33,70 @@ const exemptionLabels = {
 export default function StudyPlan() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [mounted, setMounted] = useState(false)
-  const [plannedSemesters, setPlannedSemesters] = useState([])
+  //const [mounted, setMounted] = useState(false)
+  //const [plannedSemesters, setPlannedSemesters] = useState([])
+  const [formValues, setFormValues] = useState({
+  education: '',
+  degreeLength: 4,
+  rc: '',
+  specialisations: [],
+  exemptions: [],
+})
+const [plannedSemesters, setPlannedSemesters] = useState([])
+const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search)
+  const education = params.get('education')
+  const degreeLength = Number(params.get('degreeLength') || '4')
+  const rc = params.get('rc')
+  const specialisations = params.get('specialisations')?.split(',').filter(Boolean) || []
+  const exemptions = params.get('exemptions')?.split(',').filter(Boolean) || []
+
+  setFormValues({ education, degreeLength, rc, specialisations, exemptions })
+  setMounted(true)
+}, [])
 
   if (!mounted) return null
 
-  const education = searchParams.get('education')
-  const degreeLength = Number(searchParams.get('degreeLength') || '4')
-  const rc = searchParams.get('rc')
-  const specialisations = searchParams.get('specialisations')?.split(',').filter(Boolean) || []
-  const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
+  //const education = searchParams.get('education')
+  //const degreeLength = Number(searchParams.get('degreeLength') || '4')
+  //const rc = searchParams.get('rc')
+  //const specialisations = searchParams.get('specialisations')?.split(',').filter(Boolean) || []
+  //const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
 
   
   const handleViewTimetable = async () => {
-    const flattenedModules = flattenModules(specialisations, specialisationModules, exemptions)
-
-    try {
-      const timetable = await generateTimetable(flattenedModules, degreeLength * 2)
-      console.log('Generated Timetable:', timetable)
-      setPlannedSemesters(timetable)
-    } catch (err) {
-      console.error('Failed to generate timetable', err)
-    }
+    const flattenedModules = flattenModules(
+      formValues.specialisations,
+      specialisationModules,
+      formValues.exemptions
+    )
+    const timetable = await generateTimetable(flattenedModules, formValues.degreeLength * 2)
   }
+
+  
 
   return (
     <div className="studyplan-container">
       <h2 className="studyplan-title">Your Submitted Study Plan</h2>
 
-      <p><span className="studyplan-label">Education:</span> {education}</p>
-      <p><span className="studyplan-label">Degree Length:</span> {degreeLength} years</p>
-      <p><span className="studyplan-label">Residential College:</span> {rc}</p>
+      <p><span className="studyplan-label">Education:</span> {formValues.education}</p>
+      <p><span className="studyplan-label">Degree Length:</span> {formValues.degreeLength} years</p>
+      <p><span className="studyplan-label">Residential College:</span> {formValues.rc}</p>
 
       <p>
         <span className="studyplan-label">Exemptions:</span>{' '}
-        {exemptions.length > 0
-          ? exemptions.map(ex => exemptionLabels[ex] || ex).join(', ')
+        {formValues.exemptions.length > 0
+          ? formValues.exemptions.map(ex => exemptionLabels[ex] || ex).join(', ')
           : 'None'}
       </p>
 
       <p>
         <span className="studyplan-label">Specialisations / Minors:</span>{' '}
-        {specialisations.length > 0
-          ? specialisations.map(spec => specialisationLabels[spec] || spec).join(', ')
+        {formValues.specialisations.length > 0
+          ? formValues.specialisations.map(spec => specialisationLabels[spec] || spec).join(', ')
           : 'None'}
       </p>
 
