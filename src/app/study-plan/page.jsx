@@ -65,6 +65,17 @@ export default function StudyPlan() {
   setPlannedSemesters([['CS1010', 'MA1101']])
 }
 
+useEffect(() => {
+  setMounted(true)
+  console.log('Mounted:', true)
+  console.log('Search params:', {
+    education: searchParams.get('education'),
+    degreeLength: searchParams.get('degreeLength'),
+    rc: searchParams.get('rc')
+  })
+}, [])
+
+
 
   return (
     <div className="studyplan-container">
