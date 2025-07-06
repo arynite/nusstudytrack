@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { eeMajorRequirements, specialisationModules } from '@/utils/requirements'
-import { flattenModules } from '@/utils/flattenmodules'
-import { generateTimetable } from '@/utils/generateTimetable'
+import { eeMajorRequirements, specialisationModules } from '../../utils/requirements'
+import { flattenModules } from '../../utils/flattenmodules'
+import { generateTimetable } from '../../utils/generateTimetable'
 
 
 export default function ViewTimetable() {
