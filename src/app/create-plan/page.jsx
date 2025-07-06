@@ -78,7 +78,6 @@ const [exemptions, setExemptions] = useState({
     
     // Generate required modules based on user selections
     const requiredModules = flattenModules(
-      eeMajorRequirements,
       selectedSpecialisations,
       specialisationModules,
       selectedExemptions,

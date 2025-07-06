@@ -8,6 +8,7 @@ export function flattenModules(
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules,
   selectedExemptions: string[] = [],
+  x: number
 ): string[] {
   const TECount = specialisations.length
   const major = eeMajorRequirements(TECount) // get the major requirements based on the number of specialisations
@@ -30,9 +31,12 @@ export function flattenModules(
   })
 
   major.bridgingModules.required.forEach((mod) => {
-    if (!selectedExemptions.includes(mod)) {
+    if (Array.isArray(mod)) {
+      modulesSet.add(mod[0])
+    } else {
       modulesSet.add(mod)
-    }})
+    }
+  })
   
   major.technicalElectives.required.forEach((mod) => {
     if (Array.isArray(mod)) {
