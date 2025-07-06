@@ -5,11 +5,12 @@
 import { eeMajorRequirements, specialisationModules } from './requirements'
 
 export function flattenModules(
-  major: typeof eeMajorRequirements,
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules,
   selectedExemptions: string[] = [],
 ): string[] {
+  const TECount = specialisations.length
+  const major = eeMajorRequirements(TECount) // get the major requirements based on the number of specialisations
   const modulesSet = new Set<string>() // a set to create course codes
 
   major.core.required.forEach((mod) => {
@@ -32,7 +33,14 @@ export function flattenModules(
     if (!selectedExemptions.includes(mod)) {
       modulesSet.add(mod)
     }})
-    
+  
+  major.technicalElectives.required.forEach((mod) => {
+    if (Array.isArray(mod)) {
+      modulesSet.add(mod[0])
+    } else {
+      modulesSet.add(mod)
+    }
+  })
 
   specialisations.forEach((spec) => {
     const specData = specialisationModulesData[spec]
