@@ -58,7 +58,7 @@ useEffect(() => {
   setMounted(true)
 }, [])
 
-  if (!mounted) return null
+  //if (!mounted) return null
 
   //const education = searchParams.get('education')
   //const degreeLength = Number(searchParams.get('degreeLength') || '4')
