@@ -32,8 +32,12 @@ const exemptionLabels = {
   'ES1000': 'ES1000',
 }
 
+
 export default function StudyPlan() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [mounted, setMounted] = useState(false)
+  const [plannedSemesters, setPlannedSemesters] = useState([])
 
   useEffect(() => {
     setMounted(true)
