@@ -7,6 +7,13 @@ function pickMods(mods, number) { // pick mods from mods list, GEs and UEs
   return result;
 }
 
+function TECount(specialisations) {
+  // Number of TEs depends on number of specialisations chosen
+  if (specialisations.length === 0) return 0;
+  if (specialisations.length === 1) return 20;
+  return 0; // No TEs required if more than one specialisation
+} 
+
 
 export const eeMajorRequirements = {
     label: 'Electrical Engineering Major',
