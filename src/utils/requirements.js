@@ -7,6 +7,13 @@ function pickMods(mods, number) { // pick mods from mods list, GEs and UEs
   return result;
 }
 
+function TECount(specialisations) {
+  // Number of TEs depends on number of specialisations chosen
+  if (specialisations.length === 0) return 0;
+  if (specialisations.length === 1) return 20;
+  return 0; // No TEs required if more than one specialisation
+} 
+
 
 export const eeMajorRequirements = {
     label: 'Electrical Engineering Major',
@@ -65,7 +72,7 @@ export const eeMajorRequirements = {
       required: [pickMods(['EE3131C','EE3408C','EE3331C','EE3431C','EE3731C','EE3104C','EE4204','EE4205','EE4210','EE4211','EE4216',
     'CG3207','EE4407','EE4218','EE4415','EE4302','EE4307','EE4308','EE4311','EE4312','EE4314','EE4315','EE4705','EE4409',
     'EE4435','EE4436','EE4437','EE4438','EE4501','EE4502','EE4503','EE4505','EE4509','EE4511','EE4513','EE4212','EE4309',
-    'EE4704','EE3105','EE4101','EE4104','EE4112','EE4115','EE3801','EE4032'], x) // value of x depends on the number of specialisations chosen
+    'EE4704','EE3105','EE4101','EE4104','EE4112','EE4115','EE3801','EE4032'], 20) // value of x depends on the number of specialisations chosen
       ]
     },
 
@@ -182,4 +189,3 @@ export const specialisationModules = {
     }
   }
 }
-  
