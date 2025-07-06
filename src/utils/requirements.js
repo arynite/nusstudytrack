@@ -8,8 +8,7 @@ function pickMods(mods, number) { // pick mods from mods list, GEs and UEs
 }
 
 
-export function eeMajorRequirements (x) {
-  return {
+export const eeMajorRequirements = {
     label: 'Electrical Engineering Major',
   
     core: {
@@ -66,7 +65,7 @@ export function eeMajorRequirements (x) {
       required: [pickMods(['EE3131C','EE3408C','EE3331C','EE3431C','EE3731C','EE3104C','EE4204','EE4205','EE4210','EE4211','EE4216',
     'CG3207','EE4407','EE4218','EE4415','EE4302','EE4307','EE4308','EE4311','EE4312','EE4314','EE4315','EE4705','EE4409',
     'EE4435','EE4436','EE4437','EE4438','EE4501','EE4502','EE4503','EE4505','EE4509','EE4511','EE4513','EE4212','EE4309',
-    'EE4704','EE3105','EE4101','EE4104','EE4112','EE4115','EE3801','EE4032'], x) ]}, // value of x depends on the number of specialisations chosen
+    'EE4704','EE3105','EE4101','EE4104','EE4112','EE4115','EE3801','EE4032'], 20) ]}, // value of x depends on the number of specialisations chosen
 
     bridgingModules: {
       label: 'Bridging Modules',
@@ -76,7 +75,7 @@ export function eeMajorRequirements (x) {
         'ES1103', // English
         'ES1000'  // Fundamental english
       ]
-  }}}
+  }}
 
   const roboticsElectives = ['BN4203', 'BN4601', 'EE3305/ME3243', 'EE4305', 'EE4308', 'EE4309','EE4705', 'EE4311','EE4312', 'EE4314', 'ME4242', 'ME4245', 'ME5406', 'MLE4228', 'RB4301']
 

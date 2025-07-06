@@ -8,7 +8,7 @@ export function flattenModules(
   major: typeof eeMajorRequirements,
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules,
-  selectedExemptions: string[] = []
+  selectedExemptions: string[] = [],
 ): string[] {
   const modulesSet = new Set<string>() // a set to create course codes
 
