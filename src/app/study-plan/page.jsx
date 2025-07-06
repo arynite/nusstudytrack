@@ -47,7 +47,7 @@ const [mounted, setMounted] = useState(false)
 
 
 useEffect(() => {
-  const params = new URLSearchParams(window.location.search) ///
+  const params = new URLSearchParams(window.location.search)
   const education = params.get('education')
   const degreeLength = Number(params.get('degreeLength') || '4')
   const rc = params.get('rc')
