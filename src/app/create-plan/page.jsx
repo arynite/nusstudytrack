@@ -88,6 +88,7 @@ const [exemptions, setExemptions] = useState({
     // Store mods to take in state
     setGeneratedModules(requiredModules)
     console.log("Mods to clear:", requiredModules)
+    colsole.log("x:", x)
 
 
     const { error: insertError } = await supabase.from('study_plans').insert([
