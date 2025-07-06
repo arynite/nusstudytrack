@@ -31,8 +31,8 @@ const exemptionLabels = {
 }
 
 export default function StudyPlan() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  //const router = useRouter()
+  //const searchParams = useSearchParams()
   //const [mounted, setMounted] = useState(false)
   //const [plannedSemesters, setPlannedSemesters] = useState([])
   const [formValues, setFormValues] = useState({
