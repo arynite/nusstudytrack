@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import './study-plan.css'
-import { generateTimetable } from '../../utils/generateTimetable' // change from @
-import { flattenModules } from '../../utils/flattenmodules' // change from @
-import { eeMajorRequirements } from '../../utils/requirements' // change from @
-import { specialisationModules } from '../../utils/requirements' // change from @
+//import { generateTimetable } from '../../utils/generateTimetable' // change from @
+//import { flattenModules } from '../../utils/flattenmodules' // change from @
+//import { eeMajorRequirements } from '../../utils/requirements' // change from @
+//import { specialisationModules } from '../../utils/requirements' // change from @
 
 const specialisationLabels = {
   'adv-electronics': 'Advanced Electronics',
@@ -45,17 +45,23 @@ export default function StudyPlan() {
   const specialisations = searchParams.get('specialisations')?.split(',').filter(Boolean) || []
   const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
 
-  const handleViewTimetable = async () => {
-    const flattenedModules = flattenModules(specialisations, specialisationModules, exemptions)
+  
+  //const handleViewTimetable = async () => {
+    //const flattenedModules = flattenModules(specialisations, specialisationModules, exemptions)
 
-    try {
-      const timetable = await generateTimetable(flattenedModules, degreeLength * 2)
-      console.log('Generated Timetable:', timetable)
-      setPlannedSemesters(timetable)
-    } catch (err) {
-      console.error('Failed to generate timetable', err)
-    }
-  }
+    //try {
+      //const timetable = await generateTimetable(flattenedModules, degreeLength * 2)
+      //console.log('Generated Timetable:', timetable)
+      //setPlannedSemesters(timetable)
+    //} catch (err) {
+      //console.error('Failed to generate timetable', err)
+    //}
+  //}
+
+  const handleViewTimetable = () => {
+  setPlannedSemesters([['CS1010', 'MA1101']])
+}
+
 
   return (
     <div className="studyplan-container">
