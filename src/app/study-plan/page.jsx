@@ -6,6 +6,7 @@ export const dynamic = 'force-dynamic'
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import './study-plan.css'
 
 export default function StudyPlan() {
   const [mounted, setMounted] = useState(false)
