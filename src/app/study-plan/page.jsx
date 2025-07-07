@@ -3,7 +3,7 @@
 export const dynamic = 'force-dynamic'
 //export const revalidate = 0
 
-//import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 //import { useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import './study-plan.css'
@@ -31,7 +31,7 @@ const exemptionLabels = {
 }
 
 export default function StudyPlan() {
-  //const router = useRouter()
+  const router = useRouter()
   //const searchParams = useSearchParams()
   //const [mounted, setMounted] = useState(false)
   //const [plannedSemesters, setPlannedSemesters] = useState([])
@@ -66,65 +66,85 @@ useEffect(() => {
   //const specialisations = searchParams.get('specialisations')?.split(',').filter(Boolean) || []
   //const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
 
-  
-  const handleViewTimetable = async () => {
-    const flattenedModules = flattenModules(
-      formValues.specialisations,
-      specialisationModules,
-      formValues.exemptions
-    )
-    const timetable = await generateTimetable(flattenedModules, formValues.degreeLength * 2)
-  }
+  router.push(`/HandleViewTimetable?${queryParams.toString()}`)
 
-  
+  //const handleViewTimetable = async () => {
+    //const flattenedModules = flattenModules(
+      //formValues.specialisations,
+      //specialisationModules,
+      //formValues.exemptions
+    //)
+    //const timetable = await generateTimetable(flattenedModules, formValues.degreeLength * 2)
+  //}
 
   return (
     <div className="studyplan-container">
-      <h2 className="studyplan-title">Your Submitted Study Plan</h2>
+      <h2 className="studyplan-title">Your Study Plan</h2>
+      <div className="studyplan-summary">
+        <p><strong>Education:</strong> {formValues.education}</p>
+        <p><strong>Degree Length:</strong> {formValues.degreeLength} years</p>
+        <p><strong>RC:</strong> {formValues.rc}</p>
+        <p><strong>Specialisations:</strong> {formValues.specialisations.join(', ') || 'None'}</p>
+        <p><strong>Exemptions:</strong> {formValues.exemptions.join(', ') || 'None'}</p>
+      </div>
 
-      <p><span className="studyplan-label">Education:</span> {formValues.education}</p>
-      <p><span className="studyplan-label">Degree Length:</span> {formValues.degreeLength} years</p>
-      <p><span className="studyplan-label">Residential College:</span> {formValues.rc}</p>
-
-      <p>
-        <span className="studyplan-label">Exemptions:</span>{' '}
-        {formValues.exemptions.length > 0
-          ? formValues.exemptions.map(ex => exemptionLabels[ex] || ex).join(', ')
-          : 'None'}
-      </p>
-
-      <p>
-        <span className="studyplan-label">Specialisations / Minors:</span>{' '}
-        {formValues.specialisations.length > 0
-          ? formValues.specialisations.map(spec => specialisationLabels[spec] || spec).join(', ')
-          : 'None'}
-      </p>
-
-      <br />
-      <hr />
       <div className="button-container">
         <button className="view-timetable-button" onClick={handleViewTimetable}>
           View Timetable
         </button>
       </div>
-
-      {plannedSemesters.length > 0 && (
-        <div className="timetable-container mt-6">
-          <h3 className="studyplan-title">Suggested Semester Plan</h3>
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            {plannedSemesters.map((semester, idx) => (
-              <div key={idx} className="semester-card border p-4 rounded shadow">
-                <h4 className="font-semibold mb-2">Semester {idx + 1}</h4>
-                <ul className="list-disc pl-5 text-sm">
-                  {semester.map((mod) => (
-                    <li key={mod}>{mod}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
+
+  
+
+  //return (
+    //<div className="studyplan-container">
+      //<h2 className="studyplan-title">Your Submitted Study Plan</h2>
+
+      //<p><span className="studyplan-label">Education:</span> {formValues.education}</p>
+      //<p><span className="studyplan-label">Degree Length:</span> {formValues.degreeLength} years</p>
+      //<p><span className="studyplan-label">Residential College:</span> {formValues.rc}</p>
+
+      //<p>
+        //<span className="studyplan-label">Exemptions:</span>{' '}
+        //{formValues.exemptions.length > 0
+          //? formValues.exemptions.map(ex => exemptionLabels[ex] || ex).join(', ')
+          //: 'None'}
+      //</p>
+
+      //<p>
+        //<span className="studyplan-label">Specialisations / Minors:</span>{' '}
+        //{formValues.specialisations.length > 0
+          //? formValues.specialisations.map(spec => specialisationLabels[spec] || spec).join(', ')
+          //: 'None'}
+      //</p>
+
+      //<br />
+      //<hr />
+      //<div className="button-container">
+        //<button className="view-timetable-button" onClick={handleViewTimetable}>
+          //View Timetable
+        //</button>
+      //</div>
+
+      //{plannedSemesters.length > 0 && (
+        //<div className="timetable-container mt-6">
+          //<h3 className="studyplan-title">Suggested Semester Plan</h3>
+          //<div className="grid grid-cols-2 gap-4 mt-4">
+            //{plannedSemesters.map((semester, idx) => (
+              //<div key={idx} className="semester-card border p-4 rounded shadow">
+                //<h4 className="font-semibold mb-2">Semester {idx + 1}</h4>
+                //<ul className="list-disc pl-5 text-sm">
+                  //{semester.map((mod) => (
+                    //<li key={mod}>{mod}</li>
+                  //))}
+                //</ul>
+              //</div>
+            //))}
+          //</div>
+        //</div>
+      //)}
+    //</div>
+  //)
 }

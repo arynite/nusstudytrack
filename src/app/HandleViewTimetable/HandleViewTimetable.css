@@ -1,0 +1,70 @@
+.studyplan-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #17252a; 
+  }
+  
+  .studyplan-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #1e40af;
+
+  }
+  
+  .studyplan-label {
+    font-weight: 700;
+    color: #1e40af 
+  }
+  
+  .studyplan-container p {
+    font-size: 16px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  
+  hr {
+    border: none;
+    height: 1px;
+    background: #d1d5db; 
+    margin-bottom: 0;
+  }
+
+  /**/
+  
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.view-timetable-button {
+  padding: 12px 24px;
+  background-color: #1e40af;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-timetable-button:hover {
+  background-color: #1e3a8a;
+}
+
+.timetable-container {
+    margin-top: 2rem;
+  }
+  
+  .semester-card {
+    background-color: #f9fafb;
+  }
+  
