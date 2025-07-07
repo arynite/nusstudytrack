@@ -28,10 +28,6 @@ type SemesterModule = {
     }
   }
   
-  /**
-   * Recursively parse prereqTree to get all modules in an AND relation.
-   * For OR, just pick the first option (simplified).
-   */
   function parsePrerequisites(prereqTree: PrereqTree): string[] {
     if (!prereqTree) return []
     if (typeof prereqTree === 'string') return [prereqTree]
@@ -47,10 +43,8 @@ type SemesterModule = {
   }
   
   /**
-   * Generates a semester-by-semester timetable for modules
-   * respecting prerequisites and semester offerings.
    * @param modules list of module codes
-   * @param semesters number of semesters (default 8)
+   * @param semesters number of semesters 
    */
   export async function generateTimetable(
     modules: string[],  // array of module codes
@@ -110,7 +104,6 @@ type SemesterModule = {
           }
         }
   
-        // If not placed because no semester offered or no space, skip this round
         if (!placed) continue
       }
     }
@@ -121,7 +114,7 @@ type SemesterModule = {
           timetable[sem].push(mod)
           break}}}
   
-    // Return timetable array, each element = array of module codes for that semester
+    // return array
     return timetable
   }
   
