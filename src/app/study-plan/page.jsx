@@ -58,7 +58,7 @@ useEffect(() => {
   setMounted(true)
 }, [])
 
-  if (!mounted) return null
+  //if (!mounted) return null
 
   //const education = searchParams.get('education')
   //const degreeLength = Number(searchParams.get('degreeLength') || '4')
@@ -66,7 +66,21 @@ useEffect(() => {
   //const specialisations = searchParams.get('specialisations')?.split(',').filter(Boolean) || []
   //const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
 
-  router.push(`/HandleViewTimetable?${queryParams.toString()}`)
+  //router.push(`/HandleViewTimetable?${queryParams.toString()}`)
+
+  if (!mounted) return null
+
+  const handleViewTimetable = () => {
+    const queryParams = new URLSearchParams({
+      education: formValues.education,
+      degreeLength: formValues.degreeLength.toString(),
+      rc: formValues.rc,
+      specialisations: formValues.specialisations.join(','),
+      exemptions: formValues.exemptions.join(','),
+    })
+
+    router.push(`/HandleViewTimetable?${queryParams.toString()}`) // ✅ Navigate with params
+  }
 
   //const handleViewTimetable = async () => {
     //const flattenedModules = flattenModules(
