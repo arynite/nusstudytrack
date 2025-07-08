@@ -83,7 +83,7 @@ export default function StudyPlan() {
             specialisations: formValues.specialisations,
             exemptions: formValues.exemptions,
           }],
-          { onConflict: 'user_id' }
+          { onConflict: ['user_id'] }
         )
 
       if (error) {
