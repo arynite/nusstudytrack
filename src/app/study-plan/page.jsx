@@ -75,6 +75,8 @@ useEffect(() => {
       .select('*')
       .eq('user_id', user.id)
       .single()
+    
+      console.log('Fetched data from study plan:', data)
 
     if (error && status !== 406) {
       console.error('Failed to fetch study plan:', error)
@@ -88,7 +90,7 @@ useEffect(() => {
       //})
 
       console.log('Fetched data from Supabase:', data)
-      
+
       setFormValues({
         education: data.education,
         degreeLength: data.degree_length,
