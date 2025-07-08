@@ -59,7 +59,6 @@ export default function StudyPlan() {
   }, [router])
 
   const saveStudyPlan = async () => {
-    setLoading(true)
     try {
       const {
         data: { user },
@@ -95,9 +94,11 @@ export default function StudyPlan() {
     } finally {
       setLoading(false)
     }
+
+    router.push('/create-plan')
   }
 
-  const handleViewTimetable = () => {
+  const HandleViewTimetableF = () => {
     const queryParams = new URLSearchParams({
       education: formValues.education,
       degreeLength: formValues.degreeLength.toString(),
@@ -123,10 +124,10 @@ export default function StudyPlan() {
       </div>
 
       <div className="button-container">
-        <button className="save-plan-button" onClick={saveStudyPlan} disabled={loading}>
-          {loading ? 'Saving...' : 'Save Study Plan'}
+        <button className="Go-Back-button" onClick={saveStudyPlan}>
+          Go Back
         </button>
-        <button className="view-timetable-button" onClick={handleViewTimetable}>
+        <button className="view-timetable-button" onClick={HandleViewTimetableF}>
           View Timetable
         </button>
       </div>
