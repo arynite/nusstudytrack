@@ -79,13 +79,22 @@ useEffect(() => {
     if (error && status !== 406) {
       console.error('Failed to fetch study plan:', error)
     } else if (data) {
+      //setFormValues({
+        //education: data.education,
+        //degreeLength: data.degree_length,
+        //rc: data.rc,
+        //specialisations: data.specialisations || [],
+        //exemptions: data.exemptions || [],
+      //})
+
       setFormValues({
         education: data.education,
         degreeLength: data.degree_length,
         rc: data.rc,
-        specialisations: data.specialisations || [],
-        exemptions: data.exemptions || [],
+        specialisations: Array.isArray(data.specialisations) ? data.specialisations : [],
+        exemptions: Array.isArray(data.exemptions) ? data.exemptions : [],
       })
+
       setMounted(true)
     }
   }
@@ -137,7 +146,7 @@ useEffect(() => {
       </div>
 
       <div className="button-container">
-        <button className="view-timetable-button" onClick={HandleViewTimetable}>
+        <button className="view-timetable-button" onClick={handleViewTimetable}>
           View Timetable
         </button>
       </div>
