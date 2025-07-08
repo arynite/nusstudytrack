@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { flattenModules } from '../../utils/flattenmodules'
 import { generateTimetable } from '../../utils/generateTimetable'
 import { specialisationModules } from '../../utils/requirements'
+import { supabase } from '../../utils/supabaseClient'
 import './HandleViewTimetable.css'
 
 export default function TimetablePage() {

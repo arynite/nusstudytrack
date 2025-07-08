@@ -113,7 +113,7 @@ useEffect(() => {
       exemptions: formValues.exemptions.join(','),
     })
 
-    router.push(`/HandleViewTimetable?${queryParams.toString()}`)
+    router.push(`/HandleViewTimetable`)
   }
 
   //const handleViewTimetable = async () => {
