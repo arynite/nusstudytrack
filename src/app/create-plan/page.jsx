@@ -82,8 +82,11 @@ const [exemptions, setExemptions] = useState({
       x
     )
     
-    setGeneratedModules(requiredModules)
-    const timetable = setGeneratedModules(requiredModules)
+    //setGeneratedModules(requiredModules)
+    //const timetable = setGeneratedModules(requiredModules)
+    
+    setGeneratedModules(timetable)
+    const timetable = generateTimetable(requiredModules)
 
     console.log("Mods to clear:", requiredModules)
     console.log("x:", x)
