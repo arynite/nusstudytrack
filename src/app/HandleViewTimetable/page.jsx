@@ -11,6 +11,7 @@ export default function TimetablePage() {
   const router = useRouter()
   const [plannedSemesters, setPlannedSemesters] = useState([])
   const [mounted, setMounted] = useState(false)
+
   const [formValues, setFormValues] = useState({
     education: '',
     degreeLength: 4,
@@ -19,26 +20,29 @@ export default function TimetablePage() {
     exemptions: [],
   })
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const education = params.get('education') || ''
-    const degreeLength = Number(params.get('degreeLength') || '4')
-    const rc = params.get('rc') || ''
-    const specialisations = params.get('specialisations')?.split(',').filter(Boolean) || []
-    const exemptions = params.get('exemptions')?.split(',').filter(Boolean) || []
+  //useEffect(() => {
+    //const params = new URLSearchParams(window.location.search)
+    //const education = params.get('education') || ''
+    //const degreeLength = Number(params.get('degreeLength') || '4')
+    //const rc = params.get('rc') || ''
+    //const specialisations = params.get('specialisations')?.split(',').filter(Boolean) || []
+    //const exemptions = params.get('exemptions')?.split(',').filter(Boolean) || []
 
-    const fv = { education, degreeLength, rc, specialisations, exemptions }
-    setFormValues(fv)
+    //const fv = { education, degreeLength, rc, specialisations, exemptions }
+    //setFormValues(fv)
 
-    const generate = async () => {
-      const flattened = flattenModules(specialisations, specialisationModules, exemptions)
-      const timetable = await generateTimetable(flattened, degreeLength * 2)
-      setPlannedSemesters(timetable)
-      setMounted(true)
-    }
+    //const generate = async () => {
+      //const flattened = flattenModules(specialisations, specialisationModules, exemptions)
+      //const timetable = await generateTimetable(flattened, degreeLength * 2)
+      //setPlannedSemesters(timetable)
+      //setMounted(true)
+    //}
+    //generate()
+  //}, [])
 
-    generate()
-  }, [])
+
+
+
 
   if (!mounted) return <p>Loading...</p>
 

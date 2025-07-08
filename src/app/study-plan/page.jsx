@@ -11,6 +11,7 @@ import { generateTimetable } from '../../utils/generateTimetable'
 import { flattenModules } from '../../utils/flattenmodules'
 import { eeMajorRequirements } from '../../utils/requirements'
 import { specialisationModules } from '../../utils/requirements'
+import { supabase } from '../../utils/supabaseClient'
 
 const specialisationLabels = {
   'adv-electronics': 'Advanced Electronics',
@@ -69,15 +70,15 @@ useEffect(() => {
       return
     }
 
-    const { data, error } = await supabase
+    const { data, error, status } = await supabase
       .from('study_plans')
       .select('*')
       .eq('user_id', user.id)
       .single()
 
-    if (error) {
+    if (error && status !== 406) {
       console.error('Failed to fetch study plan:', error)
-    } else {
+    } else if (data) {
       setFormValues({
         education: data.education,
         degreeLength: data.degree_length,
@@ -88,6 +89,7 @@ useEffect(() => {
       setMounted(true)
     }
   }
+  fetchUserData()
 }, [])
 
   //if (!mounted) return null
@@ -135,7 +137,7 @@ useEffect(() => {
       </div>
 
       <div className="button-container">
-        <button className="view-timetable-button" onClick={handleViewTimetable}>
+        <button className="view-timetable-button" onClick={HandleViewTimetable}>
           View Timetable
         </button>
       </div>
