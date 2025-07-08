@@ -82,7 +82,9 @@ const [exemptions, setExemptions] = useState({
       x
     )
     
-    setGeneratedModules(requiredModules)
+    const UGPlan = generateTimetable(requiredModules)
+    setGeneratedModules(UGPlan)
+
     console.log("Mods to clear:", requiredModules)
     console.log("x:", x)
 
@@ -95,6 +97,7 @@ const [exemptions, setExemptions] = useState({
         rc,
         exemptions: selectedExemptions,
         specialisations: selectedSpecialisations,
+        timetable: UGPlan,
       }],
       { onConflict: ['user_id'] }
     )
