@@ -75,7 +75,6 @@ const [exemptions, setExemptions] = useState({
       x = 0;
     }
     
-    // Generate required modules based on user selections
     const requiredModules = flattenModules(
       selectedSpecialisations,
       specialisationModules,
@@ -83,13 +82,12 @@ const [exemptions, setExemptions] = useState({
       x
     )
     
-    // Store mods to take in state
     setGeneratedModules(requiredModules)
     console.log("Mods to clear:", requiredModules)
     console.log("x:", x)
 
 
-    const { error: insertError } = await supabase.from('study_plans').insert([
+    const { error: upsertError } = await supabase.from('study_plans').upsert([
       {
         user_id: user.id,
         education,
@@ -97,10 +95,11 @@ const [exemptions, setExemptions] = useState({
         rc,
         exemptions: selectedExemptions,
         specialisations: selectedSpecialisations,
-      }
-    ])
+      }],
+      { onConflict: ['user_id'] }
+    )
 
-    if (insertError) {
+    if (upsertError) {
       alert('Failed to save: ' + insertError.message)
       return
     }
