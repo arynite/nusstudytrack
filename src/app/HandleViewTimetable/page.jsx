@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { flattenModules } from '../../utils/flattenmodules'
 import { generateTimetable } from '../../utils/generateTimetable'
@@ -7,6 +8,7 @@ import { specialisationModules } from '../../utils/requirements'
 import './HandleViewTimetable.css'
 
 export default function TimetablePage() {
+  const router = useRouter()
   const [plannedSemesters, setPlannedSemesters] = useState([])
   const [mounted, setMounted] = useState(false)
   const [formValues, setFormValues] = useState({
@@ -48,17 +50,18 @@ export default function TimetablePage() {
           <div key={idx} className="semester-card border p-4 rounded shadow">
             <h4 className="font-semibold mb-2">Semester {idx + 1}</h4>
             <ul className="list-disc pl-5 text-sm">
-              {semester.map((mod) => (
-                <li key={mod}>{mod}</li>
+              {semester.map((mod, modIdx) => (
+                <li key={`${mod}-${modIdx}`}>{mod}</li>
               ))}
             </ul>
+
           </div>
         ))}
       </div>
 
       <div className="content-container">
         <div className="button-container">
-          <button className="generate-timetable-button" onClick={() => router.push('/create-plan')}>
+          <button className="Reshuffle-button" onClick={() => router.push('/study-plan')}>
             Reshuffle
           </button>
         </div>
