@@ -55,6 +55,17 @@ export default function TimetablePage() {
           </div>
         ))}
       </div>
+
+      <div className="content-container">
+        <div className="button-container">
+          <button className="generate-timetable-button" onClick={() => router.push('/create-plan')}>
+            Reshuffle
+          </button>
+        </div>
+      </div>
+
     </div>
   )
 }
+
+

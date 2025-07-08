@@ -21,7 +21,6 @@ export default function ViewPlans() {
 
       <div className="content-container">
         <h1 className="no-timetable-yet-msg">Oh no plans yet, generate table?</h1>
-        
         <div className="button-container">
           <button className="generate-timetable-button" onClick={() => router.push('/create-plan')}>
             Generate timetable!
