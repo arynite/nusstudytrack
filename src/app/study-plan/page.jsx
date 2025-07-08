@@ -37,7 +37,7 @@ export default function StudyPlan() {
   //const [plannedSemesters, setPlannedSemesters] = useState([])
   const [formValues, setFormValues] = useState({
   education: '',
-  degreeLength: 4,
+  degreeLength: '',
   rc: '',
   specialisations: [],
   exemptions: [],
