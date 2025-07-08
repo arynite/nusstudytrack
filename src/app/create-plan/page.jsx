@@ -82,8 +82,8 @@ const [exemptions, setExemptions] = useState({
       x
     )
     
-    const UGPlan = generateTimetable(requiredModules)
-    setGeneratedModules(UGPlan)
+    setGeneratedModules(requiredModules)
+    const UGPlan = setGeneratedModules(requiredModules)
 
     console.log("Mods to clear:", requiredModules)
     console.log("x:", x)
