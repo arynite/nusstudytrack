@@ -85,6 +85,10 @@ export default function TimetablePage() {
     fetchData()
   }, [])
 
+  const SaveTimetable = async () => {
+    router.push('/view-plans')
+  }
+
 
 
   if (!mounted) return <p>Loading...</p>
@@ -111,7 +115,7 @@ export default function TimetablePage() {
           <button className="Reshuffle-button" onClick={() => router.push('/study-plan')}>
             Reshuffle
           </button> 
-          <button className="Go-Back-button" onClick={() => router.push('/view-timetable')}>
+          <button className="SaveTimetable-button" onClick={SaveTimetable}>
             Save
           </button>
         </div>
