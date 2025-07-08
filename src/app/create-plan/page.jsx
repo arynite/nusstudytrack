@@ -81,6 +81,7 @@ const [exemptions, setExemptions] = useState({
       selectedExemptions,
       x
     )
+    //const timetable = generateTimetable(requiredModules)
     
     setGeneratedModules(requiredModules)
     
@@ -96,6 +97,7 @@ const [exemptions, setExemptions] = useState({
         rc,
         exemptions: selectedExemptions,
         specialisations: selectedSpecialisations,
+        //timetable: timetable,
       }],
       { onConflict: ['user_id'] }
     )

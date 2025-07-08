@@ -1,21 +1,26 @@
 'use client'
-import { useEffect, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { supabase } from '../../utils/supabaseClient'
 import Image from 'next/image'
 import './view-plans.css'
 
 export default function ViewPlans() {
   const router = useRouter()
+
   const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
   const [timetable, setTimetable] = useState(null)
 
   useEffect(() => {
-    const fetchUserTimetable = async () => {
+    const fetchData = async () => {
       setLoading(true)
+
+      // Get logged-in user
       const {
         data: { user },
-        error: userError,
+        error: userError
       } = await supabase.auth.getUser()
 
       if (userError || !user) {
@@ -24,15 +29,21 @@ export default function ViewPlans() {
         return
       }
 
+      setUser(user)
+
+      // Get study plan with timetable
       const { data, error } = await supabase
         .from('study_plans')
         .select('timetable')
         .eq('user_id', user.id)
-        .maybeSingle()
+        .single()
 
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
+        // PGRST116 means "No rows found" in supabase-js
         console.error('Error fetching study plan:', error)
-      } else if (data && data.timetable) {
+      }
+
+      if (data && data.timetable && data.timetable.length > 0) {
         setTimetable(data.timetable)
       } else {
         setTimetable(null)
@@ -41,42 +52,18 @@ export default function ViewPlans() {
       setLoading(false)
     }
 
-    fetchUserTimetable()
+    fetchData()
   }, [router])
 
   if (loading) {
-    return <div className="view-container"><p>Loading...</p></div>
-  }
-
-  if (!timetable || timetable.length === 0) {
     return (
       <div className="view-container">
-        <div className="logo-container">
-          <Image
-            src="/nusstlogo.png"
-            alt="NUStudyTrack logo"
-            width={250}
-            height={150}
-            className="logo"
-          />
-        </div>
-
-        <div className="content-container">
-          <h1 className="no-timetable-yet-msg">Oh no plans yet, generate table?</h1>
-          <div className="button-container">
-            <button
-              className="generate-timetable-button"
-              onClick={() => router.push('/create-plan')}
-            >
-              Generate timetable!
-            </button>
-          </div>
-        </div>
+        <p>Loading...</p>
       </div>
     )
   }
 
-  return ( // Shows timetable if it exists
+  return (
     <div className="view-container">
       <div className="logo-container">
         <Image
@@ -89,19 +76,45 @@ export default function ViewPlans() {
       </div>
 
       <div className="content-container">
-        <h1 className="timetable-title">Your Saved Semester Plan</h1>
-        <div className="semester-plan">
-          {timetable.map((semesterModules, index) => (
-            <div className="semester-box" key={index}>
-              <h3>Semester {index + 1}</h3>
-              <ul>
-                {semesterModules.map((mod, i) => (
-                  <li key={i}>{mod}</li>
-                ))}
-              </ul>
+        {timetable ? (
+          <>
+            <h1 className="timetable-title">Your Saved Timetable</h1>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              {timetable.map((semester, idx) => (
+                <div key={idx} className="semester-card border p-4 rounded shadow">
+                  <h4 className="font-semibold mb-2">Semester {idx + 1}</h4>
+                  <ul className="list-disc pl-5 text-sm">
+                    {semester.map((mod, modIdx) => (
+                      <li key={`${mod}-${modIdx}`}>{mod}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="button-container">
+              <button
+                className="generate-timetable-button"
+                onClick={() => router.push('/HandleViewTimetable')}
+              >
+                Regenerate Timetable
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <h1 className="no-timetable-yet-msg">
+              Oh no plans yet, generate table?
+            </h1>
+            <div className="button-container">
+              <button
+                className="generate-timetable-button"
+                onClick={() => router.push('/create-plan')}
+              >
+                Generate timetable!
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

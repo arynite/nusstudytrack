@@ -21,26 +21,6 @@ export default function TimetablePage() {
     exemptions: [],
   })
 
-  //useEffect(() => {
-    //const params = new URLSearchParams(window.location.search)
-    //const education = params.get('education') || ''
-    //const degreeLength = Number(params.get('degreeLength') || '4')
-    //const rc = params.get('rc') || ''
-    //const specialisations = params.get('specialisations')?.split(',').filter(Boolean) || []
-    //const exemptions = params.get('exemptions')?.split(',').filter(Boolean) || []
-
-    //const fv = { education, degreeLength, rc, specialisations, exemptions }
-    //setFormValues(fv)
-
-    //const generate = async () => {
-      //const flattened = flattenModules(specialisations, specialisationModules, exemptions)
-      //const timetable = await generateTimetable(flattened, degreeLength * 2)
-      //setPlannedSemesters(timetable)
-      //setMounted(true)
-    //}
-    //generate()
-  //}, [])
-
   useEffect(() => {
     const fetchData = async () => {
       const {
@@ -84,11 +64,33 @@ export default function TimetablePage() {
 
     fetchData()
   }, [])
-
+  
+  
   const SaveTimetable = async () => {
-    router.push('/view-plans')
-  }
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+    
+    if (userError || !user) {
+      alert('You must be logged in')
+      router.push('/login')
+      return
+    }
 
+    const { error } = await supabase
+      .from('study_plans')
+      .update({ timetable: plannedSemesters })
+      .eq('user_id', user.id)
+
+    if (error) {
+      console.error('Error saving timetable:', error)
+      alert('Failed to save timetable.')
+    } else {
+      alert('Timetable saved successfully!')
+      router.push('/view-plans')
+    }
+  }
 
 
   if (!mounted) return <p>Loading...</p>
