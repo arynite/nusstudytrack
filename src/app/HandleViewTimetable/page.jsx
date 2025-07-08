@@ -110,6 +110,9 @@ export default function TimetablePage() {
         <div className="button-container">
           <button className="Reshuffle-button" onClick={() => router.push('/study-plan')}>
             Reshuffle
+          </button> 
+          <button className="Go-Back-button" onClick={() => router.push('/view-timetable')}>
+            Save
           </button>
         </div>
       </div>
@@ -118,4 +121,5 @@ export default function TimetablePage() {
   )
 }
 
+ // add function for the button to save timetable 
 

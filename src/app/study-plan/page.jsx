@@ -50,7 +50,20 @@ export default function StudyPlan() {
           specialisations: Array.isArray(data.specialisations) ? data.specialisations : [],
           exemptions: Array.isArray(data.exemptions) ? data.exemptions : [],
         })
-      }
+        
+        await supabase
+        .from('study_plans')
+        .upsert(
+        [{
+        user_id: user.id,
+        education: data.education,
+        degree_length: data.degree_length,
+        rc: data.rc,
+        specialisations: data.specialisations,
+        exemptions: data.exemptions,
+      }],
+      { onConflict: ['user_id'] }
+    )}
 
       setMounted(true)
     }
@@ -58,43 +71,7 @@ export default function StudyPlan() {
     fetchUserData()
   }, [router])
 
-  const saveStudyPlan = async () => {
-    try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser()
-
-      if (userError || !user) {
-        alert('You must be logged in')
-        router.push('/login')
-        return
-      }
-
-      const { error } = await supabase
-        .from('study_plans')
-        .upsert(
-          [{
-            user_id: user.id,
-            education: formValues.education,
-            degree_length: formValues.degreeLength,
-            rc: formValues.rc,
-            specialisations: formValues.specialisations,
-            exemptions: formValues.exemptions,
-          }],
-          { onConflict: ['user_id'] }
-        )
-
-      if (error) {
-        console.error('Error saving study plan:', error)
-        alert('Error saving study plan. Please try again.')
-      } else {
-        alert('Study plan saved successfully!')
-      }
-    } finally {
-      setLoading(false)
-    }
-
+  const GoBack = () => {
     router.push('/create-plan')
   }
 
@@ -124,7 +101,7 @@ export default function StudyPlan() {
       </div>
 
       <div className="button-container">
-        <button className="Go-Back-button" onClick={saveStudyPlan}>
+        <button className="Go-Back-button" onClick={GoBack}>
           Go Back
         </button>
         <button className="view-timetable-button" onClick={HandleViewTimetableF}>
