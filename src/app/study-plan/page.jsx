@@ -7,10 +7,10 @@ import { useRouter } from 'next/navigation'
 //import { useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import './study-plan.css'
-import { generateTimetable } from '../../utils/generateTimetable' // change from @
-import { flattenModules } from '../../utils/flattenmodules' // change from @
-import { eeMajorRequirements } from '../../utils/requirements' // change from @
-import { specialisationModules } from '../../utils/requirements' // change from @
+import { generateTimetable } from '../../utils/generateTimetable'
+import { flattenModules } from '../../utils/flattenmodules'
+import { eeMajorRequirements } from '../../utils/requirements'
+import { specialisationModules } from '../../utils/requirements'
 
 const specialisationLabels = {
   'adv-electronics': 'Advanced Electronics',
@@ -79,7 +79,7 @@ useEffect(() => {
       exemptions: formValues.exemptions.join(','),
     })
 
-    router.push(`/HandleViewTimetable?${queryParams.toString()}`) // ✅ Navigate with params
+    router.push(`/HandleViewTimetable?${queryParams.toString()}`)
   }
 
   //const handleViewTimetable = async () => {
