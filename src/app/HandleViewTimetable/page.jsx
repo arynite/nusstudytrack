@@ -40,7 +40,49 @@ export default function TimetablePage() {
     //generate()
   //}, [])
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser()
 
+      if (userError || !user) {
+        alert('You must be logged in to view your timetable.')
+        router.push('/login')
+        return
+      }
+
+      const { data, error } = await supabase
+        .from('study_plans')
+        .select('*')
+        .eq('user_id', user.id)
+        .single()
+
+      if (error) {
+        console.error('Failed to fetch study plan:', error)
+        return
+      }
+
+      const {
+        education,
+        degree_length: degreeLength,
+        rc,
+        specialisations = [],
+        exemptions = [],
+      } = data
+
+      const fv = { education, degreeLength, rc, specialisations, exemptions }
+      setFormValues(fv)
+
+      const flattened = flattenModules(specialisations, specialisationModules, exemptions)
+      const timetable = await generateTimetable(flattened, degreeLength * 2)
+      setPlannedSemesters(timetable)
+      setMounted(true)
+    }
+
+    fetchData()
+  }, [])
 
 
 
