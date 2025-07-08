@@ -87,6 +87,8 @@ useEffect(() => {
         //exemptions: data.exemptions || [],
       //})
 
+      console.log('Fetched data from Supabase:', data)
+      
       setFormValues({
         education: data.education,
         degreeLength: data.degree_length,
@@ -112,7 +114,7 @@ useEffect(() => {
   //router.push(`/HandleViewTimetable?${queryParams.toString()}`)
 
   if (!mounted) return null
-
+  
   const handleViewTimetable = () => {
     const queryParams = new URLSearchParams({
       education: formValues.education,
