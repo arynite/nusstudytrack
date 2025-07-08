@@ -83,7 +83,7 @@ const [exemptions, setExemptions] = useState({
     )
     
     setGeneratedModules(requiredModules)
-    const UGPlan = setGeneratedModules(requiredModules)
+    const timetable = setGeneratedModules(requiredModules)
 
     console.log("Mods to clear:", requiredModules)
     console.log("x:", x)
@@ -97,13 +97,13 @@ const [exemptions, setExemptions] = useState({
         rc,
         exemptions: selectedExemptions,
         specialisations: selectedSpecialisations,
-        timetable: UGPlan,
+        timetable: timetable,
       }],
       { onConflict: ['user_id'] }
     )
 
     if (upsertError) {
-      alert('Failed to save: ' + insertError.message)
+      alert('Failed to save: ' + upsertError.message)
       return
     }
 
