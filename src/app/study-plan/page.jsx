@@ -47,15 +47,47 @@ const [mounted, setMounted] = useState(false)
 
 
 useEffect(() => {
-  const params = new URLSearchParams(window.location.search)
-  const education = params.get('education')
-  const degreeLength = Number(params.get('degreeLength') || '4')
-  const rc = params.get('rc')
-  const specialisations = params.get('specialisations')?.split(',').filter(Boolean) || []
-  const exemptions = params.get('exemptions')?.split(',').filter(Boolean) || []
+  //const params = new URLSearchParams(window.location.search)
+  //const education = params.get('education')
+  //const degreeLength = Number(params.get('degreeLength') || '4')
+  //const rc = params.get('rc')
+  //const specialisations = params.get('specialisations')?.split(',').filter(Boolean) || []
+  //const exemptions = params.get('exemptions')?.split(',').filter(Boolean) || []
 
-  setFormValues({ education, degreeLength, rc, specialisations, exemptions })
-  setMounted(true)
+  //setFormValues({ education, degreeLength, rc, specialisations, exemptions })
+  //setMounted(true)
+
+  const fetchUserData = async () => {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+
+    if (userError || !user) {
+      alert('You must be logged in')
+      router.push('/login')
+      return
+    }
+
+    const { data, error } = await supabase
+      .from('study_plans')
+      .select('*')
+      .eq('user_id', user.id)
+      .single()
+
+    if (error) {
+      console.error('Failed to fetch study plan:', error)
+    } else {
+      setFormValues({
+        education: data.education,
+        degreeLength: data.degree_length,
+        rc: data.rc,
+        specialisations: data.specialisations || [],
+        exemptions: data.exemptions || [],
+      })
+      setMounted(true)
+    }
+  }
 }, [])
 
   //if (!mounted) return null
