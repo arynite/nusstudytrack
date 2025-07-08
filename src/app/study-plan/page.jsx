@@ -45,6 +45,7 @@ export default function StudyPlan() {
 })
 const [plannedSemesters, setPlannedSemesters] = useState([])
 const [mounted, setMounted] = useState(false)
+const [loading, setLoading] = useState(false)
 
 
 useEffect(() => {
@@ -74,13 +75,13 @@ useEffect(() => {
       .from('study_plans')
       .select('*')
       .eq('user_id', user.id)
-      .single()
+      .maybeSingle()
     
       console.log('Fetched data from study plan:', data)
 
     if (error && status !== 406) {
       console.error('Failed to fetch study plan:', error)
-    } else if (data) {
+    } //else if (data) {
       //setFormValues({
         //education: data.education,
         //degreeLength: data.degree_length,
@@ -89,21 +90,21 @@ useEffect(() => {
         //exemptions: data.exemptions || [],
       //})
 
-      console.log('Fetched data from Supabase:', data)
+      //console.log('Fetched data from Supabase:', data)
 
-      setFormValues({
-        education: data.education,
-        degreeLength: data.degree_length,
-        rc: data.rc,
-        specialisations: Array.isArray(data.specialisations) ? data.specialisations : [],
-        exemptions: Array.isArray(data.exemptions) ? data.exemptions : [],
-      })
+      //setFormValues({
+        //education: data.education,
+        //degreeLength: data.degree_length,
+        //rc: data.rc,
+        //specialisations: Array.isArray(data.specialisations) ? data.specialisations : [],
+        //exemptions: Array.isArray(data.exemptions) ? data.exemptions : [],
+      //})
 
-      setMounted(true)
-    }
-  }
-  fetchUserData()
-}, [])
+      //setMounted(true)
+    //}
+  //}
+  //fetchUserData()
+//}, [])
 
   //if (!mounted) return null
 
@@ -114,6 +115,57 @@ useEffect(() => {
   //const exemptions = searchParams.get('exemptions')?.split(',').filter(Boolean) || []
 
   //router.push(`/HandleViewTimetable?${queryParams.toString()}`)
+
+  else {
+        // Initialize form with existing data or empty values
+        setFormValues({
+          education: data?.education || '',
+          degreeLength: data?.degree_length || '',
+          rc: data?.rc || '',
+          specialisations: Array.isArray(data?.specialisations) ? data.specialisations : [],
+          exemptions: Array.isArray(data?.exemptions) ? data.exemptions : [],
+        })
+        setMounted(true)
+      }
+    }
+    fetchUserData()
+  }, [router])
+
+  const handleSavePlan = async () => {
+    setLoading(true)
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+    if (userError || !user) {
+      alert('You must be logged in')
+      router.push('/login')
+      return
+    }
+
+    try {
+      const { error } = await supabase
+        .from('study_plans')
+        .upsert({
+          user_id: user.id,
+          education: formValues.education,
+          degree_length: formValues.degreeLength,
+          rc: formValues.rc,
+          specialisations: formValues.specialisations,
+          exemptions: formValues.exemptions,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id'
+        })
+
+      if (error) throw error
+      
+      alert('Study plan saved successfully!')
+    } catch (error) {
+      console.error('Error saving study plan:', error)
+      alert('Failed to save study plan. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   if (!mounted) return null
   
