@@ -41,8 +41,6 @@ type SemesterModule = {
     return []
   }
 
-
-  // test
   /**
    * @param modules list of module codes
    * @param semesters number of semesters 
