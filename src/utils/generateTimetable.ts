@@ -1,6 +1,4 @@
 
-//import { supabase } from '../utils/supabaseClient'
-
 type SemesterModule = {
     semester: number
   }
@@ -42,27 +40,6 @@ type SemesterModule = {
     }
     return []
   }
-
-  //async function fetchUserInputs(userId: string): Promise<number> {
-    //const { data, error } = await supabase
-      //.from('stuyd_plans')
-      //.select('degree_length')
-      //.eq('user_id', userId)
-      //.single()
-  
-    //if (error) {
-      //console.error('Error fetching user inputs:', error)
-    //}
-    //return data.degree_length
-  //}
-
-//export async function generateTimetable2(userId: string, modules: string[]) {
-  //const degree_length = await fetchUserInputs(userId)
-  //const semesters = degree_length * 2
-  //const maxPerSemester = Math.ceil(modules.length / semesters)
-
-  //return await generateTimetable(modules, semesters, maxPerSemester)
-//}
 
   /**
    * @param modules list of module codes
