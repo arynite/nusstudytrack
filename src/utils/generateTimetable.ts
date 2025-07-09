@@ -56,14 +56,15 @@ type SemesterModule = {
     return data.degree_length
   }
 
-  
+
   /**
    * @param modules list of module codes
    * @param semesters number of semesters 
    */
   export async function generateTimetable(
     modules: string[],  // array of module codes
-    semesters = 8 // default at 8
+    semesters: number,
+    maxPerSemester: number
   ): Promise<string[][]> { // fetch all module information in parallel
     const moduleInfos: Record<string, ModuleData> = {} // to fetch module details from NUSMODs API
     await Promise.all(
@@ -86,7 +87,7 @@ type SemesterModule = {
     let modulesToSchedule = new Set(modules) // modules that need to be scheduled
   
     // Limit max modules per semester (adjust as needed)
-    const MAX_MODULES_PER_SEMESTER = 5
+    const MAX_MODULES_PER_SEMESTER = maxPerSemester
   
     let progress = true
   
