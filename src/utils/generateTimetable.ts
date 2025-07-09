@@ -1,5 +1,5 @@
 
-import { supabase } from '../utils/supabaseClient'
+//import { supabase } from '../utils/supabaseClient'
 
 type SemesterModule = {
     semester: number
@@ -43,18 +43,18 @@ type SemesterModule = {
     return []
   }
 
-  async function fetchUserInputs(userId: string): Promise<number> {
-    const { data, error } = await supabase
-      .from('stuyd_plans')
-      .select('degree_length')
-      .eq('user_id', userId)
-      .single()
+  //async function fetchUserInputs(userId: string): Promise<number> {
+    //const { data, error } = await supabase
+      //.from('stuyd_plans')
+      //.select('degree_length')
+      //.eq('user_id', userId)
+      //.single()
   
-    if (error) {
-      console.error('Error fetching user inputs:', error)
-    }
-    return data.degree_length
-  }
+    //if (error) {
+      //console.error('Error fetching user inputs:', error)
+    //}
+    //return data.degree_length
+  //}
 
 //export async function generateTimetable2(userId: string, modules: string[]) {
   //const degree_length = await fetchUserInputs(userId)
