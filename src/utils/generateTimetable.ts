@@ -1,4 +1,5 @@
 
+import { supabase } from '../utils/supabaseClient'
 
 type SemesterModule = {
     semester: number
@@ -41,6 +42,20 @@ type SemesterModule = {
     }
     return []
   }
+
+  async function fetchUserInputs(userId: string): Promise<number> {
+    const { data, error } = await supabase
+      .from('stuyd_plans')
+      .select('degree_length')
+      .eq('user_id', userId)
+      .single()
+  
+    if (error) {
+      console.error('Error fetching user inputs:', error)
+    }
+    return data.degree_length
+  }
+
   
   /**
    * @param modules list of module codes
@@ -118,3 +133,4 @@ type SemesterModule = {
     return timetable
   }
   
+  // generate using stochastic matrix? 
