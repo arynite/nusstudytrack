@@ -127,5 +127,3 @@ export default function TimetablePage() {
   )
 }
 
- // add function for the button to save timetable 
-
