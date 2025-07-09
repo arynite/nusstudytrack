@@ -57,7 +57,7 @@ export default function TimetablePage() {
       setFormValues(fv)
 
       const flattened = flattenModules(specialisations, specialisationModules, exemptions)
-      const timetable = await generateTimetable(flattened, degreeLength * 2)
+      const timetable = await generateTimetable2(flattened, degreeLength * 2, Math.ceil(flattened.length / (degreeLength * 2)))
       setPlannedSemesters(timetable)
       setMounted(true)
     }

@@ -56,6 +56,14 @@ type SemesterModule = {
     return data.degree_length
   }
 
+  export async function generateTimetable2(userId: string, modules: string[]) {
+  const degree_length = await fetchUserInputs(userId)
+  const semesters = degree_length * 2
+  const maxPerSemester = Math.ceil(modules.length / semesters)
+
+  return await generateTimetable(modules, semesters, maxPerSemester)
+}
+
   /**
    * @param modules list of module codes
    * @param semesters number of semesters 
@@ -132,13 +140,5 @@ type SemesterModule = {
     // return array
     return timetable
   }
-
-  export async function createUserTimetable(userId: string, modules: string[]) {
-  const degree_length = await fetchUserInputs(userId)
-  const semesters = degree_length * 2
-  const maxPerSemester = Math.ceil(modules.length / semesters)
-
-  return await generateTimetable(modules, semesters, maxPerSemester)
-}
   
   // generate using stochastic matrix? 
