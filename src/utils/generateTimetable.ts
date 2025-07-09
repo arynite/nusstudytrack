@@ -50,7 +50,7 @@ type SemesterModule = {
     semesters: number,
     maxPerSemester: number
   ): Promise<string[][]> { // fetch all module information in parallel
-    const moduleInfos: Record<string, ModuleData> = {} // to fetch module details from NUSMODs API
+    const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
     await Promise.all(
       modules.map(async (mod) => {
         try {moduleInfos[mod] = await fetchModuleData(mod)
