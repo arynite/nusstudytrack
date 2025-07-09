@@ -80,7 +80,9 @@ export function eeMajorRequirements(x) {
       ]
   }}}
 
-  const roboticsElectives = ['BN4203', 'BN4601', 'EE3305/ME3243', 'EE4305', 'EE4308', 'EE4309','EE4705', 'EE4311','EE4312', 'EE4314', 'ME4242', 'ME4245', 'ME5406', 'MLE4228', 'RB4301']
+  const roboticsElectives = ['BN4203', 'BN4601', 'EE3305', 'EE4305', 'EE4308', 'EE4309','EE4705', 'EE4311','EE4312', 'EE4314', 'ME4242', 'ME4245', 'ME5406', 'MLE4228', 'RB4301']
+
+//'EE3305' is 'EE3305/ME3243'
 
 export const specialisationModules = {
   'adv-electronics': {
@@ -174,9 +176,9 @@ export const specialisationModules = {
     }
   },
 
-  'data-eng': {
+  'data-eng': { // 'EE4802' is 'EE4802/IE4213'
     label: 'Minor in Data Engineering',
-    core: ['EE3801', ['IT2002', 'CS2102'], 'EE4802/IE4213', 'CS4225'],
+    core: ['EE3801', ['IT2002', 'CS2102'], 'EE4802', 'CS4225'],
     electives: {
       choose: 1,
       from: ['BT4015', 'EE4115', 'EE4704', 'EE5907', 'IE4210', 'IE4211', 'IE4243']
