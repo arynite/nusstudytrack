@@ -38,8 +38,7 @@ export default function ViewPlans() {
         .eq('user_id', user.id)
         .single()
 
-      if (error && error.code !== 'PGRST116') {
-        // PGRST116 means "No rows found" in supabase-js
+      if (error && error.code !== 'PGRST116') { // PGRST116 means "No rows found" in supabase-js
         console.error('Error fetching study plan:', error)
       }
 
