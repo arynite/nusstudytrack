@@ -53,16 +53,27 @@ type SemesterModule = {
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
     await Promise.all(
       modules.map(async (mod) => {
-        try {moduleInfos[mod] = await fetchModuleData(mod)
+        try {moduleInfos[mod] = await fetchModuleData(mod);
         } catch { // just skips the mod if fails to fetch
           moduleInfos[mod] = {
             moduleCode: mod,
             semesterData: [],
             prereqTree: null,
-          }
+          };
         }
       })
-    )
+    );
+
+      // Separate modules with and without prerequisites
+  const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
+    ([withPrereqs, withoutPrereqs], mod) => {
+      const prereqs = parsePrerequisites(moduleInfos[mod].prereqTree);
+      return prereqs.length > 0
+        ? [[...withPrereqs, mod], withoutPrereqs]
+        : [withPrereqs, [...withoutPrereqs, mod]];
+    },
+    [[], []] as [string[], string[]]
+  );
   
     // Initialize empty timetable (array of semesters)
     const timetable: string[][] = Array.from({ length: semesters }, () => [])
