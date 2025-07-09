@@ -65,13 +65,13 @@ type SemesterModule = {
     );
 
     // Separate modules with and without prerequisites
-    const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
-      ([withPrereqs, withoutPrereqs], mod) => {
-      const prereqs = parsePrerequisites(moduleInfos[mod].prereqTree);
-      return prereqs.length > 0
-        ? [[...withPrereqs, mod], withoutPrereqs]
-        : [withPrereqs, [...withoutPrereqs, mod]];
-    }, [[], []] as [string[], string[]]);
+    //const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
+      //([withPrereqs, withoutPrereqs], mod) => {
+      //const prereqs = parsePrerequisites(moduleInfos[mod].prereqTree);
+      //return prereqs.length > 0
+        //? [[...withPrereqs, mod], withoutPrereqs]
+        //: [withPrereqs, [...withoutPrereqs, mod]];
+    //}, [[], []] as [string[], string[]]);
   
     // Initialize empty timetable (array of semesters)
     const timetable: string[][] = Array.from({ length: semesters }, () => []);
