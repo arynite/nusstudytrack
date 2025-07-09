@@ -113,7 +113,6 @@ type SemesterModule = {
         if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
           timetable[sem].push(mod)
           break}}}
-  
     // return array
     return timetable
   }
