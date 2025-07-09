@@ -56,19 +56,19 @@ type SemesterModule = {
     return data.degree_length
   }
 
-  export async function generateTimetable2(userId: string, modules: string[]) {
-  const degree_length = await fetchUserInputs(userId)
-  const semesters = degree_length * 2
-  const maxPerSemester = Math.ceil(modules.length / semesters)
+//export async function generateTimetable2(userId: string, modules: string[]) {
+  //const degree_length = await fetchUserInputs(userId)
+  //const semesters = degree_length * 2
+  //const maxPerSemester = Math.ceil(modules.length / semesters)
 
-  return await generateTimetable(modules, semesters, maxPerSemester)
-}
+  //return await generateTimetable(modules, semesters, maxPerSemester)
+//}
 
   /**
    * @param modules list of module codes
    * @param semesters number of semesters 
    */
- async function generateTimetable(
+ export async function generateTimetable(
     modules: string[],  // array of module codes
     semesters: number,
     maxPerSemester: number
