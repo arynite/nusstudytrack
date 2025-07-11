@@ -56,16 +56,13 @@ type SemesterModule = {
   return weights.length - 1;
 }
 
-  /**
-   * @param modules list of module codes
-   * @param semesters number of semesters 
-   */
  export async function generateTimetable(
     modules: string[],  // array of module codes
     semesters: number,
     maxPerSemester: number
   ): Promise<string[][]> { // fetch all module information in parallel
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
+   
     await Promise.all(
       modules.map(async (mod) => {
         try {moduleInfos[mod] = await fetchModuleData(mod)
@@ -110,7 +107,6 @@ type SemesterModule = {
         if (!prereqsMet) continue
   
         // Find earliest semester offered and with space
-        let placed = false
         for (let sem = 0; sem < semesters; sem++) {
           const offered = info.semesterData.some((s) => s.semester === sem + 1)
           if (offered && timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
@@ -118,12 +114,9 @@ type SemesterModule = {
             completedModules.add(mod)
             modulesToSchedule.delete(mod)
             progress = true
-            placed = true
             break
           }
         }
-  
-        if (!placed) continue
       }
     }
 
@@ -165,13 +158,14 @@ type SemesterModule = {
       return aInfo - bInfo
     })
 
-      for (const mod of remainingModules) {
-    const info = moduleInfos[mod];
+    for (const mod of remainingModules) {
+      const info = moduleInfos[mod];
     
     // Try to place in latest possible semester that has space
     let placed = false;
     for (let sem = semesters - 1; sem >= 0; sem--) {
-      const offered = info.semesterData.length === 0 || info.semesterData.some((s) => s.semester === sem + 1);
+      const offered = info.semesterData.length === 0 || 
+      info.semesterData.some((s) => s.semester === sem + 1);
       
       if (offered && timetable[sem].length < maxPerSemester) {
         timetable[sem].push(mod);
