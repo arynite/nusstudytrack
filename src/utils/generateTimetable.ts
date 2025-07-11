@@ -13,7 +13,23 @@ type SemesterModule = {
     semesterData: SemesterModule[]
     prereqTree: PrereqTree
   }
-  
+
+  const ProbabilityMatrix: number[][] = [
+  [0.5, 0.4, 0.1, 0, 0, 0],
+  [0.1, 0.2, 0.4, 0.2, 0.1, 0],
+  [0, 0.05, 0.2, 0.4, 0.25, 0.1],
+  [0, 0, 0, 0.1, 0.4, 0.5],
+]
+
+function getModuleYear(moduleCode: string): number {
+  const match = moduleCode.match(/\d{4}/)
+  if (!match) return 1
+  const num = parseInt(match[0], 10)
+  if (num >= 4000) return 4
+  if (num >= 3000) return 3
+  if (num >= 2000) return 2
+  return 1
+} 
   async function fetchModuleData(moduleCode: string): Promise<ModuleData> {
     const res = await fetch(
       `https://api.nusmods.com/v2/2023-2024/modules/${moduleCode}.json`
