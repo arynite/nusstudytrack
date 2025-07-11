@@ -97,7 +97,7 @@ function fetchAllModules(codes_1) {
 }
 
 (async () => { // use console.dir to print nested array
-  const result = await fetchAllModules(['EE2012']);
+  const result = await fetchAllModules(['MA1511']);
   console.dir(result, { depth: null });
 })();
 
