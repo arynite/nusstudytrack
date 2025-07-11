@@ -68,20 +68,20 @@ function sampleSemester(probabilities: number[]): number {
     return []
   }
 
-  function Stochastic(semesters: number): number[] {
-    const totalWeight = (semesters * (semesters + 1)) / 2;
-    return Array.from({ length: semesters }, (_, i) => (semesters - i) / totalWeight);
-  }
+  //function Stochastic(semesters: number): number[] {
+    //const totalWeight = (semesters * (semesters + 1)) / 2;
+    //return Array.from({ length: semesters }, (_, i) => (semesters - i) / totalWeight);
+  //}
   
-  function Prob(weights: number[]): number {
-    const r = Math.random();
-    let sum = 0;
-    for (let i = 0; i < weights.length; i++) {
-      sum += weights[i];
-      if (r < sum) return i;
-  }
-  return weights.length - 1;
-}
+  //function Prob(weights: number[]): number {
+    //const r = Math.random();
+    //let sum = 0;
+    //for (let i = 0; i < weights.length; i++) {
+      //sum += weights[i];
+      //if (r < sum) return i;
+  //}
+  //return weights.length - 1;
+//}
 
  export async function generateTimetable(
     modules: string[],  // array of module codes
@@ -146,73 +146,40 @@ function sampleSemester(probabilities: number[]): number {
         }
       }
     }
-
-  const NoPreReq = Stochastic(semesters)
     
-  for (const mod of modulesWithoutPrereqs) {
-    const info = moduleInfos[mod];
-    let placed = false;
+  const remainingModules = Array.from(modulesToSchedule)
 
-    for (let attempt = 0; attempt < semesters * 2; attempt++) {
-      const sem = Prob(NoPreReq);
+  remainingModules.sort((a, b) => {
+    const aInfo = parseInt(a.match(/\d+/)?.[0] || '1000')
+    const bInfo = parseInt(b.match(/\d+/)?.[0] || '1000')
+    return aInfo - bInfo
+  })
+
+  for (const mod of remainingModules) {
+    const info = moduleInfos[mod]
+    let placed = false
+
+    for (let sem = semesters - 1; sem >= 0; sem--) {
       const offered =
         info.semesterData.length === 0 ||
-        info.semesterData.some((s) => s.semester === sem + 1);
+        info.semesterData.some((s) => s.semester === sem + 1)
 
       if (offered && timetable[sem].length < maxPerSemester) {
-        timetable[sem].push(mod);
-        placed = true;
-        break;
+        timetable[sem].push(mod)
+        placed = true
+        break
       }
     }
 
-    // Fallback if not placed randomly
     if (!placed) {
       for (let sem = 0; sem < semesters; sem++) {
         if (timetable[sem].length < maxPerSemester) {
-          timetable[sem].push(mod);
-          break;
+          timetable[sem].push(mod)
+          break
         }
       }
     }
   }
 
-    const remainingModules = Array.from(modulesToSchedule)
-
-    remainingModules.sort((a, b) => {
-      const aInfo = parseInt(a.match(/\d+/)?.[0] || '1000')
-      const bInfo = parseInt(b.match(/\d+/)?.[0] || '1000')
-      return aInfo - bInfo
-    })
-
-    for (const mod of remainingModules) {
-      const info = moduleInfos[mod];
-    
-    // Try to place in latest possible semester that has space
-    let placed = false;
-    for (let sem = semesters - 1; sem >= 0; sem--) {
-      const offered = info.semesterData.length === 0 || 
-      info.semesterData.some((s) => s.semester === sem + 1);
-      
-      if (offered && timetable[sem].length < maxPerSemester) {
-        timetable[sem].push(mod);
-        placed = true;
-        break;
-      }
-    }
-    
-    // If not placed, put in first available semester
-    if (!placed) {
-      for (let sem = 0; sem < semesters; sem++) {
-        if (timetable[sem].length < maxPerSemester) {
-          timetable[sem].push(mod);
-          break;
-        }
-      }
-    }
-  }
-
-    return timetable
-  }
-  
-  // generate using stochastic matrix? 
+  return timetable
+}
