@@ -44,6 +44,7 @@ type SemesterModule = {
    * @param modules list of module codes
    * @param semesters number of semesters 
    */
+
  export async function generateTimetable(
     modules: string[],  // array of module codes
     semesters: number,
@@ -62,7 +63,7 @@ type SemesterModule = {
         }
       })
     )
-
+    
     //// Separate modules with and without prerequisites, withprereqs, withoutprereqs
     const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
       ([withPrereqs, withoutPrereqs], mod) => {
@@ -71,14 +72,12 @@ type SemesterModule = {
         ? [[...withPrereqs, mod], withoutPrereqs]
         : [withPrereqs, [...withoutPrereqs, mod]]; }, [[], []] as [string[], string[]]);
 
-        
+
   
     // Initialize empty timetable (array of semesters)
     const timetable: string[][] = Array.from({ length: semesters }, () => [])
     const completedModules = new Set<string>() // check if modules are completed
-
     let modulesToSchedule = new Set(modules) // modules that need to be scheduled
-  
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
   
     let progress = true
