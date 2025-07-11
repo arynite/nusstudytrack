@@ -8,6 +8,8 @@ import { specialisationModules } from '../../utils/requirements'
 import { supabase } from '../../utils/supabaseClient'
 import './HandleViewTimetable.css'
 
+import { getExemptedModules } from '../../utils/generateTimetable'
+
 export default function TimetablePage() {
   const router = useRouter()
   const [plannedSemesters, setPlannedSemesters] = useState([])
@@ -57,6 +59,9 @@ export default function TimetablePage() {
 
       const fv = { education, degreeLength, rc, specialisations, exemptions }
       setFormValues(fv)
+
+      const completedModules = await getExemptedModules(user.id)
+      console.log('Completed bridging modules:', Array.from(completedModules))
 
       const flattened = flattenModules(specialisations, specialisationModules, exemptions)
       const timetable = await generateTimetable(flattened, degreeLength * 2, Math.ceil(flattened.length / (degreeLength * 2)))

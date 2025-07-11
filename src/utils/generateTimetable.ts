@@ -25,10 +25,11 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
 
   const completedModules = new Set<string>();
   for (const mod of bridgingModules) {
-    if (!exemptionCodes.includes(mod)) {
+    if (exemptionCodes.includes(mod)) {
       completedModules.add(mod);
     }
   }
+  console.log('Completed bridging modules:', Array.from(completedModules));
   return completedModules;
 }
 
