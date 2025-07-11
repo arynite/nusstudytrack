@@ -1,33 +1,43 @@
 import { supabase } from './supabaseClient';
 
 export async function getExemptedModules(userId: string): Promise<Set<string>> {
+  if (!userId) return new Set();
+
   const { data, error } = await supabase
     .from('study_plans')
     .select('exemptions')
     .eq('user_id', userId)
     .maybeSingle();
 
-  console.log('Exemptions data:', data);
-  console.log('Exemptions error:', error);
-
   if (error) {
     console.error('Supabase error fetching exemptions:', error);
     return new Set();
   }
 
-  if (!data) {
-    console.log('No study plan found for user', userId);
-    return new Set();
-  }
-  const exemptions = data.exemptions || [];
-  const completedModules = new Set<string>();
+  const exemptions: string[] = Array.isArray(data?.exemptions) ? data.exemptions : [];
 
-  for (const mod of exemptions) {
-    const code = mod.split(' ')[0].trim();
-    completedModules.add(code);
+  const bridgingModules = ['ES1000', 'ES1103', 'MA1301', 'PC1201'];
+  if (exemptions.length === 0) {
+    return new Set(bridgingModules);
+  }
+
+  const exemptionCodes = exemptions.map(mod => mod.split(' ')[0].trim());
+
+  const completedModules = new Set<string>();
+  for (const mod of bridgingModules) {
+    if (!exemptionCodes.includes(mod)) {
+      completedModules.add(mod);
+    }
   }
   return completedModules;
 }
+
+
+
+
+
+
+
 
 
 

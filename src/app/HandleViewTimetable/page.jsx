@@ -53,6 +53,8 @@ export default function TimetablePage() {
         exemptions = [],
       } = data
 
+      console.log('Exemptions:', exemptions)
+
       const fv = { education, degreeLength, rc, specialisations, exemptions }
       setFormValues(fv)
 
