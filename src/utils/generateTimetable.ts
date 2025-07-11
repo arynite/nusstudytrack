@@ -13,34 +13,7 @@ type SemesterModule = {
     semesterData: SemesterModule[]
     prereqTree: PrereqTree
   }
-
-  const ProbabilityMatrix: number[][] = [
-  [0.5, 0.4, 0.1, 0, 0, 0],
-  [0.1, 0.2, 0.4, 0.2, 0.1, 0],
-  [0, 0.05, 0.2, 0.4, 0.25, 0.1],
-  [0, 0, 0, 0.1, 0.4, 0.5],
-]
-
-function getModuleYear(moduleCode: string): number {
-  const match = moduleCode.match(/\d{4}/)
-  if (!match) return 1
-  const num = parseInt(match[0], 10)
-  if (num >= 4000) return 4
-  if (num >= 3000) return 3
-  if (num >= 2000) return 2
-  return 1
-}
-
-function sampleSemester(probabilities: number[]): number {
-  const r = Math.random()
-  let sum = 0
-  for (let i = 0; i < probabilities.length; i++) {
-    sum += probabilities[i]
-    if (r < sum) return i
-  }
-  return probabilities.length - 1
-}
- 
+  
   async function fetchModuleData(moduleCode: string): Promise<ModuleData> {
     const res = await fetch(
       `https://api.nusmods.com/v2/2023-2024/modules/${moduleCode}.json`
@@ -68,28 +41,16 @@ function sampleSemester(probabilities: number[]): number {
     return []
   }
 
-  //function Stochastic(semesters: number): number[] {
-    //const totalWeight = (semesters * (semesters + 1)) / 2;
-    //return Array.from({ length: semesters }, (_, i) => (semesters - i) / totalWeight);
-  //}
-  
-  //function Prob(weights: number[]): number {
-    //const r = Math.random();
-    //let sum = 0;
-    //for (let i = 0; i < weights.length; i++) {
-      //sum += weights[i];
-      //if (r < sum) return i;
-  //}
-  //return weights.length - 1;
-//}
-
+  /**
+   * @param modules list of module codes
+   * @param semesters number of semesters 
+   */
  export async function generateTimetable(
     modules: string[],  // array of module codes
     semesters: number,
     maxPerSemester: number
   ): Promise<string[][]> { // fetch all module information in parallel
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
-   
     await Promise.all(
       modules.map(async (mod) => {
         try {moduleInfos[mod] = await fetchModuleData(mod)
@@ -104,19 +65,23 @@ function sampleSemester(probabilities: number[]): number {
     )
 
     // Separate modules with and without prerequisites
-    const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
-      ([withPrereqs, withoutPrereqs], mod) => {
-      const prereqs = parsePrerequisites(moduleInfos[mod].prereqTree);
-      return prereqs.length > 0
-        ? [[...withPrereqs, mod], withoutPrereqs]
-        : [withPrereqs, [...withoutPrereqs, mod]];
-    }, [[], []] as [string[], string[]]);
+    //const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
+      //([withPrereqs, withoutPrereqs], mod) => {
+      //const prereqs = parsePrerequisites(moduleInfos[mod].prereqTree);
+      //return prereqs.length > 0
+        //? [[...withPrereqs, mod], withoutPrereqs]
+        //: [withPrereqs, [...withoutPrereqs, mod]];
+    //}, [[], []] as [string[], string[]]);
   
     // Initialize empty timetable (array of semesters)
     const timetable: string[][] = Array.from({ length: semesters }, () => [])
     const completedModules = new Set<string>() // check if modules are completed
+
+    let modulesToSchedule = new Set(modules) // modules that need to be scheduled
+  
+    // Limit max modules per semester (adjust as needed)
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
-    let modulesToSchedule = new Set(modulesWithPrereqs) // modules that have prerequisites
+  
     let progress = true
   
     // Repeat until no modules left or no progress
@@ -131,9 +96,11 @@ function sampleSemester(probabilities: number[]): number {
   
         // Check if prereqs are completed
         const prereqsMet = prereqs.every((pr) => completedModules.has(pr))
+  
         if (!prereqsMet) continue
   
         // Find earliest semester offered and with space
+        let placed = false
         for (let sem = 0; sem < semesters; sem++) {
           const offered = info.semesterData.some((s) => s.semester === sem + 1)
           if (offered && timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
@@ -141,45 +108,22 @@ function sampleSemester(probabilities: number[]): number {
             completedModules.add(mod)
             modulesToSchedule.delete(mod)
             progress = true
+            placed = true
             break
           }
         }
-      }
-    }
-    
-  const remainingModules = Array.from(modulesToSchedule)
-
-  remainingModules.sort((a, b) => {
-    const aInfo = parseInt(a.match(/\d+/)?.[0] || '1000')
-    const bInfo = parseInt(b.match(/\d+/)?.[0] || '1000')
-    return aInfo - bInfo
-  })
-
-  for (const mod of remainingModules) {
-    const info = moduleInfos[mod]
-    let placed = false
-
-    for (let sem = semesters - 1; sem >= 0; sem--) {
-      const offered =
-        info.semesterData.length === 0 ||
-        info.semesterData.some((s) => s.semester === sem + 1)
-
-      if (offered && timetable[sem].length < maxPerSemester) {
-        timetable[sem].push(mod)
-        placed = true
-        break
+  
+        if (!placed) continue
       }
     }
 
-    if (!placed) {
+    for (const mod of modulesToSchedule) { // just place down those mods
       for (let sem = 0; sem < semesters; sem++) {
-        if (timetable[sem].length < maxPerSemester) {
+        if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
           timetable[sem].push(mod)
-          break
-        }
-      }
-    }
+          break}}}
+    // return array
+    return timetable
   }
-
-  return timetable
-}
+  
+  // generate using stochastic matrix? 
