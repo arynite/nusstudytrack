@@ -1,10 +1,13 @@
 import { eeMajorRequirements, specialisationModules } from './requirements'
 import { supabase } from '../utils/supabaseClient'
 
+const { data: { user } } = await supabase.auth.getUser();
+const userId = user?.id;
+
 export async function getExemptedModules(userId: string): Promise<Set<string>> {
   const { data, error, status } = await supabase
     .from('study_plans')
-    .select('exemption')
+    .select('exemptions')
     .eq('user_id', userId)
     .single();
 
@@ -16,7 +19,7 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
   }
 
   const completedModules = new Set<string>();
-  for (const mod of data.exemption ?? []) {
+  for (const mod of data.exemptions ?? []) {
     const code = mod.split(' ')[0].trim();
     completedModules.add(code);
   }
