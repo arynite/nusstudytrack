@@ -1,6 +1,27 @@
 import { eeMajorRequirements, specialisationModules } from './requirements'
 import { supabase } from '../utils/supabaseClient'
 
+export async function getExemptedModules(userId: string): Promise<Set<string>> {
+  const { data, error } = await supabase
+    .from('study_plans')
+    .select('exemption')
+    .eq('user_id', userId)
+    .single();
+
+  if (error) {
+    console.error('Error fetching exemptions:', error);
+    return new Set();
+  }
+
+  const completedModules = new Set<string>();
+
+  for (const mod of data?.exemption ?? []) {
+    const code = mod.split(' ')[0].trim();
+    completedModules.add(code);
+  }
+  return completedModules;
+}
+
 type SemesterModule = {
     semester: number
   }
@@ -49,12 +70,13 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
    * @param modules list of module codes
    * @param semesters number of semesters 
    */
-
  export async function generateTimetable(
     modules: string[],  // array of module codes
     semesters: number,
-    maxPerSemester: number
+    maxPerSemester: number,
+    userId: string
   ): Promise<string[][]> { // fetch all module information in parallel
+    const completedModules = await getExemptedModules(userId)
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
     await Promise.all(
       modules.map(async (mod) => {
@@ -84,7 +106,7 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
   
     // Initialize empty timetable (array of semesters)
     const timetable: string[][] = Array.from({ length: semesters }, () => [])
-    const completedModules = new Set<string>() // check if modules are completed
+    //const completedModules = new Set<string>() // check if modules are completed
     let modulesToSchedule = new Set(modules) // modules that need to be scheduled
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
     let progress = true
