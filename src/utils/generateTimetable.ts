@@ -93,7 +93,6 @@ type SemesterModule = {
   
         // Check if prereqs are completed
         const prereqsMet = prereqs.every((pr) => completedModules.has(pr))
-  
         if (!prereqsMet) continue
   
         // Find earliest semester offered and with space
@@ -114,12 +113,47 @@ type SemesterModule = {
       }
     }
 
-    for (const mod of modulesToSchedule) { // just place down those mods
-      for (let sem = 0; sem < semesters; sem++) {
-        if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
-          timetable[sem].push(mod)
-          break}}}
+    //for (const mod of modulesToSchedule) { // just place down those mods
+      //for (let sem = 0; sem < semesters; sem++) {
+        //if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+          //timetable[sem].push(mod)
+          //break}}}
     // return array
+
+    const remainingModules = Array.from(modulesToSchedule)
+
+    remainingModules.sort((a, b) => {
+      const aInfo = parseInt(a.match(/\d+/)?.[0] || '1000')
+      const bInfo = parseInt(b.match(/\d+/)?.[0] || '1000')
+      return aInfo - bInfo
+    })
+
+      for (const mod of remainingModules) {
+    const info = moduleInfos[mod];
+    
+    // Try to place in latest possible semester that has space
+    let placed = false;
+    for (let sem = semesters - 1; sem >= 0; sem--) {
+      const offered = info.semesterData.length === 0 || info.semesterData.some((s) => s.semester === sem + 1);
+      
+      if (offered && timetable[sem].length < maxPerSemester) {
+        timetable[sem].push(mod);
+        placed = true;
+        break;
+      }
+    }
+    
+    // If not placed, put in first available semester
+    if (!placed) {
+      for (let sem = 0; sem < semesters; sem++) {
+        if (timetable[sem].length < maxPerSemester) {
+          timetable[sem].push(mod);
+          break;
+        }
+      }
+    }
+  }
+
     return timetable
   }
   
