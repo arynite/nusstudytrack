@@ -35,7 +35,6 @@ type SemesterModule = {
       return prereqTree.data.flatMap(parsePrerequisites)
     }
     if (prereqTree.type === 'or') {
-      // Simplified: just pick first option
       return parsePrerequisites(prereqTree.data[0])
     }
     return []
