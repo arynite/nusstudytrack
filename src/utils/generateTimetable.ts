@@ -87,8 +87,7 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
     let progress = true
   
-    // Repeat until no modules left or no progress
-    while (modulesToSchedule.size > 0 && progress) {
+    while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
       progress = false
       for (const mod of Array.from(modulesToSchedule)) { // checks for each unscheduled mod to see if they can be scheduled
         const info = moduleInfos[mod]
@@ -113,11 +112,13 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
       }
     }
 
+    /*
     for (const mod of modulesToSchedule) { // just place down those that are left
       for (let sem = 0; sem < semesters; sem++) {
         if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
           timetable[sem].push(mod)
           break}}}
+          */
 
     return timetable    // return array
   }
