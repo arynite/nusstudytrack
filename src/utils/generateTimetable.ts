@@ -8,17 +8,18 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
     .eq('user_id', userId)
     .single();
 
-  if (error) {
-    console.error('Error fetching exemptions:', error);
+  if (!data || error) {
+    console.error('No exemption data or error fetching:', error);
     return new Set();
   }
 
   const completedModules = new Set<string>();
 
-  for (const mod of data?.exemption ?? []) {
+  for (const mod of data.exemption ?? []) {
     const code = mod.split(' ')[0].trim();
     completedModules.add(code);
   }
+
   return completedModules;
 }
 
