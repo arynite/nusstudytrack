@@ -1,8 +1,20 @@
-import { eeMajorRequirements, specialisationModules } from './requirements'
-import { supabase } from '../utils/supabaseClient'
+import { supabase } from './supabaseClient';
 
-const { data: { user } } = await supabase.auth.getUser();
-const userId = user?.id;
+export async function getExemptedModulesFromLoggedInUser(): Promise<Set<string>> {
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+  console.log('user data:', userData);
+  console.log('user error:', userError);
+
+  const userId = userData.user?.id;
+  console.log('userId:', userId);
+
+  if (!userId) {
+    console.error('No user ID');
+    return new Set();
+  }
+
+  return await getExemptedModules(userId);
+}
 
 export async function getExemptedModules(userId: string): Promise<Set<string>> {
   const { data, error, status } = await supabase
@@ -13,13 +25,9 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
 
   console.log('from Supabase:', { data, error, status });
 
-  if (error || !data) {
-    console.error('Failed to fetch exemptions:', error, 'Status:', status);
-    return new Set();
-  }
-
   const completedModules = new Set<string>();
-  for (const mod of data.exemptions ?? []) {
+
+  for (const mod of data?.exemptions ?? []) {
     const code = mod.split(' ')[0].trim();
     completedModules.add(code);
   }
