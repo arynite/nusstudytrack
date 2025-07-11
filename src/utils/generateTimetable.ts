@@ -63,7 +63,7 @@ type SemesterModule = {
         }
       })
     )
-    
+
     //// Separate modules with and without prerequisites, withprereqs, withoutprereqs
     const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
       ([withPrereqs, withoutPrereqs], mod) => {
@@ -85,16 +85,10 @@ type SemesterModule = {
     // Repeat until no modules left or no progress
     while (modulesToSchedule.size > 0 && progress) {
       progress = false
-  
       for (const mod of Array.from(modulesToSchedule)) { // checks for each unscheduled mod to see if they can be scheduled
         const info = moduleInfos[mod]
-  
-        // Parse prerequisites
-        const prereqs = parsePrerequisites(info.prereqTree)
-  
-        // Check if prereqs are completed
-        const prereqsMet = prereqs.every((pr) => completedModules.has(pr))
-  
+        const prereqs = parsePrerequisites(info.prereqTree) // Parse prerequisites
+        const prereqsMet = prereqs.every((pr) => completedModules.has(pr)) // Check if prereqs are completed
         if (!prereqsMet) continue
   
         // Find earliest semester offered and with space
@@ -110,18 +104,17 @@ type SemesterModule = {
             break
           }
         }
-  
         if (!placed) continue
       }
     }
 
-    for (const mod of modulesToSchedule) { // just place down those mods
+    for (const mod of modulesToSchedule) { // just place down those that are left
       for (let sem = 0; sem < semesters; sem++) {
         if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
           timetable[sem].push(mod)
           break}}}
-    // return array
-    return timetable
+
+    return timetable    // return array
   }
   
   // generate using stochastic matrix? 
