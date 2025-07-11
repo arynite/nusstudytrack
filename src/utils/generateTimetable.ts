@@ -41,6 +41,21 @@ type SemesterModule = {
     return []
   }
 
+  function Stochastic(semesters: number): number[] {
+    const totalWeight = (semesters * (semesters + 1)) / 2;
+    return Array.from({ length: semesters }, (_, i) => (semesters - i) / totalWeight);
+  }
+  
+  function Prob(weights: number[]): number {
+    const r = Math.random();
+    let sum = 0;
+    for (let i = 0; i < weights.length; i++) {
+      sum += weights[i];
+      if (r < sum) return i;
+  }
+  return weights.length - 1;
+}
+
   /**
    * @param modules list of module codes
    * @param semesters number of semesters 
@@ -76,7 +91,6 @@ type SemesterModule = {
     // Initialize empty timetable (array of semesters)
     const timetable: string[][] = Array.from({ length: semesters }, () => [])
     const completedModules = new Set<string>() // check if modules are completed
-
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
     let modulesToSchedule = new Set(modulesWithPrereqs) // modules that have prerequisites
     let progress = true
@@ -113,12 +127,35 @@ type SemesterModule = {
       }
     }
 
-    //for (const mod of modulesToSchedule) { // just place down those mods
-      //for (let sem = 0; sem < semesters; sem++) {
-        //if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
-          //timetable[sem].push(mod)
-          //break}}}
-    // return array
+  const NoPreReq = Stochastic(semesters)
+    
+  for (const mod of modulesWithoutPrereqs) {
+    const info = moduleInfos[mod];
+    let placed = false;
+
+    for (let attempt = 0; attempt < semesters * 2; attempt++) {
+      const sem = Prob(NoPreReq);
+      const offered =
+        info.semesterData.length === 0 ||
+        info.semesterData.some((s) => s.semester === sem + 1);
+
+      if (offered && timetable[sem].length < maxPerSemester) {
+        timetable[sem].push(mod);
+        placed = true;
+        break;
+      }
+    }
+
+    // Fallback if not placed randomly
+    if (!placed) {
+      for (let sem = 0; sem < semesters; sem++) {
+        if (timetable[sem].length < maxPerSemester) {
+          timetable[sem].push(mod);
+          break;
+        }
+      }
+    }
+  }
 
     const remainingModules = Array.from(modulesToSchedule)
 
