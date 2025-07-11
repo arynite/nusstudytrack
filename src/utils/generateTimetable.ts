@@ -65,23 +65,20 @@ type SemesterModule = {
     )
 
     // Separate modules with and without prerequisites
-    //const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
-      //([withPrereqs, withoutPrereqs], mod) => {
-      //const prereqs = parsePrerequisites(moduleInfos[mod].prereqTree);
-      //return prereqs.length > 0
-        //? [[...withPrereqs, mod], withoutPrereqs]
-        //: [withPrereqs, [...withoutPrereqs, mod]];
-    //}, [[], []] as [string[], string[]]);
+    const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
+      ([withPrereqs, withoutPrereqs], mod) => {
+      const prereqs = parsePrerequisites(moduleInfos[mod].prereqTree);
+      return prereqs.length > 0
+        ? [[...withPrereqs, mod], withoutPrereqs]
+        : [withPrereqs, [...withoutPrereqs, mod]];
+    }, [[], []] as [string[], string[]]);
   
     // Initialize empty timetable (array of semesters)
     const timetable: string[][] = Array.from({ length: semesters }, () => [])
     const completedModules = new Set<string>() // check if modules are completed
 
-    let modulesToSchedule = new Set(modules) // modules that need to be scheduled
-  
-    // Limit max modules per semester (adjust as needed)
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
-  
+    let modulesToSchedule = new Set(modulesWithPrereqs) // modules that have prerequisites
     let progress = true
   
     // Repeat until no modules left or no progress
