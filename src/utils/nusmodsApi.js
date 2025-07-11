@@ -96,4 +96,8 @@ function fetchAllModules(codes_1) {
     });
 }
 
-fetchAllModules(['EE2012']);
+(async () => {
+  const result = await fetchAllModules(['EE2012']);
+  console.dir(result, { depth: null });
+})();
+
