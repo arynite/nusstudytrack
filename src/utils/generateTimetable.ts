@@ -85,7 +85,6 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
     const completedModules = new Set<string>() // check if modules are completed
     let modulesToSchedule = new Set(modules) // modules that need to be scheduled
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
-  
     let progress = true
   
     // Repeat until no modules left or no progress
