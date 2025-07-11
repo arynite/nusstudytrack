@@ -29,7 +29,18 @@ function getModuleYear(moduleCode: string): number {
   if (num >= 3000) return 3
   if (num >= 2000) return 2
   return 1
-} 
+}
+
+function sampleSemester(probabilities: number[]): number {
+  const r = Math.random()
+  let sum = 0
+  for (let i = 0; i < probabilities.length; i++) {
+    sum += probabilities[i]
+    if (r < sum) return i
+  }
+  return probabilities.length - 1
+}
+ 
   async function fetchModuleData(moduleCode: string): Promise<ModuleData> {
     const res = await fetch(
       `https://api.nusmods.com/v2/2023-2024/modules/${moduleCode}.json`
