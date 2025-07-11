@@ -96,4 +96,4 @@ function fetchAllModules(codes_1) {
     });
 }
 
-fetchAllModules(['EE1111A','EE2111A','EE2012','EE2022','EE2023']);
+fetchAllModules(['EE2012']);
