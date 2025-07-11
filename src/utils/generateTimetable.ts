@@ -29,22 +29,9 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
       completedModules.add(mod);
     }
   }
-  console.log('Completed bridging modules:', Array.from(completedModules));
+  console.log('Completed bridging modules:(test)', Array.from(completedModules));
   return completedModules;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 type SemesterModule = {
     semester: number
@@ -90,17 +77,27 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
   return [];
 }
 
+
+
   /**
    * @param modules list of module codes
-   * @param semesters number of semesters 
+   * @param semesters number of semesters
+   * @param maxPerSemester maximum number of modules per semester
+   * @param userId user ID to fetch exemptions
+   * @return timetable as an array of arrays, each inner array represents a semester with module codes
    */
+
+
  export async function generateTimetable(
     modules: string[],  // array of module codes
     semesters: number,
     maxPerSemester: number,
     userId: string
   ): Promise<string[][]> { // fetch all module information in parallel
+    console.log("generateTimetable - received userId:", userId);
     const completedModules = await getExemptedModules(userId)
+    console.log("Completed modules (Set):", Array.from(completedModules))
+    modules = modules.filter(mod => !completedModules.has(mod))
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
     await Promise.all(
       modules.map(async (mod) => {
@@ -160,13 +157,5 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
       }
     }
 
-    /*
-    for (const mod of modulesToSchedule) { // just place down those that are left
-      for (let sem = 0; sem < semesters; sem++) {
-        if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
-          timetable[sem].push(mod)
-          break}}}
-          */
-
-    return timetable    // return array
+    return timetable
   }
