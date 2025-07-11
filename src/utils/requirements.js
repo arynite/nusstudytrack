@@ -8,7 +8,7 @@ function pickMods(mods, number) { // pick mods from mods list, GEs and UEs
 }
 
 
-export function eeMajorRequirements(x) {
+export function eeMajorRequirements(x) { // consisits of core, unrestricted electives, general education, technical electives, bridging modules
   return{
     label: 'Electrical Engineering Major',
   
@@ -84,7 +84,7 @@ export function eeMajorRequirements(x) {
 
 //'EE3305' is 'EE3305/ME3243'
 
-export const specialisationModules = {
+export const specialisationModules = {  // consists of SPN
   'adv-electronics': {
     label: 'Advanced Electronics',
     core: ['EE3408C', 'EE3431C'],

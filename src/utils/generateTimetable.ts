@@ -1,3 +1,5 @@
+import { eeMajorRequirements, specialisationModules } from './requirements'
+import { supabase } from '../utils/supabaseClient'
 
 type SemesterModule = {
     semester: number
