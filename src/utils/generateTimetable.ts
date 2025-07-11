@@ -3,16 +3,22 @@ type SemesterModule = {
     semester: number
   }
   
+  /*
   type PrereqTree =
     | null
     | string
     | { type: 'and' | 'or'; data: PrereqTree[] }
-  
-  type ModuleData = {
-    moduleCode: string
-    semesterData: SemesterModule[]
-    prereqTree: PrereqTree
-  }
+    */
+
+type PrereqTree =
+  | string
+  | { and?: PrereqTree[]; or?: PrereqTree[]; nOf?: [number, PrereqTree[]] } // added n0f for AND prerequisites
+
+type ModuleData = {
+  moduleCode: string
+  semesterData: SemesterModule[]
+  prereqTree: PrereqTree
+}
   
   async function fetchModuleData(moduleCode: string): Promise<ModuleData> {
     const res = await fetch(
@@ -50,8 +56,6 @@ type SemesterModule = {
     }
     return []
   }
-  */
-
   function parsePrerequisites(prereqTree: PrereqTree): string[] { // help to extract the prereq mods
     if (!prereqTree) return [];
     if (typeof prereqTree === 'string') return [prereqTree];
@@ -64,6 +68,24 @@ type SemesterModule = {
     }
     return [];
   }
+  */
+
+function parsePrerequisites(prereqTree: PrereqTree): string[] {
+  if (!prereqTree) return [];
+  if (typeof prereqTree === 'string') return [prereqTree];
+  if ('and' in prereqTree) {
+    return prereqTree.and.flatMap(parsePrerequisites);
+  }
+  if ('or' in prereqTree) {
+    return prereqTree.or.flatMap(parsePrerequisites);
+  }
+
+  if ('nOf' in prereqTree) {
+    const [, mods] = prereqTree.nOf;
+    return mods.flatMap(parsePrerequisites);
+  }
+  return [];
+}
 
   /**
    * @param modules list of module codes
