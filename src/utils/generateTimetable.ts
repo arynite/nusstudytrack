@@ -64,13 +64,16 @@ type SemesterModule = {
       })
     )
 
-    //// Separate modules with and without prerequisites, withprereqs, withoutprereqs
+    //// Separate modules with and without prerequisites, modulesWithPrereqs, modulesWithoutPrereqs
     const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
       ([withPrereqs, withoutPrereqs], mod) => {
       const prereqs = parsePrerequisites(moduleInfos[mod].prereqTree);
       return prereqs.length > 0
         ? [[...withPrereqs, mod], withoutPrereqs]
         : [withPrereqs, [...withoutPrereqs, mod]]; }, [[], []] as [string[], string[]]);
+
+    console.log("with prereq:", modulesWithPrereqs);
+    console.log("without prereq", modulesWithoutPrereqs);
 
 
   
@@ -116,5 +119,3 @@ type SemesterModule = {
 
     return timetable    // return array
   }
-  
-  // generate using stochastic matrix? 
