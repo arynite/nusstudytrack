@@ -108,7 +108,7 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
             break
           }
         }
-        //if (!placed) continue
+        if (!placed) continue
       }
     }
 
