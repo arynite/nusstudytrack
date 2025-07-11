@@ -96,7 +96,7 @@ function fetchAllModules(codes_1) {
     });
 }
 
-(async () => {
+(async () => { // use console.dir to print nested array
   const result = await fetchAllModules(['EE2012']);
   console.dir(result, { depth: null });
 })();
