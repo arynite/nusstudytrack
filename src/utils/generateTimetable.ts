@@ -2,13 +2,6 @@
 type SemesterModule = {
     semester: number
   }
-  
-  /*
-  type PrereqTree =
-    | null
-    | string
-    | { type: 'and' | 'or'; data: PrereqTree[] }
-    */
 
 type PrereqTree =
   | string
@@ -32,43 +25,6 @@ type ModuleData = {
       prereqTree: data.prereqTree || null,
     }
   }
-  
-  /*
-  function parsePrerequisites(prereqTree: PrereqTree, moduleCode?: string): string[] { // help to extract the prereq mods
-    if (!prereqTree) {
-      console.log(`${moduleCode}: No prerequisites`);
-      return [];
-    }
-    if (typeof prereqTree === 'string') {
-      console.log(`${moduleCode}: Single prerequisite -> ${prereqTree}`);
-      return [prereqTree];
-    }
-  
-    if (prereqTree.type === 'and') {
-      const andPrereqs = prereqTree.data.flatMap(t => parsePrerequisites(t));
-      console.log(`${moduleCode}: AND prerequisites ->`, andPrereqs);
-      return andPrereqs; // Flatten the array of prerequisites
-    }
-    if (prereqTree.type === 'or') {
-      const orPrereqs = parsePrerequisites(prereqTree.data[0]);
-      console.log(`${moduleCode}: OR prerequisites (first option only) ->`, orPrereqs);
-      return orPrereqs; // Return the first option only for OR
-    }
-    return []
-  }
-  function parsePrerequisites(prereqTree: PrereqTree): string[] { // help to extract the prereq mods
-    if (!prereqTree) return [];
-    if (typeof prereqTree === 'string') return [prereqTree];
-  
-    if (prereqTree.type === 'and') {
-      return prereqTree.data.flatMap(parsePrerequisites); // Flatten the array of prerequisites
-    }
-    if (prereqTree.type === 'or') {
-      return parsePrerequisites(prereqTree.data[0]); // Return the first option only for OR
-    }
-    return [];
-  }
-  */
 
 function parsePrerequisites(prereqTree: PrereqTree): string[] {
   if (!prereqTree) return [];
