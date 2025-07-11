@@ -2,19 +2,20 @@ import { eeMajorRequirements, specialisationModules } from './requirements'
 import { supabase } from '../utils/supabaseClient'
 
 export async function getExemptedModules(userId: string): Promise<Set<string>> {
-  const { data, error } = await supabase
+  const { data, error, status } = await supabase
     .from('study_plans')
     .select('exemption')
     .eq('user_id', userId)
     .single();
 
-  if (!data || error) {
-    console.error('No exemption data or error fetching:', error);
+  console.log('from Supabase:', { data, error, status });
+
+  if (error || !data) {
+    console.error('Failed to fetch exemptions:', error, 'Status:', status);
     return new Set();
   }
 
   const completedModules = new Set<string>();
-
   for (const mod of data.exemption ?? []) {
     const code = mod.split(' ')[0].trim();
     completedModules.add(code);
@@ -22,6 +23,7 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
 
   return completedModules;
 }
+
 
 type SemesterModule = {
     semester: number
