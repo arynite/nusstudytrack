@@ -33,6 +33,33 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
   return completedModules;
 }
 
+export async function PolyOrNot(userId: string): Promise<Set<string>> {
+  if (!userId) return new Set();
+
+  const { data, error } = await supabase
+    .from('study_plans')
+    .select('education')
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Supabase error fetching education:', error);
+    return new Set();
+  }
+
+  const completedModules = await getExemptedModules(userId);
+  const education = data?.education;
+
+  if (education === 'Polytechnic') {
+    ['EG3611P', 'EG1311', 'DTK1234'].forEach(mod => completedModules.add(mod));
+  }
+
+  return completedModules;
+}
+
+
+
+
 type SemesterModule = {
     semester: number
   }
@@ -117,7 +144,8 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     userId: string
   ): Promise<string[][]> { // fetch all module information in parallel
     console.log("generateTimetable - received userId:", userId);
-    const completedModules = await getExemptedModules(userId)
+    //const completedModules = await getExemptedModules(userId)
+    const completedModules = await PolyOrNot(userId)
     console.log("Completed modules (Set):", Array.from(completedModules))
     modules = modules.filter(mod => !completedModules.has(mod)) // filter out exempted modules 
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
