@@ -100,7 +100,7 @@ function extractLevelFromModuleCode(code: string): number {
   if (!match) return 1; // Default to Year 1 if no match
 
   const firstDigit = parseInt(match[0][0]);
-  return Math.min(Math.max(firstDigit, 1), 4); // Clamp to 1-4
+  return Math.min(Math.max(firstDigit, 1), 5);
 }
 
 function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
