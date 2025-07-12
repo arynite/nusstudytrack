@@ -46,6 +46,8 @@ type ModuleData = {
   semesterData: SemesterModule[]
   prereqTree: PrereqTree
 }
+
+type PrereqGroup = string[][];
   
   async function fetchModuleData(moduleCode: string): Promise<ModuleData> {
     const res = await fetch(
@@ -60,19 +62,25 @@ type ModuleData = {
     }
   }
 
-function parsePrerequisites(prereqTree: PrereqTree): string[] {
+function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
   if (!prereqTree) return [];
-  if (typeof prereqTree === 'string') return [prereqTree];
+
+  if (typeof prereqTree === 'string') {
+    return [[prereqTree.split(':')[0].trim()]];
+  }
+
   if ('and' in prereqTree) {
     return prereqTree.and.flatMap(parsePrerequisites);
   }
+
   if ('or' in prereqTree) {
-    return prereqTree.or.flatMap(parsePrerequisites);
+    const orGroup = prereqTree.or.flatMap(parsePrerequisites);
+    return [orGroup.flat()];
   }
 
   if ('nOf' in prereqTree) {
     const [, mods] = prereqTree.nOf;
-    return mods.flatMap(parsePrerequisites);
+    return [mods.flatMap(parsePrerequisites).flat()];
   }
   return [];
 }
@@ -97,7 +105,7 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
     console.log("generateTimetable - received userId:", userId);
     const completedModules = await getExemptedModules(userId)
     console.log("Completed modules (Set):", Array.from(completedModules))
-    modules = modules.filter(mod => !completedModules.has(mod))
+    modules = modules.filter(mod => !completedModules.has(mod)) // filter out exempted modules 
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
     await Promise.all(
       modules.map(async (mod) => {
@@ -123,7 +131,6 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
     console.log("with prereq:", modulesWithPrereqs);
     console.log("without prereq", modulesWithoutPrereqs);
 
-
   
     // Initialize empty timetable (array of semesters)
     const timetable: string[][] = Array.from({ length: semesters }, () => [])
@@ -132,13 +139,19 @@ function parsePrerequisites(prereqTree: PrereqTree): string[] {
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
     let progress = true
   
+
     while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
       progress = false
       for (const mod of Array.from(modulesToSchedule)) { // checks for each unscheduled mod to see if they can be scheduled
         const info = moduleInfos[mod]
         const prereqs = parsePrerequisites(info.prereqTree) // Parse prerequisites
-        const prereqsMet = prereqs.every((pr) => completedModules.has(pr)) // Check if prereqs are completed
-        if (!prereqsMet) continue
+
+        const prereqsMet = prereqs.length === 0 || prereqs.some(group => group.some(pr => completedModules.has(pr))) // Check if prereqs are completed
+        if (!prereqsMet) {
+          const missing = prereqs.filter(group => !group.some(code => completedModules.has(code)));
+          console.log(`Cannot place ${mod}, missing prereq group(s):`, missing);
+          continue;
+        }
   
         // Find earliest semester offered and with space
         let placed = false
