@@ -184,7 +184,14 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     let modulesToSchedule = new Set(modules) // modules that need to be scheduled
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
     let progress = true
-  
+
+    const forcedSem0Mods = new Set(["ES1000", "ES1103", "MA1301", "CS1010E", "PC1201", "EE1111A"]);
+    for (const mod of forcedSem0Mods) {
+      if (modulesToSchedule.has(mod) && timetable[0].length < MAX_MODULES_PER_SEMESTER) {
+        timetable[0].push(mod);
+        completedModules.add(mod);
+        modulesToSchedule.delete(mod);
+      }}
 
     while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
       progress = false
