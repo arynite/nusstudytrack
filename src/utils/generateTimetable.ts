@@ -45,6 +45,7 @@ type ModuleData = {
   moduleCode: string
   semesterData: SemesterModule[]
   prereqTree: PrereqTree
+  level: number;
 }
 
 type PrereqGroup = string[][];
@@ -59,8 +60,21 @@ type PrereqGroup = string[][];
       moduleCode,
       semesterData: data.semesterData || [],
       prereqTree: data.prereqTree || null,
+      level: extractLevelFromModuleCode(moduleCode), // Extract year from module code
     }
   }
+
+function getYearFromSemester(sem: number): number {
+  return Math.floor(sem / 2) + 1;
+}
+
+function extractLevelFromModuleCode(code: string): number {
+  const match = code.match(/\d+/); // Extract number part
+  if (!match) return 1; // Default to Year 1 if no match
+
+  const firstDigit = parseInt(match[0][0]);
+  return Math.min(Math.max(firstDigit, 1), 4); // Clamp to 1-4
+}
 
 function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
   if (!prereqTree) return [];
@@ -109,12 +123,16 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
     await Promise.all(
       modules.map(async (mod) => {
-        try {moduleInfos[mod] = await fetchModuleData(mod)
+        try {
+          const info = await fetchModuleData(mod);
+          info.level = extractLevelFromModuleCode(mod); // Extract year from module code
+          moduleInfos[mod] = info; // Store module info
         } catch { // just skips the mod if fails to fetch
           moduleInfos[mod] = {
             moduleCode: mod,
             semesterData: [],
             prereqTree: null,
+            level: extractLevelFromModuleCode(mod),
           }
         }
       })
@@ -156,6 +174,7 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         // Find earliest semester offered and with space
         let placed = false
         for (let sem = 0; sem < semesters; sem++) {
+          if (getYearFromSemester(sem) < info.level) continue; // see which level is the module 
           //const offered = info.semesterData.some((s) => s.semester === sem + 1) // check for offered in semester
           if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
             timetable[sem].push(mod)
