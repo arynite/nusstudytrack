@@ -58,8 +58,6 @@ export async function PolyOrNot(userId: string): Promise<Set<string>> {
 }
 
 
-
-
 type SemesterModule = {
     semester: number
   }
