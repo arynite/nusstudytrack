@@ -50,7 +50,7 @@ export async function PolyOrNot(userId: string): Promise<Set<string>> {
   const completedModules = await getExemptedModules(userId);
   const education = data?.education;
 
-  if (education === 'Polytechnic') {
+  if (education === 'Polytechnic') { // in addition to -20 for x
     ['EG3611P', 'EG1311', 'DTK1234'].forEach(mod => completedModules.add(mod));
   }
 

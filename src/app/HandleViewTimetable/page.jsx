@@ -64,10 +64,13 @@ export default function TimetablePage() {
       console.log('Completed bridging modules:', Array.from(completedModules))
 
       const flattened = flattenModules(specialisations, specialisationModules, exemptions)
-      const timetable = await generateTimetable(
-        flattened, degreeLength * 2, 
-        Math.ceil(flattened.length / (degreeLength * 2)),
-        user.id)
+      if (degreeLength === 3 && flattened.length < 40){
+        const timetable = await generateTimetable(flattened, degreeLength * 2, 5, user.id) 
+      } else if (degreeLength === 4 && flattened.length < 40) {
+        const timetable = await generateTimetable(flattened, degreeLength * 2, 5, user.id) 
+      } else{
+
+      const timetable = await generateTimetable(flattened, degreeLength * 2, Math.ceil(flattened.length/(degreeLength * 2)), user.id) }
       setPlannedSemesters(timetable)
       setMounted(true)
     }
