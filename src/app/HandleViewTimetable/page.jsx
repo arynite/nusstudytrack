@@ -66,12 +66,14 @@ export default function TimetablePage() {
       let timetable;
 
       const flattened = flattenModules(specialisations, specialisationModules, exemptions)
-      if (degreeLength === '3' && flattened.length < 40){
-        timetable = await generateTimetable(flattened, degreeLength * 2, 4, user.id) 
-      } else if (degreeLength === '4' && flattened.length < 40) {
+      if (degreeLength === 3 && flattened.length < 40){
+        timetable = await generateTimetable(flattened, degreeLength * 2, 6, user.id) 
+      } else if (degreeLength === 3.5 && flattened.length < 40) {
+        timetable = await generateTimetable(flattened, degreeLength * 2, 5, user.id) 
+      }else if (degreeLength === 4 && flattened.length < 40) {
         timetable = await generateTimetable(flattened, degreeLength * 2, 4, user.id) 
       } else{
-        timetable = await generateTimetable(flattened, degreeLength * 2, Math.ceil(flattened.length/(degreeLength * 2)), user.id)
+        timetable = await generateTimetable(flattened, degreeLength * 2, Math.ceil(flattened.length/(degreeLength * 2)), user.id) // original method
       }
       setPlannedSemesters(timetable)
       setMounted(true)
