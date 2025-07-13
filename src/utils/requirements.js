@@ -56,17 +56,50 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
         'CS1010E',     // Digital Literacy
         'ES2631',      // Critique and Expression
         pickMods(['GEN2000', 'GEN2001','GEN2002' ], 1),  // Communities and Engagement
-        pickMods(['GESS1000','GESS1001','GESS1002' ], 1),  // Singapore Studies
+        pickMods(['CDE2501','GESS1000','GESS1001','GESS1002'], 1),  // Singapore Studies
         pickMods(['GEC1000','GEC1001','GEC1002' ], 1)  // Culture and Connections
       ]
     },
 
-    RCMods: {
-      label: 'RC mods',
+    RCModsCommon: {
+      label: 'Common RC mods',
+      required: [ // IEM, choose 1
+        pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
+        'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
+      ]
+    },
+
+    RCModsAcacia: {
+      label: 'Acacia mods',
       required: [
-        'RC1000', // RC Orientation
-        'RC2000', // RC Community Engagement
-        'RC3000'  // RC Leadership Development
+        pickMods(['UTC1801','UTC1802'], 1), // junior seminar, choose 1
+        pickMods(['UTC2851','UTC2852','UTS2831','UTS2891'], 2) // senior seminar, choose 2
+      ]
+    },
+
+    RCModsCAPT: {
+      label: 'CAPT mods',
+      required: [
+        pickMods(['UTC1409','UTC1416','UTC1412','UTC1422'], 1), // junior seminar, choose 1
+        pickMods(['UTC2400','UTC2402','UTC2408','UTC2410B','UTC2411', 'UTC2412', 'UTC2417', 
+        'UTC2420A','UTS2400','UTS2402','UTS2406','UTS2408','UTS2409','UTS2414'], 2) // senior seminar, choose 2
+      ]
+    },
+
+    RCModsRC4: {
+      label: 'RC4 mods',
+      required: [
+        pickMods(['UTC1702B','UTC1702C','UTC1702D','UTC1702E','UTC1702F','UTC1702G','UTC1702H'], 1), // junior seminar, choose 1
+        pickMods(['UTC2700','UTC2704','UTS2706','UTS2716','UTC2722','UTC2723',
+        'UTC2728','UTC2729','UTC2734','UTC2737'], 2) // senior seminar (not full list), choose 2 
+      ]
+    },
+
+    RCModstembu: {
+      label: 'Tembu mods',
+      required: [
+        pickMods(['UTC1102C','UTC1102S','UTC1113','UTC1119'], 1), // junior seminar (not full list), choose 1
+        pickMods(['UTC2105','UTC2107','UTC2110','UTC2113','UTC2114'], 2) // senior seminar (not full list), choose 2
       ]
     },
 
