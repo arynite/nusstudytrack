@@ -61,6 +61,15 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
       ]
     },
 
+    RCMods: {
+      label: 'RC mods',
+      required: [
+        'RC1000', // RC Orientation
+        'RC2000', // RC Community Engagement
+        'RC3000'  // RC Leadership Development
+      ]
+    },
+
 
     technicalElectives:{ // Number of TE depends on number of specialisations chosen
       label: 'Technical Electives',
