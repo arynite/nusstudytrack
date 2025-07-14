@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { flattenModules } from '../../utils/flattenmodules'
 import { generateTimetable } from '../../utils/generateTimetable'
-import { specialisationModules } from '../../utils/requirements'
+import { specialisationModules, RCOrNoRC } from '../../utils/requirements'
 import { supabase } from '../../utils/supabaseClient'
 import './HandleViewTimetable.css'
 
@@ -14,6 +14,7 @@ export default function TimetablePage() {
   const router = useRouter()
   const [plannedSemesters, setPlannedSemesters] = useState([])
   const [mounted, setMounted] = useState(false)
+  const [rcMods, setRcMods] = useState(new Set()) //////////////////////////////////////////
 
   const [formValues, setFormValues] = useState({
     education: '',
@@ -60,22 +61,26 @@ export default function TimetablePage() {
       const fv = { education, degreeLength, rc, specialisations, exemptions }
       setFormValues(fv)
 
+      const rcModules = await RCOrNoRC(user.id, rc)
+      setRcMods(rcModules)
+      console.log('RC Modules:', Array.from(rcModules))
+
       const completedModules = await getExemptedModules(user.id)
       console.log('Completed bridging modules:', Array.from(completedModules))
 
       let timetable;
 
-      const flattened = flattenModules(specialisations, specialisationModules, exemptions) 
+      const flattened = flattenModules(specialisations, specialisationModules, exemptions, rcModules) 
 
 
       if (degreeLength === 3 && flattened.length < 40){ // handles generateTimetable function from generateTimetable.ts
-        timetable = await generateTimetable(flattened, degreeLength * 2, 6, user.id) 
+        timetable = await generateTimetable(flattened, degreeLength * 2, 6, user.id, rcModules) 
       } else if (degreeLength === 3.5 && flattened.length < 40) {
-        timetable = await generateTimetable(flattened, degreeLength * 2, 5, user.id) 
-      }else if (degreeLength === 4 && flattened.length < 40) {
-        timetable = await generateTimetable(flattened, degreeLength * 2, 4, user.id) 
+        timetable = await generateTimetable(flattened, degreeLength * 2, 5, user.id, rcModules) 
+      }else if (degreeLength === 4 && flattened.length < 50) {
+        timetable = await generateTimetable(flattened, degreeLength * 2, 5, user.id, rcModules) 
       } else{
-        timetable = await generateTimetable(flattened, degreeLength * 2, Math.ceil(flattened.length/(degreeLength * 2)), user.id) // original method
+        timetable = await generateTimetable(flattened, degreeLength * 2, Math.ceil(flattened.length/(degreeLength * 2)), user.id, rcModules) // original method
       }
       setPlannedSemesters(timetable)
       setMounted(true)

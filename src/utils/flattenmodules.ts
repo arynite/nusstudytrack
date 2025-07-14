@@ -2,7 +2,7 @@
 // takes user inputs like specialisations
 // outputs a list of mods that are required for graduation
 
-import { eeMajorRequirements, specialisationModules } from './requirements'
+import { eeMajorRequirements, specialisationModules, RCOrNoRC } from './requirements';
 
 export function flattenModules(
   specialisations: string[],
@@ -32,21 +32,10 @@ export function flattenModules(
     }
   }) */
 
-  if (rcMods) {
-    // If user stays in RC, add RC modules instead of GE modules
-    for (const mod of rcMods) {
-      modulesSet.add(mod)
-    }
-  } else {
-    // Else, add default General Education modules
-    major.generalEducation.required.forEach((mod) => {
-      if (Array.isArray(mod)) {
-        modulesSet.add(mod[0])
-      } else {
-        modulesSet.add(mod)
-      }
-    })
+  if (rcMods && rcMods.size > 0) {
+    rcMods.forEach(mod => modulesSet.add(mod));
   }
+
 
   major.bridgingModules.required.forEach((mod) => {
     if (Array.isArray(mod)) {
@@ -99,6 +88,5 @@ export function flattenModules(
       }
     }
   })
-
   return Array.from(modulesSet)
 }

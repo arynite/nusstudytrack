@@ -7,7 +7,7 @@ import './create-plan.css'
 
 // import flattenmods, req.js
 import { flattenModules } from '../../utils/flattenmodules'
-import { eeMajorRequirements, specialisationModules} from '../../utils/requirements'
+import { eeMajorRequirements, specialisationModules, RCOrNoRC} from '../../utils/requirements'
 
 export default function CreatePlan() {
   const router = useRouter()
@@ -93,15 +93,18 @@ const [exemptions, setExemptions] = useState({
 
     if (education === 'Polytechnic' && numSPN === 0) {
       x = 20;
-    } else if (numSPN === 0) {
+    } else if (numSPN === 1) {
       x = 0;
     }
+    
+    const rcMods = await RCOrNoRC(user.id, rc);
     
     const requiredModules = flattenModules(
       selectedSpecialisations,
       specialisationModules,
       selectedExemptions,
-      x
+      x,
+      rcMods
     )
     //const timetable = generateTimetable(requiredModules)
     

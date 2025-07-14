@@ -1,5 +1,5 @@
 //import { Network } from "inspector/promises";
-import { supabase } from './supabaseClient';
+//import { supabase } from './supabaseClient';
 
 function pickMods(mods, number) { // pick mods from mods list
   const result = [];
@@ -69,7 +69,13 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
         'ES1103', // English
         'ES1000'  // Fundamental english
       ]
-  }}}
+  },
+
+    generalEducation: {
+      label: 'General Education',
+      required: [] // empty since handling GE in RCOrNoRC
+    }
+}}
 
   const roboticsElectives = ['BN4203', 'BN4601', 'EE3305', 'EE4305', 'EE4308', 'EE4309','EE4705', 'EE4311','EE4312', 'EE4314', 'ME4242', 'ME4245', 'ME5406', 'MLE4228', 'RB4301']
 
@@ -177,120 +183,82 @@ export const specialisationModules = {  // consists of SPN
   }
 }
 
-export async function RCOrNoRC(userId){ // RC mods or GE
-  if (!userId) return new Set();
+export async function RCOrNoRC(userId, rcSelection) {
 
+  const rc = rcSelection;
+  const pickedMods = new Set();
+
+  /*
+  if (!userId) return new Set();
   const { data, error } = await supabase
     .from('study_plans')
     .select('rc')
     .eq('user_id', userId)
     .maybeSingle();
-
   if (error) {
     console.error('Supabase error fetching rc:', error);
     return new Set();
   }
-
   const rc = data?.rc;
   const pickedMods = new Set();
+  */
 
   if (rc === 'None') {
     const geMods = [
-        'GEA1000',     // Data Literacy
-        'CS1010E',     // Digital Literacy
-        'ES2631',      // Critique and Expression
-        pickMods(['GEN2000', 'GEN2001','GEN2002' ], 1),  // Communities and Engagement
-        pickMods(['CDE2501','GESS1000','GESS1001','GESS1002'], 1),  // Singapore Studies
-        pickMods(['GEC1000','GEC1001','GEC1002' ], 1)  // Culture and Connections
-      ];
-      geMods.flat().forEach(mod => pickedMods.add(mod));
-    }
-    
-  if (rc === 'Acacia') {
-    const UTRC_Acacia =  // IEM, choose 1 for UT RCs
-        pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J','UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1);
-    UTRC_Acacia.flat().forEach(mod => pickedMods.add(mod));
+      'GEA1000', 'CS1010E', 'ES2631',
+      pickMods(['GEN2000', 'GEN2001', 'GEN2002'], 1),
+      pickMods(['CDE2501', 'GESS1000', 'GESS1001', 'GESS1002'], 1),
+      pickMods(['GEC1000', 'GEC1001', 'GEC1002'], 1)
+    ];
+    geMods.flat().forEach(mod => pickedMods.add(mod));
+  }
 
-    const RCModsAcacia_J = pickMods(['UTC1801','UTC1802'], 1); // junior seminar, choose 1
-    const RCModsAcacia_S = pickMods(['UTC2851','UTC2852','UTS2831','UTS2891'], 2); // senior seminar, choose 2
-      
-    RCModsAcacia_J.flat().forEach(mod => pickedMods.add(mod));
-    RCModsAcacia_S.flat().forEach(mod => pickedMods.add(mod));
-    }
+  if (rc === 'Acacia') {
+    const UTRC = pickMods(['UTW1001A', 'UTW1001C', 'UTW1001G', 'UTW1001I', 'UTW1001J', 'UTW1001K', 'UTW1001P', 'UTW1001Q', 'UTW1001T', 'UTW1001X'], 1);
+    const junior = pickMods(['UTC1801', 'UTC1802'], 1);
+    const senior = pickMods(['UTC2851', 'UTC2852', 'UTS2831', 'UTS2891'], 2);
+    [UTRC, junior, senior].flat().forEach(mod => pickedMods.add(mod));
+  }
 
   if (rc === 'CAPT') {
-    const UTRC_CAPT =  // IEM, choose 1 for UT RCs
-        pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
-        'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1);
-    UTRC_CAPT.flat().forEach(mod => pickedMods.add(mod));
+    const UTRC = pickMods(['UTW1001A', 'UTW1001C', 'UTW1001G', 'UTW1001I', 'UTW1001J', 'UTW1001K', 'UTW1001P', 'UTW1001Q', 'UTW1001T', 'UTW1001X'], 1);
+    const junior = pickMods(['UTC1409', 'UTC1416', 'UTC1412', 'UTC1422'], 1);
+    const senior = pickMods(['UTC2400', 'UTC2402', 'UTC2408', 'UTC2410B', 'UTC2411', 'UTC2412', 'UTC2417', 'UTC2420A', 'UTS2400', 'UTS2402', 'UTS2406', 'UTS2408', 'UTS2409', 'UTS2414'], 2);
+    [UTRC, junior, senior].flat().forEach(mod => pickedMods.add(mod));
+  }
 
-    const RCModsCAPT_J = pickMods(['UTC1409','UTC1416','UTC1412','UTC1422'], 1); // junior seminar, choose 1
-    const RCModsCAPT_S = pickMods(['UTC2400','UTC2402','UTC2408','UTC2410B','UTC2411', 'UTC2412', 'UTC2417', 
-        'UTC2420A','UTS2400','UTS2402','UTS2406','UTS2408','UTS2409','UTS2414'], 2); // senior seminar, choose 2
-    
-    RCModsCAPT_J.flat().forEach(mod => pickedMods.add(mod));
-    RCModsCAPT_S.flat().forEach(mod => pickedMods.add(mod));
-    }
-  
   if (rc === 'RC4') {
-      const UTRC_RC4 =  // IEM, choose 1 for UT RCs
-        pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
-        'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1);
-    UTRC_RC4.flat().forEach(mod => pickedMods.add(mod));
-      const RCModsRC4 = 
-        pickMods(['UTC1702B','UTC1702C','UTC1702D','UTC1702E','UTC1702F','UTC1702G','UTC1702H'], 1); // junior seminar, choose 1
-        pickMods(['UTC2700','UTC2704','UTS2706','UTS2716','UTC2722','UTC2723',
-        'UTC2728','UTC2729','UTC2734','UTC2737'], 2); // senior seminar (not full list), choose 2 
-    RCModsRC4.flat().forEach(mod => pickedMods.add(mod));
-    }
-  
+    const UTRC = pickMods(['UTW1001A', 'UTW1001C', 'UTW1001G', 'UTW1001I', 'UTW1001J', 'UTW1001K', 'UTW1001P', 'UTW1001Q', 'UTW1001T', 'UTW1001X'], 1);
+    const junior = pickMods(['UTC1702B', 'UTC1702C', 'UTC1702D', 'UTC1702E', 'UTC1702F', 'UTC1702G', 'UTC1702H'], 1);
+    const senior = pickMods(['UTC2700', 'UTC2704', 'UTS2706', 'UTS2716', 'UTC2722', 'UTC2723', 'UTC2728', 'UTC2729', 'UTC2734', 'UTC2737'], 2);
+    [UTRC, junior, senior].flat().forEach(mod => pickedMods.add(mod));
+  }
+
   if (rc === 'Tembusu') {
-      const UTRC_Tembu =  // IEM, choose 1 for UT RCs
-        pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
-        'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1);
-    UTRC_Tembu.flat().forEach(mod => pickedMods.add(mod));
-      const RCModsTembu = 
-        pickMods(['UTC1102C','UTC1102S','UTC1113','UTC1119'], 1); // junior seminar (not full list), choose 1
-        pickMods(['UTC2105','UTC2107','UTC2110','UTC2113','UTC2114'], 2); // senior seminar (not full list), choose 2
-    RCModsTembu.flat().forEach(mod => pickedMods.add(mod));
-    }
+    const UTRC = pickMods(['UTW1001A', 'UTW1001C', 'UTW1001G', 'UTW1001I', 'UTW1001J', 'UTW1001K', 'UTW1001P', 'UTW1001Q', 'UTW1001T', 'UTW1001X'], 1);
+    const junior = pickMods(['UTC1102C', 'UTC1102S', 'UTC1113', 'UTC1119'], 1);
+    const senior = pickMods(['UTC2105', 'UTC2107', 'UTC2110', 'UTC2113', 'UTC2114'], 2);
+    [UTRC, junior, senior].flat().forEach(mod => pickedMods.add(mod));
+  }
 
   if (rc === 'RVRC') {
-      const RCModsRVRC_RVC = pickMods(['RVC1000','RVC1001','RVC2000'], 1);
-      const RCModsRVRC_RVN = pickMods(['RVN2000','RVN2001','RVN2002','RVN2003'], 1);
-      const RCModsRVRC_RVSS = pickMods(['RVSS1000','RVSS1001', 'RVSS1002','RVSS1003','RVSS1004'], 1);
-      const RCModsRVRC_RVX = pickMods(['RVX1000','RVX1002','RVX1003','RVX1005'], 1);
-
-    RCModsRVRC_RVC.flat().forEach(mod => pickedMods.add(mod));
-    RCModsRVRC_RVN.flat().forEach(mod => pickedMods.add(mod));
-    RCModsRVRC_RVSS.flat().forEach(mod => pickedMods.add(mod));
-    RCModsRVRC_RVX.flat().forEach(mod => pickedMods.add(mod));
-    }
+    const rvc = pickMods(['RVC1000', 'RVC1001', 'RVC2000'], 1);
+    const rvn = pickMods(['RVN2000', 'RVN2001', 'RVN2002', 'RVN2003'], 1);
+    const rvss = pickMods(['RVSS1000', 'RVSS1001', 'RVSS1002', 'RVSS1003', 'RVSS1004'], 1);
+    const rvx = pickMods(['RVX1000', 'RVX1002', 'RVX1003', 'RVX1005'], 1);
+    [rvc, rvn, rvss, rvx].flat().forEach(mod => pickedMods.add(mod));
+  }
 
   if (rc === 'NUSC') {
-    pickedMods.add('GEA1000N'); // Reasoning with Data
+    pickedMods.add('GEA1000N');
 
-      const RCModsNUSC_1 = pickMods(['NTW2007','NTW2010','NTW2032','NTW2033','NTW2035', 'NTW2036','NTW2037', 'NTW2038',
-          'NSW2001A', 'NSW2001B', 'NSW2001C', 'NSW2001D', 'NSW2001E', 'NSW2001F', 'NSW2001G', 'NSW2001H', 'NSW2001I', 'NSW2001J',
-          'NPS2001A', 'NPS2001B', 'NPS2001C', 'NPS2001D', 'NPS2001E'
-        ], 2); // NTW, NSW, NPS
+    const group1 = pickMods(['NTW2007','NTW2010','NTW2032','NTW2033','NTW2035','NTW2036','NTW2037','NTW2038','NSW2001A','NSW2001B','NSW2001C','NSW2001D','NSW2001E','NSW2001F','NSW2001G','NSW2001H','NSW2001I','NSW2001J','NPS2001A','NPS2001B','NPS2001C','NPS2001D','NPS2001E'], 2);
+    const group2 = pickMods(['NGN2001A','NGN2001B','NGN2001C','NGN2001D','NGN2001F','NGN2001G','NGN2001H','NGN2001I','NGN2001J','NGN2001K','NSS2001A','NSS2001B','NSS2001C','NSS2001D','NSS2001E','NSS2001F','NSS2001G','NSS2001H','NSS2001I','NSS2001J'], 2);
+    const group3 = pickMods(['NHS3901','NHS3902','NST2044','NST3901','NST3902','NHT2205','NHT2207','NHT2208','NHT2209','NHT2210','NHT2212','NHT2213'], 3);
+    const group4 = pickMods(['NEP3001', 'NEP3001Z'], 1);
 
-      const RCModsNUSC_2 = pickMods(['NGN2001A', 'NGN2001B', 'NGN2001C', 'NGN2001D', 'NGN2001F', 'NGN2001G', 'NGN2001H', 'NGN2001I', 'NGN2001J', 'NGN2001K',
-          'NSS2001A', 'NSS2001B', 'NSS2001C', 'NSS2001D', 'NSS2001E', 'NSS2001F', 'NSS2001G', 'NSS2001H', 'NSS2001I', 'NSS2001J'
-        ], 2); //NGN, NGT, NSS, excluded NGT
-
-      const RCModsNUSC_3 = pickMods(['NHS3901', 'NHS3902',
-          'NST2044','NST3901', 'NST3902',
-          'NHT2205', 'NHT2207', 'NHT2208', 'NHT2209', 'NHT2210', 'NHT2212', 'NHT2213'
-        ], 3); //NHS, NST, NHT
-
-      const RCModsNUSC_4 = pickMods(['NEP3001', 'NEP3001Z'], 1); // NEP
-
-    RCModsNUSC_1.flat().forEach(mod => pickedMods.add(mod));
-    RCModsNUSC_2.flat().forEach(mod => pickedMods.add(mod));
-    RCModsNUSC_3.flat().forEach(mod => pickedMods.add(mod));
-    RCModsNUSC_4.flat().forEach(mod => pickedMods.add(mod));
-    }
+    [group1, group2, group3, group4].flat().forEach(mod => pickedMods.add(mod));
+  }
 
   return pickedMods;
 }

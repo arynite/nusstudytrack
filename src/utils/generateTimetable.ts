@@ -139,13 +139,23 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     modules: string[],  // array of module codes
     semesters: number,
     maxPerSemester: number,
-    userId: string
+    userId: string,
+    rcMods: Set<string> = new Set() /////////////////////////////////////////////
   ): Promise<string[][]> { // fetch all module information in parallel
     console.log("generateTimetable - received userId:", userId);
+    console.log("RC/GE modules:", Array.from(rcMods)); /////////////////////////////////////////////
+
+    const allModules = [...new Set([...modules, ...rcMods])];
+    console.log("All modules combined:", allModules);
+
     //const completedModules = await getExemptedModules(userId)
     const completedModules = await PolyOrNot(userId)
     console.log("Completed modules (Set):", Array.from(completedModules))
-    modules = modules.filter(mod => !completedModules.has(mod)) // filter out exempted modules 
+
+    //modules = modules.filter(mod => !completedModules.has(mod)) // filter out exempted modules 
+    modules = allModules.filter(mod => !completedModules.has(mod));
+    console.log("Modules after filtering completed ones:", modules);
+
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
     await Promise.all(
       modules.map(async (mod) => {
