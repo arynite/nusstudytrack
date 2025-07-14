@@ -8,7 +8,8 @@ export function flattenModules(
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules,
   selectedExemptions: string[] = [],
-  x: number
+  x: number,
+  rcMods: Set<string> | null = null
 ): string[] {
   const TECount = specialisations.length
   const major = eeMajorRequirements(TECount) // get the major requirements based on the number of specialisations
@@ -22,13 +23,30 @@ export function flattenModules(
     }
   })
 
+  /*
   major.generalEducation.required.forEach((mod) => {
     if (Array.isArray(mod)) { // loops through GE mods, will choose GE mods first
       modulesSet.add(mod[0])
     } else { // or else it will just add the mod directly
       modulesSet.add(mod)
     }
-  })
+  }) */
+
+  if (rcMods) {
+    // If user stays in RC, add RC modules instead of GE modules
+    for (const mod of rcMods) {
+      modulesSet.add(mod)
+    }
+  } else {
+    // Else, add default General Education modules
+    major.generalEducation.required.forEach((mod) => {
+      if (Array.isArray(mod)) {
+        modulesSet.add(mod[0])
+      } else {
+        modulesSet.add(mod)
+      }
+    })
+  }
 
   major.bridgingModules.required.forEach((mod) => {
     if (Array.isArray(mod)) {
