@@ -7,7 +7,7 @@ import './create-plan.css'
 
 // import flattenmods, req.js
 import { flattenModules } from '../../utils/flattenmodules'
-import { eeMajorRequirements, specialisationModules } from '../../utils/requirements'
+import { eeMajorRequirements, specialisationModules} from '../../utils/requirements'
 
 export default function CreatePlan() {
   const router = useRouter()
