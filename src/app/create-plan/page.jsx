@@ -16,7 +16,7 @@ export default function CreatePlan() {
   const [rc, setRc] = useState('')
 
   /*
-  
+
     const [specialisations, setSpecialisations] = useState({
     'adv-electronics': false,
     'industry4': false,
@@ -186,7 +186,7 @@ const [exemptions, setExemptions] = useState({
         <table>
           <tbody>
             <tr>
-              {['NUSC', 'RVRC', 'RC4', 'Tembusu', 'Acacia College', 'None'].map(item => (
+              {['NUSC', 'CAPT', 'RC4', 'Tembusu', 'Acacia','RVRC', 'None'].map(item => (
                 <td
                   key={item}
                   className={`selection ${rc === item ? 'selection-active' : ''}`}

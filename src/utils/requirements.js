@@ -1,4 +1,5 @@
-import { Network } from "inspector/promises";
+//import { Network } from "inspector/promises";
+import { supabase } from './supabaseClient';
 
 function pickMods(mods, number) { // pick mods from mods list, GEs and UEs
   const result = [];
@@ -8,6 +9,8 @@ function pickMods(mods, number) { // pick mods from mods list, GEs and UEs
   }
   return result;
 }
+
+
 
 
 export function eeMajorRequirements(x) { // consisits of core, unrestricted electives, general education, technical electives, bridging modules
@@ -50,7 +53,153 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
 
 
     },
-  
+
+
+
+
+
+    /*
+export async function RCOrNoRC(userId: string): Promise<Set<string>> {
+  if (!userId) return new Set();
+
+  const { data, error } = await supabase
+    .from('study_plans')
+    .select('rc')
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Supabase error fetching exemptions:', error);
+    return new Set();
+  }
+
+  const rc: string[] = Array.isArray(data?.rc) ? data.rc : [];
+
+  const bridgingModules = ['ES1000', 'ES1103', 'MA1301', 'PC1201'];
+  if (rc === 'None') {
+      generalEducation: {
+      label: 'General Education',
+      required: [
+        'GEA1000',     // Data Literacy
+        'CS1010E',     // Digital Literacy
+        'ES2631',      // Critique and Expression
+        pickMods(['GEN2000', 'GEN2001','GEN2002' ], 1),  // Communities and Engagement
+        pickMods(['CDE2501','GESS1000','GESS1001','GESS1002'], 1),  // Singapore Studies
+        pickMods(['GEC1000','GEC1001','GEC1002' ], 1)  // Culture and Connections
+      ]
+    }
+  }
+  if (rc === 'Acacia') {
+      RCModsCommon: {
+      label: 'Common RC mods',
+      required: [ // IEM, choose 1 for UT RCs
+        pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
+        'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
+      ]
+    }
+      RCModsAcacia: {
+      label: 'Acacia mods',
+      required: [
+        pickMods(['UTC1801','UTC1802'], 1), // junior seminar, choose 1
+        pickMods(['UTC2851','UTC2852','UTS2831','UTS2891'], 2) // senior seminar, choose 2
+      ]
+    }
+  }
+  if (rc === 'CAPT') {
+      RCModsCommon: {
+      label: 'Common RC mods',
+      required: [ // IEM, choose 1 for UT RCs
+        pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
+        'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
+      ]
+    }
+      RCModsCAPT: {
+      label: 'CAPT mods',
+      required: [
+        pickMods(['UTC1409','UTC1416','UTC1412','UTC1422'], 1), // junior seminar, choose 1
+        pickMods(['UTC2400','UTC2402','UTC2408','UTC2410B','UTC2411', 'UTC2412', 'UTC2417', 
+        'UTC2420A','UTS2400','UTS2402','UTS2406','UTS2408','UTS2409','UTS2414'], 2) // senior seminar, choose 2
+      ]
+    }
+  }
+  if (rc === 'RC4') {
+      RCModsCommon: {
+      label: 'Common RC mods',
+      required: [ // IEM, choose 1 for UT RCs
+        pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
+        'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
+      ]
+    }
+      RCModsRC4: {
+      label: 'RC4 mods',
+      required: [
+        pickMods(['UTC1702B','UTC1702C','UTC1702D','UTC1702E','UTC1702F','UTC1702G','UTC1702H'], 1), // junior seminar, choose 1
+        pickMods(['UTC2700','UTC2704','UTS2706','UTS2716','UTC2722','UTC2723',
+        'UTC2728','UTC2729','UTC2734','UTC2737'], 2) // senior seminar (not full list), choose 2 
+      ]
+    }
+  }
+  if (rc === 'Tembusu') {
+      RCModsCommon: {
+      label: 'Common RC mods',
+      required: [ // IEM, choose 1 for UT RCs
+        pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
+        'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
+      ]
+    }
+      RCModstembu: {
+      label: 'Tembu mods',
+      required: [
+        pickMods(['UTC1102C','UTC1102S','UTC1113','UTC1119'], 1), // junior seminar (not full list), choose 1
+        pickMods(['UTC2105','UTC2107','UTC2110','UTC2113','UTC2114'], 2) // senior seminar (not full list), choose 2
+      ]
+    }
+  }
+
+
+
+
+  if (rc === 'RVRC') {
+      RCModsRVRC: {
+      label: 'RVRC mods',
+      required: [
+        pickMods(['RVC1000','RVC1001','RVC2000'], 1),
+        pickMods(['RVN2000','RVN2001','RVN2002','RVN2003'], 1),
+        pickMods(['RVSS1000','RVSS1001', 'RVSS1002','RVSS1003','RVSS1004'], 1),
+        pickMods(['RVX1000','RVX1002','RVX1003','RVX1005'], 1),
+      ]
+    }
+  }
+
+
+  if (rc === 'NUSC') {
+      RCModsNUSC: {
+      label: 'NUSC mods',
+      required: [
+        'GEA1000N', // Reasoning with Data
+
+        pickMods(['NTW2007','NTW2010','NTW2032','NTW2033','NTW2035', 'NTW2036','NTW2037', 'NTW2038',
+          'NSW2001A', 'NSW2001B', 'NSW2001C', 'NSW2001D', 'NSW2001E', 'NSW2001F', 'NSW2001G', 'NSW2001H', 'NSW2001I', 'NSW2001J',
+          'NPS2001A', 'NPS2001B', 'NPS2001C', 'NPS2001D', 'NPS2001E'
+        ], 2), // NTW, NSW, NPS
+
+        pickMods(['NGN2001A', 'NGN2001B', 'NGN2001C', 'NGN2001D', 'NGN2001F', 'NGN2001G', 'NGN2001H', 'NGN2001I', 'NGN2001J', 'NGN2001K',
+          'NSS2001A', 'NSS2001B', 'NSS2001C', 'NSS2001D', 'NSS2001E', 'NSS2001F', 'NSS2001G', 'NSS2001H', 'NSS2001I', 'NSS2001J'
+        ], 2), //NGN, NGT, NSS, excluded NGT
+
+        pickMods(['NHS3901', 'NHS3902',
+          'NST2044','NST3901', 'NST3902',
+          'NHT2205', 'NHT2207', 'NHT2208', 'NHT2209', 'NHT2210', 'NHT2212', 'NHT2213'
+        ], 3), //NHS, NST, NHT
+
+        pickMods(['NEP3001', 'NEP3001Z'], 1) // NEP
+      ]
+    }
+  }
+}
+    */
+
+
     generalEducation: {
       label: 'General Education',
       required: [
