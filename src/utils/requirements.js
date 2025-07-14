@@ -208,92 +208,72 @@ export async function RCOrNoRC(userId){
       geMods.forEach(mod => pickedMods.add(mod));
     }
   if (rc === 'Acacia') {
-      RCModsCommon: {
-      label: 'Common RC mods';
-      required: [ // IEM, choose 1 for UT RCs
+    const UTRC_Acacia = [ // IEM, choose 1 for UT RCs
         pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
         'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
-      ].forEach(mod => pickedMods.add(mod));
-    }
-      RCModsAcacia: {
-      label: 'Acacia mods';
-      required: [
+      ];
+    UTRC_Acacia.forEach(mod => pickedMods.add(mod));
+
+    const RCModsAcacia = [
         pickMods(['UTC1801','UTC1802'], 1), // junior seminar, choose 1
         pickMods(['UTC2851','UTC2852','UTS2831','UTS2891'], 2) // senior seminar, choose 2
-      ].forEach(mod => pickedMods.add(mod));
+      ];
+    RCModsAcacia.forEach(mod => pickedMods.add(mod));
     }
-  }
+
   if (rc === 'CAPT') {
-      RCModsCommon: {
-      label: 'Common RC mods';
-      required: [ // IEM, choose 1 for UT RCs
+    const UTRC_CAPT = [ // IEM, choose 1 for UT RCs
         pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
         'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
-      ].forEach(mod => pickedMods.add(mod));
-    }
-      RCModsCAPT: {
-      label: 'CAPT mods';
-      required: [
+      ];
+    UTRC_CAPT.forEach(mod => pickedMods.add(mod));
+    const RCModsCAPT = [
         pickMods(['UTC1409','UTC1416','UTC1412','UTC1422'], 1), // junior seminar, choose 1
         pickMods(['UTC2400','UTC2402','UTC2408','UTC2410B','UTC2411', 'UTC2412', 'UTC2417', 
         'UTC2420A','UTS2400','UTS2402','UTS2406','UTS2408','UTS2409','UTS2414'], 2) // senior seminar, choose 2
-      ].forEach(mod => pickedMods.add(mod));
+      ];
+    RCModsCAPT.forEach(mod => pickedMods.add(mod));
     }
-  }
+  
   if (rc === 'RC4') {
-      RCModsCommon: {
-      label: 'Common RC mods';
-      required: [ // IEM, choose 1 for UT RCs
+      const UTRC_RC4 = [ // IEM, choose 1 for UT RCs
         pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
         'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
-      ].forEach(mod => pickedMods.add(mod));
-    }
-      RCModsRC4: {
-      label: 'RC4 mods';
-      required: [
+      ];
+    UTRC_RC4.forEach(mod => pickedMods.add(mod));
+      const RCModsRC4 = [
         pickMods(['UTC1702B','UTC1702C','UTC1702D','UTC1702E','UTC1702F','UTC1702G','UTC1702H'], 1), // junior seminar, choose 1
         pickMods(['UTC2700','UTC2704','UTS2706','UTS2716','UTC2722','UTC2723',
         'UTC2728','UTC2729','UTC2734','UTC2737'], 2) // senior seminar (not full list), choose 2 
-      ].forEach(mod => pickedMods.add(mod));
+      ];
+    RCModsRC4.forEach(mod => pickedMods.add(mod));
     }
-  }
+  
   if (rc === 'Tembusu') {
-      RCModsCommon: {
-      label: 'Common RC mods';
-      required: [ // IEM, choose 1 for UT RCs
+      const UTRC_Tembu = [ // IEM, choose 1 for UT RCs
         pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
         'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
-      ].forEach(mod => pickedMods.add(mod));
-    }
-      RCModstembu: {
-      label: 'Tembu mods';
-      required: [
+      ];
+    UTRC_Tembu.forEach(mod => pickedMods.add(mod));
+      const RCModsTembu = [
         pickMods(['UTC1102C','UTC1102S','UTC1113','UTC1119'], 1), // junior seminar (not full list), choose 1
         pickMods(['UTC2105','UTC2107','UTC2110','UTC2113','UTC2114'], 2) // senior seminar (not full list), choose 2
-      ].forEach(mod => pickedMods.add(mod));
+      ];
+    RCModsTembu.forEach(mod => pickedMods.add(mod));
     }
-  }
-
-
-
 
   if (rc === 'RVRC') {
-      RCModsRVRC: {
-      label: 'RVRC mods';
-      required: [
+      const RCModsRVRC = [
         pickMods(['RVC1000','RVC1001','RVC2000'], 1),
         pickMods(['RVN2000','RVN2001','RVN2002','RVN2003'], 1),
         pickMods(['RVSS1000','RVSS1001', 'RVSS1002','RVSS1003','RVSS1004'], 1),
         pickMods(['RVX1000','RVX1002','RVX1003','RVX1005'], 1),
-      ].forEach(mod => pickedMods.add(mod));
+      ];
+    RCModsRVRC.forEach(mod => pickedMods.add(mod));
     }
-  }
-
 
   if (rc === 'NUSC') {
-      RCModsNUSC: {
-      label: 'NUSC mods';
-      required: [
+      const RCModsNUSC = [
         'GEA1000N', // Reasoning with Data
 
         pickMods(['NTW2007','NTW2010','NTW2032','NTW2033','NTW2035', 'NTW2036','NTW2037', 'NTW2038',
@@ -311,9 +291,10 @@ export async function RCOrNoRC(userId){
         ], 3), //NHS, NST, NHT
 
         pickMods(['NEP3001', 'NEP3001Z'], 1) // NEP
-      ].forEach(mod => pickedMods.add(mod));
+
+      ];
+    RCModsNUSC.forEach(mod => pickedMods.add(mod));
     }
-  }
 
   return pickedMods;
 }
