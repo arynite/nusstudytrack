@@ -1,3 +1,5 @@
+import { Network } from "inspector/promises";
+
 function pickMods(mods, number) { // pick mods from mods list, GEs and UEs
   const result = [];
   for (let i = 0; i < number; i++) {
@@ -63,7 +65,7 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
 
     RCModsCommon: {
       label: 'Common RC mods',
-      required: [ // IEM, choose 1
+      required: [ // IEM, choose 1 for UT RCs
         pickMods(['UTW1001A','UTW1001C','UTW1001G','UTW1001I','UTW1001J',
         'UTW1001K','UTW1001P','UTW1001Q','UTW1001T','UTW1001X'], 1)
       ]
@@ -100,6 +102,63 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
       required: [
         pickMods(['UTC1102C','UTC1102S','UTC1113','UTC1119'], 1), // junior seminar (not full list), choose 1
         pickMods(['UTC2105','UTC2107','UTC2110','UTC2113','UTC2114'], 2) // senior seminar (not full list), choose 2
+      ]
+    },
+
+    RCModsRVRC: {
+      label: 'RVRC mods',
+      required: [
+        pickMods(['RVC1000','RVC1001','RVC2000'], 1),
+        pickMods(['RVN2000','RVN2001','RVN2002','RVN2003'], 1),
+        pickMods(['RVSS1000','RVSS1001', 'RVSS1002','RVSS1003','RVSS1004'], 1),
+        pickMods(['RVX1000','RVX1002','RVX1003','RVX1005'], 1),
+      ]
+    },
+
+
+    /*NUSC Mods
+    Critical Competencies (4 mods) take 3
+    thinking with writing, NTW
+    Reasoning with data, GEA1000N
+    Understanding social world, NSW
+    Computernational Problem Solving, NPS
+
+    Global Orientation (3 mods) take 2
+    Gloabl narratives, NGN
+    Global Social thought, NGT
+    Science and society, NSS
+
+    Making connections (3 mods) take 3
+    Making connections 1, HSS/ST
+    Making connections 2, ST
+    Making connections 3, HSS
+
+    Impact experience project (1 mod) take 1
+    Impact experience project, NEP
+    */
+
+
+    RCModsNUSC: {
+      label: 'NUSC mods',
+      required: [
+        'GEA1000N', // Reasoning with Data
+
+        pickMods(['NTW2007','NTW2010','NTW2032','NTW2033','NTW2035', 'NTW2036','NTW2037', 'NTW2038',
+          'NSW2001A', 'NSW2001B', 'NSW2001C', 'NSW2001D', 'NSW2001E', 'NSW2001F', 'NSW2001G', 'NSW2001H', 'NSW2001I', 'NSW2001J',
+          'NPS2001A', 'NPS2001B', 'NPS2001C', 'NPS2001D', 'NPS2001E'
+        ], 2), // NTW, NSW, NPS
+
+        pickMods(['NGN2001A', 'NGN2001B', 'NGN2001C', 'NGN2001D', 'NGN2001F', 'NGN2001G', 'NGN2001H', 'NGN2001I', 'NGN2001J', 'NGN2001K',
+          /*'NGT2001A', 'NGT2001B', 'NGT2001C', 'NGT2001D', 'NGT2001E', 'NGT2001F', 'NGT2001G',*/
+          'NSS2001A', 'NSS2001B', 'NSS2001C', 'NSS2001D', 'NSS2001E', 'NSS2001F', 'NSS2001G', 'NSS2001H', 'NSS2001I', 'NSS2001J'
+        ], 2), //NGN, NGT, NSS, excluded NGT
+
+        pickMods(['NHS3901', 'NHS3902',
+          'NST2044','NST3901', 'NST3902',
+          'NHT2205', 'NHT2207', 'NHT2208', 'NHT2209', 'NHT2210', 'NHT2212', 'NHT2213'
+        ], 3), //NHS, NST, NHT
+
+        pickMods(['NEP3001', 'NEP3001Z'], 1) // NEP
       ]
     },
 
