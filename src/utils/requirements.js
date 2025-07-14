@@ -13,7 +13,7 @@ function pickMods(mods, number) { // pick mods from mods list, GEs and UEs
 
 
 
-export function eeMajorRequirements(x) { // consisits of core, unrestricted electives, general education or RC  mods, technical electives, bridging modules
+export function eeMajorRequirements(x) { // consisits of core, unrestricted electives, technical electives, bridging modules
   return{
     label: 'Electrical Engineering Major',
   
@@ -179,7 +179,7 @@ export const specialisationModules = {  // consists of SPN
   }
 }
 
-export async function RCOrNoRC(userId){
+export async function RCOrNoRC(userId){ // RC mods or GE
   if (!userId) return new Set();
 
   const { data, error } = await supabase

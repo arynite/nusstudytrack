@@ -1,3 +1,6 @@
+
+
+/*
 //import { Network } from "inspector/promises";
 import { supabase } from './supabaseClient';
 
@@ -263,70 +266,6 @@ if (rc === 'NUSC') {
   return pickedMods;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //import { Network } from "inspector/promises";
 import { supabase } from './supabaseClient';
@@ -387,8 +326,8 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
 
 
 
+/*
 
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export async function RCOrNoRC(userId: string): Promise<Set<string>> {
   if (!userId) return new Set();
 
@@ -527,9 +466,7 @@ export async function RCOrNoRC(userId: string): Promise<Set<string>> {
     }
   }
 }
-    */////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
+   
     generalEducation: {
       label: 'General Education',
       required: [
@@ -641,7 +578,6 @@ export async function RCOrNoRC(userId: string): Promise<Set<string>> {
       ]
     },
 
-    */
 
 
     technicalElectives:{ // Number of TE depends on number of specialisations chosen
@@ -768,3 +704,5 @@ export const specialisationModules = {  // consists of SPN
     }
   }
 }
+
+*/
