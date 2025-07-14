@@ -15,6 +15,21 @@ export default function CreatePlan() {
   const [degreeLength, setDegreeLength] = useState('')
   const [rc, setRc] = useState('')
 
+  /*
+  
+    const [specialisations, setSpecialisations] = useState({
+    'adv-electronics': false,
+    'industry4': false,
+    'iot': false,
+    'microelectronics': false,
+    'robotics': false,
+    'space-tech': false,
+    'transportation': false,
+    'data-eng': false,
+  })
+
+  */ 
+
 // new state for mods
 const [generatedModules, setGeneratedModules] = useState([])
 const [exemptions, setExemptions] = useState({
