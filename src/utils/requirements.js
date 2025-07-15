@@ -18,6 +18,7 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
     core: {
       label: 'Core Modules',
       required: [
+        'CS1010E',
         'DTK1234',
         'EG1311',
         'EE2211',
