@@ -16,7 +16,7 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
 
   const exemptions: string[] = Array.isArray(data?.exemptions) ? data.exemptions : [];
 
-  const bridgingModules = ['ES1000', 'ES1103', 'MA1301', 'PC1201'];
+  const bridgingModules = ['ES1000', 'ES1103', 'MA1301', 'PC1201', 'CS1010E'];
   if (exemptions.length === 0) {
     return new Set(bridgingModules);
   }
