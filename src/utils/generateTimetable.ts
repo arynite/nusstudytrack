@@ -248,7 +248,7 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         const prereqs = parsePrerequisites(info.prereqTree) // Parse prerequisites
 
         const prereqsMet = prereqs.length === 0 || prereqs.some(group => group.some(pr => completedModules.has(pr))) // Check if prereqs are completed
-        if (!prereqsMet && (mod !== "" || mod !== ""|| mod !== ""|| mod !== ""|| mod !== ""|| mod !== "")) { // if not met, skip this module, besides certain NUSC mods due to their unique prerequistes
+        if (!prereqsMet && (mod !== "" || mod !== ""|| mod !== ""|| mod !== ""|| mod !== ""|| mod !== "")) { // if not met, skip this module, besides certain NUSC mods due to their unique prerequistes like NHT courses
           const missing = prereqs.filter(group => !group.some(code => completedModules.has(code)));
           console.log(`Cannot place ${mod}, missing prereq group(s):`, missing);
           continue;
