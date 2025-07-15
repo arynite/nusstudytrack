@@ -248,13 +248,22 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         const prereqs = parsePrerequisites(info.prereqTree) // Parse prerequisites
 
         const prereqsMet = prereqs.length === 0 || prereqs.some(group => group.some(pr => completedModules.has(pr))) // Check if prereqs are completed
-        if (!prereqsMet && (mod !== "NHT2205" || "NHT2207"|| "NHT2208"|| "NHT2209"|| "NHT2210"|| "NHT2212" || "NHT2213")) { // if not met, skip this module, besides certain NUSC mods due to their unique prerequistes like NHT courses
-          
+        if (!prereqsMet) { // if not met, skip this module, (besides certain NUSC mods due to their unique prerequistes like NHT courses)
           const missing = prereqs.filter(group => !group.some(code => completedModules.has(code)));
           console.log(`Cannot place ${mod}, missing prereq group(s):`, missing);
           continue;
         }
-  
+
+
+
+
+
+        // NHT Courses:  && (mod !== "NHT2205" || "NHT2207"|| "NHT2208"|| "NHT2209"|| "NHT2210"|| "NHT2212" || "NHT2213")
+
+
+        
+
+
         // Find earliest semester offered and with space
         let placed = false
         for (let sem = 0; sem < semesters; sem++) {
