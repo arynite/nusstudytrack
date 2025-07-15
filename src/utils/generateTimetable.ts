@@ -51,7 +51,7 @@ export async function PolyOrNot(userId: string): Promise<Set<string>> {
   const education = data?.education;
 
   if (education === 'Polytechnic') { // in addition to -20 for x
-    ['EG3611P', 'EG1311', 'DTK1234'].forEach(mod => completedModules.add(mod));
+    ['EG3611P', 'EG1311', 'DTK1234', 'EG3611A'].forEach(mod => completedModules.add(mod));
   }
 
   return completedModules;
@@ -193,13 +193,53 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     const MAX_MODULES_PER_SEMESTER = maxPerSemester
     let progress = true
 
-    const forcedSem0Mods = new Set(["ES1000", "ES1103", "MA1301", "CS1010E", "PC1201", "EE1111A"]);
-    for (const mod of forcedSem0Mods) {
-      if (modulesToSchedule.has(mod) && timetable[0].length < MAX_MODULES_PER_SEMESTER) {
-        timetable[0].push(mod);
-        completedModules.add(mod);
-        modulesToSchedule.delete(mod);
-      }}
+     const needsES1000 = modulesToSchedule.has("ES1000"); //ensure es1000 and es1103 are not in the same sem
+     const needsES1103 = modulesToSchedule.has("ES1103");
+ 
+     if (needsES1000 && timetable[0].length < MAX_MODULES_PER_SEMESTER) {
+       timetable[0].push("ES1000");
+       completedModules.add("ES1000");
+       modulesToSchedule.delete("ES1000");
+ 
+       if (needsES1103 && semesters > 1 && timetable[1].length < MAX_MODULES_PER_SEMESTER) {
+         timetable[1].push("ES1103");
+         completedModules.add("ES1103");
+         modulesToSchedule.delete("ES1103");
+       }
+     } else if (needsES1103 && timetable[0].length < MAX_MODULES_PER_SEMESTER) {
+       timetable[0].push("ES1103");
+       completedModules.add("ES1103");
+       modulesToSchedule.delete("ES1103");
+     }
+ 
+     // Handle the rest of the fixed semester 1 modules
+     const forcedSem0Mods = new Set(["MA1301", "CS1010E", "PC1201", "EE1111A"]);
+     for (const mod of forcedSem0Mods) {
+       if (modulesToSchedule.has(mod) && timetable[0].length < MAX_MODULES_PER_SEMESTER) {
+         timetable[0].push(mod);
+         completedModules.add(mod);
+         modulesToSchedule.delete(mod);
+       }
+     }
+    
+      if (modulesToSchedule.has("EE2111A") && semesters > 1) { //ensure EE2111A always in y1s2
+        if (timetable[1].length < MAX_MODULES_PER_SEMESTER) {
+          timetable[1].push("EE2111A");
+          completedModules.add("EE2111A");
+          modulesToSchedule.delete("EE2111A");
+        }
+      }
+
+      if (modulesToSchedule.has("GEA1000")) { //ensure gea is completed within first year 
+        for (let sem = 0; sem < Math.min(2, semesters); sem++) {
+          if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+            timetable[sem].push("GEA1000");
+            completedModules.add("GEA1000");
+            modulesToSchedule.delete("GEA1000");
+            break;
+          }
+        }
+      }
 
     while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
       progress = false
