@@ -242,7 +242,7 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
       }
 
     const NUSC_NHTMods_and_Others = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213",
-      "EE2211"
+      "EE2211", "CS3237", "IT2002",
     ]);
 
 
