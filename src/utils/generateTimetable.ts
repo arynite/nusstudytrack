@@ -241,13 +241,27 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         }
       }
 
+    const NUSC_NHTMods = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213"]);
+
+
     while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
       progress = false
       for (const mod of Array.from(modulesToSchedule)) { // checks for each unscheduled mod to see if they can be scheduled
         const info = moduleInfos[mod]
         const prereqs = parsePrerequisites(info.prereqTree) // Parse prerequisites
 
-        const prereqsMet = prereqs.length === 0 || prereqs.some(group => group.some(pr => completedModules.has(pr))) // Check if prereqs are completed
+        //const prereqsMet = prereqs.length === 0 || prereqs.some(group => group.some(pr => completedModules.has(pr))) // Check if prereqs are completed
+
+        let prereqsMet;
+        if (NUSC_NHTMods.has(mod)) {
+          // For NUSC/NHT modules, we trust prerequisites are fulfilled
+          prereqsMet = true;
+        } else {
+          prereqsMet =
+            prereqs.length === 0 || prereqs.some(group => group.some(pr => completedModules.has(pr)));
+        }
+
+
         if (!prereqsMet) { // if not met, skip this module, (besides certain NUSC mods due to their unique prerequistes like NHT courses)
           const missing = prereqs.filter(group => !group.some(code => completedModules.has(code)));
           console.log(`Cannot place ${mod}, missing prereq group(s):`, missing);
