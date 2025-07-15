@@ -241,7 +241,9 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         }
       }
 
-    const NUSC_NHTMods = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213"]);
+    const NUSC_NHTMods_and_Others = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213",
+      "EE2211"
+    ]);
 
 
     while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
@@ -253,7 +255,7 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         //const prereqsMet = prereqs.length === 0 || prereqs.some(group => group.some(pr => completedModules.has(pr))) // Check if prereqs are completed
 
         let prereqsMet;
-        if (NUSC_NHTMods.has(mod)) {
+        if (NUSC_NHTMods_and_Others.has(mod)) {
           // For NUSC/NHT modules, we trust prerequisites are fulfilled
           prereqsMet = true;
         } else {
