@@ -533,24 +533,24 @@ export async function RCOrNoRC(userId: string): Promise<Set<string>> {
 
 
     //NUSC Mods
-    //Critical Competencies (4 mods) take 3
-    //thinking with writing, NTW
-    //Reasoning with data, GEA1000N
-    //Understanding social world, NSW
-    //Computernational Problem Solving, NPS
+  //Critical Competencies (4 mods) take 3
+  //thinking with writing, NTW
+  //Reasoning with data, GEA1000N
+  //Understanding social world, NSW
+  //Computernational Problem Solving, NPS
 
-    //Global Orientation (3 mods) take 2
-    //Gloabl narratives, NGN
-   // Global Social thought, NGT
-    //Science and society, NSS
+  //Global Orientation (3 mods) take 2
+  //Gloabl narratives, NGN
+  // Global Social thought, NGT
+  //Science and society, NSS
 
-    //Making connections (3 mods) take 3
-   //Making connections 1, HSS/ST
-    //Making connections 2, ST
-    //Making connections 3, HSS
+  //Making connections (3 mods) take 3
+  //Making connections 1, HSS/ST
+  //Making connections 2, ST
+  //Making connections 3, HSS
 
-    //Impact experience project (1 mod) take 1
-    //Impact experience project, NEP
+  //Impact experience project (1 mod) take 1
+  //Impact experience project, NEP
     
 
 
