@@ -77,7 +77,7 @@ type PrereqGroup = string[][];
   
   async function fetchModuleData(moduleCode: string): Promise<ModuleData> {
     const res = await fetch(
-      `https://api.nusmods.com/v2/2023-2024/modules/${moduleCode}.json`
+      `https://api.nusmods.com/v2/2024-2025/modules/${moduleCode}.json`
     )
     if (!res.ok) throw new Error(`Failed to fetch ${moduleCode}`)
     const data = await res.json()
