@@ -1,6 +1,3 @@
-//import { Network } from "inspector/promises";
-//import { supabase } from './supabaseClient';
-
 function pickMods(mods, number) { // pick mods from mods list
   const result = [];
   for (let i = 0; i < number; i++) {
@@ -37,7 +34,7 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
         ['EE2026', 'EE2028'],
         'EE2027',
         'PC2020',
-        pickMods(['EE3131C','EE3408C','EE3331C','EE3431C','EE3731C','EE3104C'], 4)
+        ...pickMods(['EE3131C','EE3408C','EE3331C','EE3431C','EE3731C','EE3104C'], 4)
       ]
     },
   
