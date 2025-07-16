@@ -1,4 +1,5 @@
 import { supabase } from './supabaseClient';
+import { shuffleArray } from './shuffle';
 
 export async function getExemptedModules(userId: string): Promise<Set<string>> {
   if (!userId) return new Set();
@@ -153,7 +154,7 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     console.log("Completed modules (Set):", Array.from(completedModules))
 
     //modules = modules.filter(mod => !completedModules.has(mod)) // filter out exempted modules 
-    modules = allModules.filter(mod => !completedModules.has(mod));
+    modules = shuffleArray(allModules.filter(mod => !completedModules.has(mod)));
     console.log("Modules after filtering completed ones:", modules);
 
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
@@ -248,7 +249,7 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
 
     while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
       progress = false
-      for (const mod of Array.from(modulesToSchedule)) { // checks for each unscheduled mod to see if they can be scheduled
+      for (const mod of shuffleArray(Array.from(modulesToSchedule))) { // checks for each unscheduled mod to see if they can be scheduled
         const info = moduleInfos[mod]
         const prereqs = parsePrerequisites(info.prereqTree) // Parse prerequisites
 
