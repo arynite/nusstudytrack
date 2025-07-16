@@ -17,15 +17,15 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
 
   const exemptions: string[] = Array.isArray(data?.exemptions) ? data.exemptions : [];
 
-  const bridgingModules = ['ES1000', 'ES1103', 'MA1301', 'PC1201', 'CS1010E'];
+  const bridgingModules_And_Math = ['ES1000', 'ES1103', 'MA1301', 'PC1201', 'CS1010E', 'MA1511', 'MA1512'];
   if (exemptions.length === 0) {
-    return new Set(bridgingModules);
+    return new Set(bridgingModules_And_Math);
   }
 
   const exemptionCodes = exemptions.map(mod => mod.split(' ')[0].trim());
 
   const completedModules = new Set<string>();
-  for (const mod of bridgingModules) {
+  for (const mod of bridgingModules_And_Math) {
     if (exemptionCodes.includes(mod)) {
       completedModules.add(mod);
     }
