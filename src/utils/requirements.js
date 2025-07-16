@@ -14,7 +14,6 @@ function pickMods(mods, number) { // pick mods from mods list
 export function eeMajorRequirements(x) { // consisits of core, unrestricted electives, technical electives, bridging modules
   return{
     label: 'Electrical Engineering Major',
-  
     core: {
       label: 'Core Modules',
       required: [
@@ -38,10 +37,7 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
         ['EE2026', 'EE2028'],
         'EE2027',
         'PC2020',
-        'EE3131C', // Technical Elective 1
-        'EE3408C', // Technical Elective 2
-        'EE3331C', // Technical Course 1
-        'EE3431C'  // Technical Course 2
+        pickMods(['EE3131C','EE3408C','EE3331C','EE3431C','EE3731C','EE3104C'], 4)
       ]
     },
   
