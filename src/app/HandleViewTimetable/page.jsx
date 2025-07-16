@@ -73,9 +73,9 @@ export default function TimetablePage() {
       const flattened = flattenModules(specialisations, specialisationModules, exemptions, rc_ge_Modules) 
 
 
-      if (degreeLength === 3 && 31 <= flattened.length <= 36){ // handles generateTimetable function from generateTimetable.ts
+      if (degreeLength === 3 && 32 <= flattened.length <= 36){ // handles generateTimetable function from generateTimetable.ts
         timetable = await generateTimetable(flattened, degreeLength * 2, 6, user.id, rc_ge_Modules) 
-      } else if (degreeLength === 3 && flattened.length <= 30) {
+      } else if (degreeLength === 3 && flattened.length <= 31) {
         timetable = await generateTimetable(flattened, degreeLength * 2, 5, user.id, rc_ge_Modules) 
       }
       

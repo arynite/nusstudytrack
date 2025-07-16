@@ -84,15 +84,15 @@ const [exemptions, setExemptions] = useState({
     const numSPN = selectedSpecialisations.length;
 
     if (education === 'JC / Others' && numSPN === 0) {
-      x = 40;
+      x = 8;
     } else if (numSPN === 1) {
-      x = 20;
+      x = 4;
     } else if (numSPN >= 2) {
       x = 0;
     }
 
     if (education === 'Polytechnic' && numSPN === 0) {
-      x = 20;
+      x = 4;
     } else if (numSPN === 1) {
       x = 0;
     }
