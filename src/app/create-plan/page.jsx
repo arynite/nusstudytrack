@@ -85,7 +85,7 @@ const [exemptions, setExemptions] = useState({
     } else if (numSPN >= 2) {
       x = 0;
     }
-    
+
     if (education === 'Polytechnic' && numSPN === 0) {
       x = 4;
     } else if (numSPN === 1) {
@@ -93,12 +93,13 @@ const [exemptions, setExemptions] = useState({
     }
     
     const rcMods = await RCOrNoRC(user.id, rc);
+    const z = x + y
     
     const requiredModules = flattenModules(
       selectedSpecialisations,
       specialisationModules,
       selectedExemptions,
-      x + y,
+      z,
       rcMods
     )
     //const timetable = generateTimetable(requiredModules)
@@ -106,7 +107,7 @@ const [exemptions, setExemptions] = useState({
     setGeneratedModules(requiredModules)
     
     console.log("Mods to clear:", requiredModules)
-    console.log("x:", x)
+    console.log("z:", z)
 
 
     const { error: upsertError } = await supabase.from('study_plans').upsert([

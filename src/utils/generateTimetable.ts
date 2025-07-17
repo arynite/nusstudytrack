@@ -30,7 +30,6 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
       completedModules.add(mod);
     }
   }
-  console.log('Completed bridging modules:(test)', Array.from(completedModules));
   return completedModules;
 }
 
@@ -143,19 +142,19 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     userId: string,
     rcMods: Set<string> = new Set() /////////////////////////////////////////////
   ): Promise<string[][]> { // fetch all module information in parallel
-    console.log("generateTimetable - received userId:", userId);
-    console.log("RC/GE modules:", Array.from(rcMods)); /////////////////////////////////////////////
+    //console.log("generateTimetable - received userId:", userId);
+    //console.log("RC/GE modules:", Array.from(rcMods)); /////////////////////////////////////////////
 
     const allModules = [...new Set([...modules, ...rcMods])];
-    console.log("All modules combined:", allModules);
+    //console.log("All modules combined:", allModules);
 
     //const completedModules = await getExemptedModules(userId)
     const completedModules = await PolyOrNot(userId)
-    console.log("Completed modules (Set):", Array.from(completedModules))
+    //console.log("Completed modules (Set):", Array.from(completedModules))
 
     //modules = modules.filter(mod => !completedModules.has(mod)) // filter out exempted modules 
     modules = shuffleArray(allModules.filter(mod => !completedModules.has(mod)));
-    console.log("Modules after filtering completed ones:", modules);
+    //console.log("Modules after filtering completed ones:", modules);
 
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
     await Promise.all(
@@ -244,7 +243,8 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
 
     const NUSC_NHTMods_and_Others = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213",
       "EE2211", "CS3237", "IT2002", "PC2020", "EE4407", "EE3408C", "EE2023", "EE4409", "EE2012", "EE3104C", "EE3731C",
-      "UTC2110","UTC2105", "UTC2737", "UTC2729", "EE3331C", "EE3131C", "NSS2001H", "NPS2001C", "EE4211", "EE4502", "EE3801"
+      "UTC2110","UTC2105", "UTC2737", "UTC2729", "EE3331C", "EE3131C", "NSS2001H", "NPS2001C", "EE4211", "EE4502", "EE3801",
+      "EE4438", "EE5507"
     ]);
 
 

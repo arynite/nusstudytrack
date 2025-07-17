@@ -56,14 +56,14 @@ export default function TimetablePage() {
         exemptions = [],
       } = data
 
-      console.log('Exemptions:', exemptions)
+      //console.log('Exemptions:', exemptions)
 
       const fv = { education, degreeLength, rc, specialisations, exemptions }
       setFormValues(fv)
 
       const rc_ge_Modules = await RCOrNoRC(user.id, rc)
       setRcMods(rc_ge_Modules)
-      console.log('RC/GE Modules:', Array.from(rc_ge_Modules))
+      //console.log('RC/GE Modules:', Array.from(rc_ge_Modules))
 
       const completedModules = await getExemptedModules(user.id)
       console.log('Completed bridging modules:', Array.from(completedModules))
@@ -71,26 +71,27 @@ export default function TimetablePage() {
       let timetable;
 
       const flattened = flattenModules(specialisations, specialisationModules, exemptions, rc_ge_Modules) 
+      const Actiul_Total = flattened.length + rc_ge_Modules.size - completedModules.size
 
 
-      if (degreeLength === 3 && 32 <= flattened.length <= 36){ // handles generateTimetable function from generateTimetable.ts
+      if (degreeLength === 3 && 32 <= Actiul_Total <= 36){ // handles generateTimetable function from generateTimetable.ts
         timetable = await generateTimetable(flattened, degreeLength * 2, 6, user.id, rc_ge_Modules) 
-      } else if (degreeLength === 3 && flattened.length <= 31) {
+      } else if (degreeLength === 3 && Actiul_Total <= 31) {
         timetable = await generateTimetable(flattened, degreeLength * 2, 5, user.id, rc_ge_Modules) 
       }
       
       
-      else if (degreeLength === 3.5 && flattened.length <= 40) {
+      else if (degreeLength === 3.5 && Actiul_Total <= 40) {
         timetable = await generateTimetable(flattened, degreeLength * 2, 6, user.id, rc_ge_Modules) 
-      } else if (degreeLength === 4 && flattened.length <= 40) {
+      } else if (degreeLength === 4 && Actiul_Total <= 40) {
         timetable = await generateTimetable(flattened, degreeLength * 2, 5, user.id, rc_ge_Modules) 
-      } else if (degreeLength === 4.5 && flattened.length <= 40) {
+      } else if (degreeLength === 4.5 && Actiul_Total <= 40) {
         timetable = await generateTimetable(flattened, degreeLength * 2, 4, user.id, rc_ge_Modules) 
-      } else if (degreeLength === 5 && flattened.length <= 40) {
+      } else if (degreeLength === 5 && Actiul_Total <= 40) {
         timetable = await generateTimetable(flattened, degreeLength * 2, 4, user.id, rc_ge_Modules) 
       }
       else{
-        timetable = await generateTimetable(flattened, degreeLength * 2, Math.ceil(flattened.length/(degreeLength * 2)), user.id, rc_ge_Modules) // original method
+        timetable = await generateTimetable(flattened, degreeLength * 2, Math.ceil(Actiul_Total/(degreeLength * 2)), user.id, rc_ge_Modules) // original method
       }
       setPlannedSemesters(timetable)
       setMounted(true)

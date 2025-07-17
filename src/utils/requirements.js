@@ -8,7 +8,7 @@ function pickMods(mods, number) { // pick mods from mods list
 }
 
 
-export function eeMajorRequirements(x) { // consisits of core, unrestricted electives, technical electives, bridging modules
+export function eeMajorRequirements(z) { // consisits of core, unrestricted electives, technical electives, bridging modules
   return{
     label: 'Electrical Engineering Major',
     core: {
@@ -34,9 +34,11 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
         ['EE2026', 'EE2028'],
         'EE2027',
         'PC2020',
-        ...pickMods(['EE3131C','EE3408C','EE3331C','EE3431C','EE3731C','EE3104C'], 4)
+        'EE3408C','EE3331C','EE3431C','EE3731C' // TE
       ]
     },
+
+    // EE4113, EE4114 needs  EE3131C ||||| EE4110 needs EE3104C
   
     unrestrictedElectives: {
       label: 'Unrestricted Electives',
@@ -51,7 +53,7 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
       required: [pickMods(['EE4204','EE4205','EE4210','EE4211','EE4216',
     'CG3207','EE4407','EE4218','EE4415','EE4302','EE4307','EE4308','EE4311','EE4312','EE4314','EE4315','EE4705','EE4409',
     'EE4435','EE4436','EE4437','EE4438','EE4501','EE4502','EE4503','EE4505','EE4509','EE4511','EE4513','EE4212','EE4309',
-    'EE4704','EE3105','EE4101','EE4104','EE4112','EE4115','EE3801','EE4032'], x) // value of x depends on the number of specialisations chosen
+    'EE4704','EE3105','EE4101','EE4104','EE4112','EE4115','EE3801','EE4032'], z) // value of z depends on the number of specialisations and exemptions chosen
       ]
     },
 
