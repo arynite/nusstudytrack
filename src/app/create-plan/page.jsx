@@ -4,8 +4,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../utils/supabaseClient'
 import './create-plan.css'
-
-// import flattenmods, req.js
 import { flattenModules } from '../../utils/flattenmodules'
 import { eeMajorRequirements, specialisationModules, RCOrNoRC} from '../../utils/requirements'
 
@@ -65,6 +63,18 @@ const [exemptions, setExemptions] = useState({
     const selectedSpecialisations = Object.keys(specialisations).filter(key => specialisations[key])
     const selectedExemptions = Object.keys(exemptions).filter(key => exemptions[key])
 
+    let y;
+    const numExemptions = selectedExemptions.length;
+    if (numExemptions === 1) {
+      y = 3;
+    } else if (numExemptions === 2) {
+      y = 2;
+    } else if (numExemptions >= 1) {
+      y = 1;
+    } else {
+      y = 0;
+    }
+
     let x;
     const numSPN = selectedSpecialisations.length;
 
@@ -75,7 +85,7 @@ const [exemptions, setExemptions] = useState({
     } else if (numSPN >= 2) {
       x = 0;
     }
-
+    
     if (education === 'Polytechnic' && numSPN === 0) {
       x = 4;
     } else if (numSPN === 1) {
@@ -88,7 +98,7 @@ const [exemptions, setExemptions] = useState({
       selectedSpecialisations,
       specialisationModules,
       selectedExemptions,
-      x,
+      x + y,
       rcMods
     )
     //const timetable = generateTimetable(requiredModules)

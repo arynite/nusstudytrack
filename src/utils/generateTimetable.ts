@@ -244,7 +244,7 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
 
     const NUSC_NHTMods_and_Others = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213",
       "EE2211", "CS3237", "IT2002", "PC2020", "EE4407", "EE3408C", "EE2023", "EE4409", "EE2012", "EE3104C", "EE3731C",
-      "UTC2110","UTC2105", "UTC2737", "UTC2729", "EE3331C", "EE3131C", "NSS2001H", "NPS2001C", "EE4211"
+      "UTC2110","UTC2105", "UTC2737", "UTC2729", "EE3331C", "EE3131C", "NSS2001H", "NPS2001C", "EE4211", "EE4502", "EE3801"
     ]);
 
 
