@@ -236,6 +236,28 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         }
       }
 
+      if (modulesToSchedule.has("MA1511")) { //ensure MA1511 is completed within first year 
+        for (let sem = 0; sem < Math.min(2, semesters); sem++) {
+          if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+            timetable[sem].push("MA1511");
+            completedModules.add("MA1511");
+            modulesToSchedule.delete("MA1511");
+            break;
+          }
+        }
+      }
+
+      if (modulesToSchedule.has("MA1512")) { //ensure MA1512 is completed within first year 
+        for (let sem = 0; sem < Math.min(2, semesters); sem++) {
+          if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+            timetable[sem].push("MA1512");
+            completedModules.add("MA1512");
+            modulesToSchedule.delete("MA1512");
+            break;
+          }
+        }
+      }
+
     const NUSC_NHTMods_and_Others = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213",
       "EE2211", "CS3237", "IT2002", "PC2020", "EE4407", "EE3408C", "EE2023", "EE4409", "EE2012", "EE3104C", "EE3731C",
       "UTC2110","UTC2105", "UTC2737", "UTC2729", "EE3331C", "EE3131C", "NSS2001H", "NPS2001C", "EE4211", "EE4502", "EE3801",
@@ -266,9 +288,23 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
           console.log(`Cannot place ${mod}, missing prereq group(s):`, missing);
           continue;
         }
-
         // NHT Courses:  && (mod !== "NHT2205" || "NHT2207"|| "NHT2208"|| "NHT2209"|| "NHT2210"|| "NHT2212" || "NHT2213")
 
+        const isitFinalYearMod = info.level >= 4;
+        const last2Sems = semesters >= 2? [semesters -2, semesters -1] : [semesters -1];
+
+        if (isitFinalYearMod) {
+          for (const lastsems of last2Sems) {
+            if (timetable[lastsems].length < MAX_MODULES_PER_SEMESTER){
+              timetable[lastsems].push(mod);
+              completedModules.add(mod);
+              modulesToSchedule.delete(mod);
+              progress = true;
+            break;
+          }
+        }
+        continue;
+      }
 
         // Find earliest semester offered and with space
         let placed = false
