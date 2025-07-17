@@ -79,15 +79,15 @@ const [exemptions, setExemptions] = useState({
     const numSPN = selectedSpecialisations.length;
 
     if (education === 'JC / Others' && numSPN === 0) {
-      x = 8;
+      x = 10;
     } else if (numSPN === 1) {
-      x = 4;
+      x = 5;
     } else if (numSPN >= 2) {
       x = 0;
     }
 
     if (education === 'Polytechnic' && numSPN === 0) {
-      x = 4;
+      x = 5;
     } else if (numSPN === 1) {
       x = 0;
     }
@@ -102,7 +102,6 @@ const [exemptions, setExemptions] = useState({
       z,
       rcMods
     )
-    //const timetable = generateTimetable(requiredModules)
     
     setGeneratedModules(requiredModules)
     
