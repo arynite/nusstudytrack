@@ -4,8 +4,9 @@ export const dynamic = 'force-dynamic'
 
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import './study-plan.css'
 import { supabase } from '../../utils/supabaseClient'
+
+import './study-plan.css'
 
 export default function StudyPlan() {
   const router = useRouter()
