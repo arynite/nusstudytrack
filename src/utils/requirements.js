@@ -106,7 +106,7 @@ export const specialisationModules = {  // consists of SPN
     electives: {
       choose: 2,
       from: [
-        'CG4002', 'CS4222', 'EE4204', 'EE4216', 'EE4218', 'CS3244',
+        'CS4222', 'EE4204', 'EE4216', 'EE4218', 'CS3244', // CG4002
         ['EE4002D', 'EE4002R', 'CP4106']
       ]
     }
@@ -175,7 +175,7 @@ export const specialisationModules = {  // consists of SPN
     core: ['EE3801', ['IT2002', 'CS2102'], 'EE4802', 'CS4225'],
     electives: {
       choose: 1,
-      from: ['BT4015', 'EE4115', 'EE4704', 'EE5907', 'IE4210', 'IE4211', 'IE4243']
+      from: ['EE4115', 'EE4704', 'EE5907', 'IE4210', 'IE4211', 'IE4243'] // BT4015
     }
   }
 }
@@ -252,4 +252,5 @@ export async function RCOrNoRC(userId, rcSelection) {
 
 
 
-// CG4002, CS4225, BT4015, 
+// CG4002, CS4225, BT4015,
+// CS4222
