@@ -17,7 +17,7 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
 
   const exemptions: string[] = Array.isArray(data?.exemptions) ? data.exemptions : [];
 
-  const bridgingModules = ['ES1000', 'ES1103', 'MA1301', 'PC1201', 'CS1010E'];
+  const bridgingModules = ['ES1000', 'ES1103', 'MA1301', 'PC1201'];
   if (exemptions.length === 0) {
     return new Set(bridgingModules);
   }
@@ -30,7 +30,6 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
       completedModules.add(mod);
     }
   }
-  console.log('Completed bridging modules:(test)', Array.from(completedModules));
   return completedModules;
 }
 
@@ -51,7 +50,7 @@ export async function PolyOrNot(userId: string): Promise<Set<string>> {
   const completedModules = await getExemptedModules(userId);
   const education = data?.education;
 
-  if (education === 'Polytechnic') { // in addition to -20 for x
+  if (education === 'Polytechnic') { // in addition to -5 for x
     ['EG3611P', 'EG1311', 'DTK1234', 'EG3611A'].forEach(mod => completedModules.add(mod));
   }
 
@@ -145,15 +144,11 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     userId: string,
     rcMods: Set<string> = new Set() /////////////////////////////////////////////
   ): Promise<string[][]> { // fetch all module information in parallel
-    console.log("generateTimetable - received userId:", userId);
-    console.log("RC/GE modules:", Array.from(rcMods)); /////////////////////////////////////////////
 
     const allModules = [...new Set([...modules, ...rcMods])];
-    console.log("All modules combined:", allModules);
 
     //const completedModules = await getExemptedModules(userId)
     const completedModules = await PolyOrNot(userId)
-    console.log("Completed modules (Set):", Array.from(completedModules))
 
     //modules = modules.filter(mod => !completedModules.has(mod)) // filter out exempted modules 
     modules = shuffleArray(
@@ -246,13 +241,49 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         }
       }
 
+      if (modulesToSchedule.has("MA1511")) { //ensure MA1511 is completed within first year 
+        for (let sem = 0; sem < Math.min(2, semesters); sem++) {
+          if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+            timetable[sem].push("MA1511");
+            completedModules.add("MA1511");
+            modulesToSchedule.delete("MA1511");
+            break;
+          }
+        }
+      }
+
+      if (modulesToSchedule.has("MA1512")) { //ensure MA1512 is completed within first year 
+        for (let sem = 0; sem < Math.min(2, semesters); sem++) {
+          if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+            timetable[sem].push("MA1512");
+            completedModules.add("MA1512");
+            modulesToSchedule.delete("MA1512");
+            break;
+          }
+        }
+      }
+
     const NUSC_NHTMods_and_Others = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213",
-      "EE2211", "CS3237", "IT2002",
+      'NPS2001A','NPS2001B','NPS2001C','NPS2001D','NPS2001E',
+      'UTC2851', 'UTC2852', 'UTS2831', 'UTS2891',
+      'UTC2400', 'UTC2402', 'UTC2408', 'UTC2410B', 'UTC2411', 'UTC2412', 'UTC2417', 'UTC2420A', 'UTS2400', 'UTS2402', 'UTS2406', 'UTS2408', 'UTS2409', 'UTS2414',
+      'UTC2700', 'UTC2704', 'UTS2706', 'UTS2716', 'UTC2722', 'UTC2723', 'UTC2728', 'UTC2729', 'UTC2734', 'UTC2737',
+      'UTC2105', 'UTC2107', 'UTC2110', 'UTC2113', 'UTC2114',
+      'NSS2001A','NSS2001B','NSS2001C','NSS2001D','NSS2001E','NSS2001F','NSS2001G','NSS2001H','NSS2001I','NSS2001J',
+      "EE2211","EE4407", "EE3408C", "EE2023", "EE4409", "EE2012", "EE3104C", "EE3731C",
+      "EE3331C", "EE3131C", "EE4211", "EE4502", "EE3801",
+      "EE4438", "EE5507", "EE4204", "EE4210", "EE4212", "EE4437", "EE5507", "EE4307", "EE4302", "EE4503", 
+      "EE4101", "EE4435", "EE4802", 
+      "CG3207", "CS4222", "CS4225", "CS3237", "IT2002",
+      "PC2020", 
     ]);
 
-
+    const last2Sems = semesters >= 4 ? [semesters -4, semesters - 3,semesters - 2, semesters - 1] : Array.from({length: semesters}, (_, a) => a);
+    progress = true;
     while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
-      progress = false
+      progress = false;
+
+
       for (const mod of shuffleArray(Array.from(modulesToSchedule))) { // checks for each unscheduled mod to see if they can be scheduled
         const info = moduleInfos[mod]
         const prereqs = parsePrerequisites(info.prereqTree) // Parse prerequisites
@@ -274,20 +305,27 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
           console.log(`Cannot place ${mod}, missing prereq group(s):`, missing);
           continue;
         }
-
-
-
-
-
         // NHT Courses:  && (mod !== "NHT2205" || "NHT2207"|| "NHT2208"|| "NHT2209"|| "NHT2210"|| "NHT2212" || "NHT2213")
 
+        const isitFinalYearMod = info.level >= 4;
 
-        
-
+        if (isitFinalYearMod) {
+          for (const lastsems of last2Sems) {
+            if (timetable[lastsems].length < MAX_MODULES_PER_SEMESTER){
+              timetable[lastsems].push(mod);
+              completedModules.add(mod);
+              modulesToSchedule.delete(mod);
+              progress = true;
+            break;
+          }
+        }
+        continue;
+      }
 
         // Find earliest semester offered and with space
         let placed = false
         for (let sem = 0; sem < semesters; sem++) {
+
           //if (getYearFromSemester(sem) < info.level) continue; // see which level is the module 
           const moduleYear = info.level;
           const currentYear = getYearFromSemester(sem);
@@ -306,6 +344,23 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         if (!placed) continue
       }
     }
+    
+    function thoselastfewmods(
+      timetable: string[][],
+      modulesToSchedule: Set<string>,
+      MAX_MODULES_PER_SEMESTER: number
+    ) {
+      for (const mod of Array.from(modulesToSchedule)) {
+        for (let sem = 0; sem < timetable.length; sem++) {
+          if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+          timetable[sem].push(mod);
+          modulesToSchedule.delete(mod);
+          break;
+        }
+      }
+    }
+  }
 
+    thoselastfewmods(timetable, modulesToSchedule, MAX_MODULES_PER_SEMESTER);
     return timetable
   }

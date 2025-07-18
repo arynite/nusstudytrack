@@ -8,7 +8,7 @@ export function flattenModules(
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules,
   selectedExemptions: string[] = [],
-  x: number,
+  z: number,
   rcMods: Set<string> | null = null
 ): string[] {
   const TECount = specialisations.length
@@ -22,15 +22,6 @@ export function flattenModules(
       modulesSet.add(mod)
     }
   })
-
-  /*
-  major.generalEducation.required.forEach((mod) => {
-    if (Array.isArray(mod)) { // loops through GE mods, will choose GE mods first
-      modulesSet.add(mod[0])
-    } else { // or else it will just add the mod directly
-      modulesSet.add(mod)
-    }
-  }) */
 
   if (rcMods && rcMods.size > 0) {
     rcMods.forEach(mod => modulesSet.add(mod));

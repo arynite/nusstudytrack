@@ -100,7 +100,7 @@ export default function ViewPlans() {
             <div className="button-container">
               <button
                 className="generate-timetable-button"
-                onClick={() => router.push('/HandleViewTimetable')}
+                onClick={() => router.push('/study-plan')}
               >
                 Regenerate Timetable
               </button>

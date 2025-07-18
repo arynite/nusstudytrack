@@ -38,7 +38,7 @@ export default function StudyPlan() {
         .eq('user_id', user.id)
         .maybeSingle()
 
-      console.log('Fetched data from study plan:', data)
+      console.log('Fetched data from study_plan table:', data)
 
       if (error && status !== 406) {
         console.error('Failed to fetch study plan:', error)

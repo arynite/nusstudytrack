@@ -1,6 +1,3 @@
-//import { Network } from "inspector/promises";
-//import { supabase } from './supabaseClient';
-
 function pickMods(mods, number) { // pick mods from mods list
   const result = [];
   for (let i = 0; i < number; i++) {
@@ -11,10 +8,9 @@ function pickMods(mods, number) { // pick mods from mods list
 }
 
 
-export function eeMajorRequirements(x) { // consisits of core, unrestricted electives, technical electives, bridging modules
+export function eeMajorRequirements(z) { // consisits of core, unrestricted electives, technical electives, bridging modules
   return{
     label: 'Electrical Engineering Major',
-  
     core: {
       label: 'Core Modules',
       required: [
@@ -38,12 +34,11 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
         ['EE2026', 'EE2028'],
         'EE2027',
         'PC2020',
-        'EE3131C', // Technical Elective 1
-        'EE3408C', // Technical Elective 2
-        'EE3331C', // Technical Course 1
-        'EE3431C'  // Technical Course 2
+        'EE3408C','EE3331C','EE3431C','EE3731C' // TE
       ]
     },
+
+    // EE4113, EE4114 needs  EE3131C ||||| EE4110 needs EE3104C
   
     unrestrictedElectives: {
       label: 'Unrestricted Electives',
@@ -55,10 +50,10 @@ export function eeMajorRequirements(x) { // consisits of core, unrestricted elec
 
     technicalElectives:{ // Number of TE depends on number of specialisations chosen
       label: 'Technical Electives',
-      required: [pickMods(['EE3131C','EE3408C','EE3331C','EE3431C','EE3731C','EE3104C','EE4204','EE4205','EE4210','EE4211','EE4216',
+      required: [pickMods(['EE4204','EE4205','EE4210','EE4211','EE4216',
     'CG3207','EE4407','EE4218','EE4415','EE4302','EE4307','EE4308','EE4311','EE4312','EE4314','EE4315','EE4705','EE4409',
     'EE4435','EE4436','EE4437','EE4438','EE4501','EE4502','EE4503','EE4505','EE4509','EE4511','EE4513','EE4212','EE4309',
-    'EE4704','EE3105','EE4101','EE4104','EE4112','EE4115','EE3801','EE4032'], x) // value of x depends on the number of specialisations chosen
+    'EE4704','EE3105','EE4101','EE4104','EE4112','EE4115','EE3801','EE4032'], z) // value of z depends on the number of specialisations and exemptions chosen
       ]
     },
 
@@ -111,7 +106,7 @@ export const specialisationModules = {  // consists of SPN
     electives: {
       choose: 2,
       from: [
-        'CG4002', 'CS4222', 'EE4204', 'EE4216', 'EE4218', 'CS3244',
+        'CS4222', 'EE4204', 'EE4216', 'EE4218', 'CS3244', // CG4002
         ['EE4002D', 'EE4002R', 'CP4106']
       ]
     }
@@ -180,7 +175,7 @@ export const specialisationModules = {  // consists of SPN
     core: ['EE3801', ['IT2002', 'CS2102'], 'EE4802', 'CS4225'],
     electives: {
       choose: 1,
-      from: ['BT4015', 'EE4115', 'EE4704', 'EE5907', 'IE4210', 'IE4211', 'IE4243']
+      from: ['EE4115', 'EE4704', 'EE5907', 'IE4210', 'IE4211', 'IE4243'] // BT4015
     }
   }
 }
@@ -254,7 +249,3 @@ export async function RCOrNoRC(userId, rcSelection) {
 
   return pickedMods;
 }
-
-
-
-// CG4002, CS4225, BT4015, 

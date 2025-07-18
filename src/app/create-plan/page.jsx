@@ -4,8 +4,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../utils/supabaseClient'
 import './create-plan.css'
-
-// import flattenmods, req.js
 import { flattenModules } from '../../utils/flattenmodules'
 import { eeMajorRequirements, specialisationModules, RCOrNoRC} from '../../utils/requirements'
 
@@ -14,21 +12,6 @@ export default function CreatePlan() {
   const [education, setEducation] = useState('')
   const [degreeLength, setDegreeLength] = useState('')
   const [rc, setRc] = useState('')
-
-  /*
-
-    const [specialisations, setSpecialisations] = useState({
-    'adv-electronics': false,
-    'industry4': false,
-    'iot': false,
-    'microelectronics': false,
-    'robotics': false,
-    'space-tech': false,
-    'transportation': false,
-    'data-eng': false,
-  })
-
-  */ 
 
 // new state for mods
 const [generatedModules, setGeneratedModules] = useState([])
@@ -80,38 +63,50 @@ const [exemptions, setExemptions] = useState({
     const selectedSpecialisations = Object.keys(specialisations).filter(key => specialisations[key])
     const selectedExemptions = Object.keys(exemptions).filter(key => exemptions[key])
 
+    let y;
+    const numExemptions = selectedExemptions.length;
+    if (numExemptions === 1) {
+      y = 3;
+    } else if (numExemptions === 2) {
+      y = 2;
+    } else if (numExemptions >= 1) {
+      y = 1;
+    } else {
+      y = 0;
+    }
+
     let x;
     const numSPN = selectedSpecialisations.length;
 
     if (education === 'JC / Others' && numSPN === 0) {
-      x = 40;
+      x = 10;
     } else if (numSPN === 1) {
-      x = 20;
+      x = 5;
     } else if (numSPN >= 2) {
       x = 0;
     }
 
     if (education === 'Polytechnic' && numSPN === 0) {
-      x = 20;
+      x = 5;
     } else if (numSPN === 1) {
       x = 0;
     }
     
     const rcMods = await RCOrNoRC(user.id, rc);
+    const z = x + y
     
     const requiredModules = flattenModules(
       selectedSpecialisations,
       specialisationModules,
       selectedExemptions,
-      x,
+      z,
       rcMods
     )
-    //const timetable = generateTimetable(requiredModules)
     
     setGeneratedModules(requiredModules)
     
     console.log("Mods to clear:", requiredModules)
-    console.log("x:", x)
+    console.log("z:", z)
 
 
     const { error: upsertError } = await supabase.from('study_plans').upsert([
