@@ -17,15 +17,15 @@ export async function getExemptedModules(userId: string): Promise<Set<string>> {
 
   const exemptions: string[] = Array.isArray(data?.exemptions) ? data.exemptions : [];
 
-  const bridgingModules_And_Math = ['ES1000', 'ES1103', 'MA1301', 'PC1201', 'CS1010E', 'MA1511', 'MA1512'];
+  const bridgingModules = ['ES1000', 'ES1103', 'MA1301', 'PC1201'];
   if (exemptions.length === 0) {
-    return new Set(bridgingModules_And_Math);
+    return new Set(bridgingModules);
   }
 
   const exemptionCodes = exemptions.map(mod => mod.split(' ')[0].trim());
 
   const completedModules = new Set<string>();
-  for (const mod of bridgingModules_And_Math) {
+  for (const mod of bridgingModules) {
     if (exemptionCodes.includes(mod)) {
       completedModules.add(mod);
     }
@@ -262,10 +262,10 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
       "EE2211", "CS3237", "IT2002", "PC2020", "EE4407", "EE3408C", "EE2023", "EE4409", "EE2012", "EE3104C", "EE3731C",
       "UTC2110","UTC2105", "UTC2737", "UTC2729", "EE3331C", "EE3131C", "NSS2001H", "NPS2001C", "EE4211", "EE4502", "EE3801",
       "EE4438", "EE5507", "EE4204", "EE4210", "EE4212", "EE4437", "EE5507", "EE4307", "EE4302", "EE4503", "CS4222", " CS4225",
-      "EE4101", "NSS2001A", "NPS2001D", "NSS2001I"
+      "EE4101", "NSS2001A", "NPS2001D", "NSS2001I", "EE4435", "EE4802"
     ]);
 
-    const last2Sems = semesters >= 2 ? [semesters - 2, semesters - 1] : [semesters - 1];
+    const last2Sems = semesters >= 4 ? [semesters -4, semesters - 3,semesters - 2, semesters - 1] : Array.from({length: semesters}, (_, a) => a);
     progress = true;
     while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
       progress = false;
@@ -313,8 +313,6 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         let placed = false
         for (let sem = 0; sem < semesters; sem++) {
 
-
-
           //if (getYearFromSemester(sem) < info.level) continue; // see which level is the module 
           const moduleYear = info.level;
           const currentYear = getYearFromSemester(sem);
@@ -329,15 +327,27 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
             placed = true
             break
           }
-
-
-
-
-          
         }
         if (!placed) continue
       }
     }
+    
+    function thoselastfewmods(
+      timetable: string[][],
+      modulesToSchedule: Set<string>,
+      MAX_MODULES_PER_SEMESTER: number
+    ) {
+      for (const mod of Array.from(modulesToSchedule)) {
+        for (let sem = 0; sem < timetable.length; sem++) {
+          if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+          timetable[sem].push(mod);
+          modulesToSchedule.delete(mod);
+          break;
+        }
+      }
+    }
+  }
 
+    thoselastfewmods(timetable, modulesToSchedule, MAX_MODULES_PER_SEMESTER);
     return timetable
   }
