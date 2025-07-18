@@ -131,14 +131,16 @@ const [exemptions, setExemptions] = useState({
   }
 
   return (
-    <div className="create-container">
-      <div className="create-header">
-        <img src="/nusstlogo.png" alt="Orbital Logo" />
-        <div className="titles">
-          <h1><b>Plan Smarter. Graduate Sooner.</b></h1>
+  <div className="create-container">
+    <div className="header-container">
+      <div className="create-header2">
+        <img src="/OrbitalLogo.jpg" alt="Orbital Logo 2" />
+        </div>
+        <div className="create-header">
+          <img src="/nusstlogo.png" alt="Orbital Logo" />
         </div>
       </div>
-
+      
       <form onSubmit={handleSubmit}>
         <div className="question">
           Which tertiary education did you complete?
@@ -198,23 +200,6 @@ const [exemptions, setExemptions] = useState({
         </table>
 
         <div className="question">
-          Are you exempted from any of these modules?
-        </div>
-        {Object.entries(exemptions).map(([id, checked]) => (
-          <div key={id} className="checkbox-item">
-            <input
-              type="checkbox"
-              id={id}
-              checked={checked}
-              onChange={() => toggleExemption(id)}
-            />
-            <label htmlFor={id}>{id}</label>
-          </div>
-        ))}
-
-        <br />
-        <hr />
-        <div className="question">
           Which Specialisations / Minor would you like to complete?
         </div>
 
@@ -236,6 +221,22 @@ const [exemptions, setExemptions] = useState({
               onChange={() => toggleSpecialisation(id)}
             />
             <label htmlFor={id}>{label}</label>
+          </div>
+        ))}
+
+
+        <div className="question">
+          Are you exempted from any of these modules?
+        </div>
+        {Object.entries(exemptions).map(([id, checked]) => (
+          <div key={id} className="checkbox-item">
+            <input
+              type="checkbox"
+              id={id}
+              checked={checked}
+              onChange={() => toggleExemption(id)}
+            />
+            <label htmlFor={id}>{id}</label>
           </div>
         ))}
 
