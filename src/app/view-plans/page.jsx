@@ -11,13 +11,13 @@ export default function ViewPlans() {
 
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
-  const [plans, setPlans] = useState([])
-  const [selectedPlanIndex, setSelectedPlanIndex] = useState(0)
+  const [timetable, setTimetable] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
 
+      // Get logged-in user
       const {
         data: { user },
         error: userError
@@ -33,17 +33,19 @@ export default function ViewPlans() {
 
       const { data, error } = await supabase
         .from('study_plans')
-        .select('id, timetable, created_at')
+        .select('timetable')
         .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
+        .single()
 
-      if (error) {
-        console.error('Error fetching study plans:', error)
-        setPlans([])
+      if (error && error.code !== 'PGRST116') { // PGRST116 means "No rows found" in supabase-js
+        console.error('Error fetching study plan:', error)
+      }
+
+      if (data && data.timetable && data.timetable.length > 0) {
+        const nonEmpty = data.timetable.filter((sem) => sem.length > 0)
+        setTimetable(nonEmpty)
       } else {
-        const nonEmptyPlans = data
-          .filter((plan) => plan.timetable && plan.timetable.some((sem) => sem.length > 0))
-        setPlans(nonEmptyPlans)
+        setTimetable(null)
       }
 
       setLoading(false)
@@ -51,8 +53,6 @@ export default function ViewPlans() {
 
     fetchData()
   }, [router])
-
-  const selectedPlan = plans[selectedPlanIndex] || null
 
   if (loading) {
     return (
@@ -65,40 +65,24 @@ export default function ViewPlans() {
   return (
     <div className="view-container">
       <div
-        className="logo-container cursor-pointer"
-        onClick={() => router.push('/')}
-      >
-        <Image
-          src="/nusstlogo.png"
-          alt="NUStudyTrack logo"
-          width={250}
-          height={150}
-          className="logo"
-        />
-      </div>
+          className="logo-container cursor-pointer"
+          onClick={() => router.push('/')}
+        >
+          <Image
+            src="/nusstlogo.png"
+            alt="NUStudyTrack logo"
+            width={250}
+            height={150}
+            className="logo"
+          />
+        </div>
 
       <div className="content-container">
-        {plans.length > 0 ? (
+        {timetable ? (
           <>
-            <h1 className="timetable-title">Your Saved Timetables</h1>
-
-            <div className="mb-4">
-              <label className="font-semibold mr-2">Select a plan:</label>
-              <select
-                value={selectedPlanIndex}
-                onChange={(e) => setSelectedPlanIndex(Number(e.target.value))}
-                className="border p-1 rounded"
-              >
-                {plans.map((plan, idx) => (
-                  <option key={plan.id} value={idx}>
-                    Plan {idx + 1} 
-                  </option>
-                ))}
-              </select>
-            </div>
-
+            <h1 className="timetable-title">Your Saved Timetable</h1>
             <div className="grid grid-cols-2 gap-4 mt-4">
-              {selectedPlan.timetable.map((semester, idx) => {
+              {timetable.map((semester, idx) => {
                 const year = Math.floor(idx / 2) + 1
                 const sem = (idx % 2) + 1
                 return (
@@ -113,8 +97,7 @@ export default function ViewPlans() {
                 )
               })}
             </div>
-
-            <div className="button-container mt-4">
+            <div className="button-container">
               <button
                 className="generate-timetable-button"
                 onClick={() => router.push('/study-plan')}
