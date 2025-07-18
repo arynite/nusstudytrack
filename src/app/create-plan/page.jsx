@@ -109,7 +109,7 @@ const [exemptions, setExemptions] = useState({
     console.log("z:", z)
 
 
-    const { error: upsertError } = await supabase.from('study_plans').insert([
+    const { error: upsertError } = await supabase.from('study_plans').upsert([
       {
         user_id: user.id,
         education,
@@ -119,7 +119,7 @@ const [exemptions, setExemptions] = useState({
         specialisations: selectedSpecialisations,
         //timetable: timetable,
       }],
-      { onConflict: ['user_id'] }
+      { onConflict: ['user_id'] } ///////////////////////////////////////////////////////////////////////////////////////
     )
 
     if (upsertError) {

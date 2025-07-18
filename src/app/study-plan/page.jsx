@@ -53,7 +53,7 @@ export default function StudyPlan() {
         
         await supabase
         .from('study_plans')
-        .upsert(
+        .upsert( //////////////////////////////////////////////////////////
         [{
         user_id: user.id,
         education: data.education,
@@ -62,7 +62,7 @@ export default function StudyPlan() {
         specialisations: data.specialisations,
         exemptions: data.exemptions,
       }],
-      { onConflict: ['user_id'] }
+      { onConflict: ['user_id'] }////////////////////////////////////////////////////////////////////////////////////
     )}
 
       setMounted(true)
