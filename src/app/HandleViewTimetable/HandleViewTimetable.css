@@ -1,17 +1,17 @@
 .studyplan-container {
-    max-width: 600px;
+    max-width: 750px;
     margin: 40px auto;
     padding: 32px;
     background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.75);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #17252a; 
   }
   
   .studyplan-title {
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 50px;
+    font-weight: 1000;
     margin-bottom: 24px;
     text-align: center;
     color: #1e40af;
@@ -26,7 +26,7 @@
   .studyplan-container p {
     font-size: 16px;
     margin-bottom: 16px;
-    line-height: 1.5;
+    line-height: 5;
   }
   
   hr {
@@ -36,12 +36,10 @@
     margin-bottom: 0;
   }
 
-  /**/
-  
 .button-container {
   display: flex;
   justify-content: center;
-  margin-top: 32px;
+  margin-top: 40px;
 }
 
 .view-timetable-button {
@@ -66,6 +64,8 @@
   
   .semester-card {
     background-color: #f9fafb;
+    font-size: 2rem;
+    font-weight: bold;
   }
 
 
@@ -73,29 +73,27 @@
   padding: 12px 24px;
   background-color: #2563eb; 
   color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
+  border-radius: 16px;
+  font-size: 3.5rem;
+  font-weight: bold;
   transition: background-color 0.3s;
 }
 
 .Reshuffle-button:hover {
-  background-color: #1d4ed8;
+  background-color: darkgoldenrod;
 }
 
 .SaveTimetable-button {
   padding: 12px 24px;
   background-color: #2563eb; 
   color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
+  border-radius: 16px;
+  font-size: 3.5rem;
+  font-weight: bold;
   transition: background-color 0.3s;
 }
 
 .SaveTimetable-button:hover {
-  background-color: #1d4ed8;
+  background-color: darkgoldenrod;
 }
   
