@@ -262,12 +262,15 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
       "EE2211", "CS3237", "IT2002", "PC2020", "EE4407", "EE3408C", "EE2023", "EE4409", "EE2012", "EE3104C", "EE3731C",
       "UTC2110","UTC2105", "UTC2737", "UTC2729", "EE3331C", "EE3131C", "NSS2001H", "NPS2001C", "EE4211", "EE4502", "EE3801",
       "EE4438", "EE5507", "EE4204", "EE4210", "EE4212", "EE4437", "EE5507", "EE4307", "EE4302", "EE4503", "CS4222", " CS4225",
-      ""
+      "EE4101", "NSS2001A", "NPS2001D", "NSS2001I"
     ]);
 
-
+    const last2Sems = semesters >= 2 ? [semesters - 2, semesters - 1] : [semesters - 1];
+    progress = true;
     while (modulesToSchedule.size > 0 && progress) {  // Repeat until no modules left or no progress
-      progress = false
+      progress = false;
+
+
       for (const mod of shuffleArray(Array.from(modulesToSchedule))) { // checks for each unscheduled mod to see if they can be scheduled
         const info = moduleInfos[mod]
         const prereqs = parsePrerequisites(info.prereqTree) // Parse prerequisites
@@ -292,7 +295,6 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         // NHT Courses:  && (mod !== "NHT2205" || "NHT2207"|| "NHT2208"|| "NHT2209"|| "NHT2210"|| "NHT2212" || "NHT2213")
 
         const isitFinalYearMod = info.level >= 4;
-        const last2Sems = semesters >= 2? [semesters -2, semesters -1] : [semesters -1];
 
         if (isitFinalYearMod) {
           for (const lastsems of last2Sems) {
@@ -310,6 +312,9 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         // Find earliest semester offered and with space
         let placed = false
         for (let sem = 0; sem < semesters; sem++) {
+
+
+
           //if (getYearFromSemester(sem) < info.level) continue; // see which level is the module 
           const moduleYear = info.level;
           const currentYear = getYearFromSemester(sem);
@@ -324,6 +329,11 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
             placed = true
             break
           }
+
+
+
+
+          
         }
         if (!placed) continue
       }

@@ -18,7 +18,7 @@ export default function TimetablePage() {
 
   const [formValues, setFormValues] = useState({
     education: '',
-    degreeLength: 4,
+    degreeLength: '',
     rc: '',
     specialisations: [],
     exemptions: [],
@@ -91,7 +91,8 @@ export default function TimetablePage() {
         timetable = await generateTimetable(flattened, degreeLength * 2, 4, user.id, rc_ge_Modules) 
       }
       else{
-        timetable = await generateTimetable(flattened, degreeLength * 2, Math.ceil(Actiul_Total/(degreeLength * 2)), user.id, rc_ge_Modules) // original method
+        timetable = await generateTimetable(flattened, degreeLength * 2, Actiul_Total/(degreeLength * 2), user.id, rc_ge_Modules) // original method
+        console.log("its here")
       }
       setPlannedSemesters(timetable)
       setMounted(true)

@@ -249,8 +249,3 @@ export async function RCOrNoRC(userId, rcSelection) {
 
   return pickedMods;
 }
-
-
-
-// CG4002, CS4225, BT4015,
-// CS4222
