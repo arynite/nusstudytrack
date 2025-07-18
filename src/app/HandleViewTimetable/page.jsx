@@ -135,6 +135,7 @@ export default function TimetablePage() {
   return (
     <div className="studyplan-container">
       <h2 className="studyplan-title">Suggested Semester Plan</h2>
+      
       <div className="grid grid-cols-2 gap-4 mt-4">
       {nonEmptySemesters.map((semester, idx) => {
           const year = Math.floor(idx / 2) + 1

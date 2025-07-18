@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 120;
+  box-sizing: border-box;
+}
+
 .studyplan-container {
     max-width: 750px;
     margin: 40px auto;
@@ -66,6 +72,7 @@
     background-color: #f9fafb;
     font-size: 2rem;
     font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
 
 
