@@ -1,21 +1,48 @@
+body {
+  background-color: white;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
 /* Container */
 .create-container {
     max-width: 700px;
-    margin: auto;
+    margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    background-color: white;
+    color: black;
   }
+
+  .create-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    margin-bottom: 0;
+    padding-top: 10px;
+}
+
+.create-header img {
+    width: 250px;
+    left: 10px;
+    top: 10px;
+}
   
-  /* Header */
+/*
+   Header 
   .create-header {
     display: flex;
     align-items: center;
     margin-bottom: 30px;
+    justify-content: flex-start;
+    padding-top: 10px;
   }
   
   .create-header img {
-    width: 125px;
-  }
+    width: 250px;
+    left: 10px;
+    top: 10px;
+  }*/
   
   .create-header .titles {
     margin-left: 20px;
@@ -43,18 +70,18 @@
   .selection {
     cursor: pointer;
     padding: 10px 20px;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     text-align: center;
     user-select: none;
     transition: background-color 0.2s ease;
   }
   
   .selection:hover {
-    background-color: #e6f7ff;
+    background-color: black;
   }
   
   .selection-active {
-    background-color: #d0f0fd;
+    background-color: black;
   }
   
   /* Checkbox Section */
@@ -78,7 +105,7 @@
   .submit-button {
     padding: 10px 20px;
     background-color: #2563eb;
-    color: white;
+    color: black;
     border: none;
     border-radius: 8px;
     font-weight: 500;
