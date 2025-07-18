@@ -14,7 +14,7 @@ export default function TimetablePage() {
   const router = useRouter()
   const [plannedSemesters, setPlannedSemesters] = useState([])
   const [mounted, setMounted] = useState(false)
-  const [rcMods, setRcMods] = useState(new Set()) //////////////////////////////////////////
+  const [rcMods, setRcMods] = useState(new Set()) 
 
   const [formValues, setFormValues] = useState({
     education: '',
@@ -128,22 +128,26 @@ export default function TimetablePage() {
 
 
   if (!mounted) return <p>Loading...</p>
+  const nonEmptySemesters = plannedSemesters.filter(sem => sem.length > 0)
 
   return (
     <div className="studyplan-container">
       <h2 className="studyplan-title">Suggested Semester Plan</h2>
       <div className="grid grid-cols-2 gap-4 mt-4">
-        {plannedSemesters.map((semester, idx) => (
-          <div key={idx} className="semester-card border p-4 rounded shadow">
-            <h4 className="font-semibold mb-2">Semester {idx + 1}</h4>
-            <ul className="list-disc pl-5 text-sm">
-              {semester.map((mod, modIdx) => (
-                <li key={`${mod}-${modIdx}`}>{mod}</li>
-              ))}
-            </ul>
-
-          </div>
-        ))}
+      {nonEmptySemesters.map((semester, idx) => {
+          const year = Math.floor(idx / 2) + 1
+          const sem = (idx % 2) + 1
+          return (
+            <div key={idx} className="semester-card border p-4 rounded shadow">
+              <h4 className="font-semibold mb-2">Year {year} Sem {sem}</h4>
+              <ul className="list-disc pl-5 text-sm">
+                {semester.map((mod, modIdx) => (
+                  <li key={`${mod}-${modIdx}`}>{mod}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        })}
       </div>
 
       <div className="content-container">

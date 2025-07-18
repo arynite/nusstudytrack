@@ -31,7 +31,6 @@ export default function ViewPlans() {
 
       setUser(user)
 
-      // Get study plan with timetable
       const { data, error } = await supabase
         .from('study_plans')
         .select('timetable')
@@ -43,7 +42,8 @@ export default function ViewPlans() {
       }
 
       if (data && data.timetable && data.timetable.length > 0) {
-        setTimetable(data.timetable)
+        const nonEmpty = data.timetable.filter((sem) => sem.length > 0)
+        setTimetable(nonEmpty)
       } else {
         setTimetable(null)
       }
@@ -64,31 +64,38 @@ export default function ViewPlans() {
 
   return (
     <div className="view-container">
-      <div className="logo-container">
-        <Image
-          src="/nusstlogo.png"
-          alt="NUStudyTrack logo"
-          width={250}
-          height={150}
-          className="logo"
-        />
-      </div>
-
+      <div
+          className="logo-container cursor-pointer"
+          onClick={() => router.push('/')}
+        >
+          <Image
+            src="/nusstlogo.png"
+            alt="NUStudyTrack logo"
+            width={250}
+            height={150}
+            className="logo"
+          />
+        </div>
+        
       <div className="content-container">
         {timetable ? (
           <>
             <h1 className="timetable-title">Your Saved Timetable</h1>
             <div className="grid grid-cols-2 gap-4 mt-4">
-              {timetable.map((semester, idx) => (
-                <div key={idx} className="semester-card border p-4 rounded shadow">
-                  <h4 className="font-semibold mb-2">Semester {idx + 1}</h4>
-                  <ul className="list-disc pl-5 text-sm">
-                    {semester.map((mod, modIdx) => (
-                      <li key={`${mod}-${modIdx}`}>{mod}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+              {timetable.map((semester, idx) => {
+                const year = Math.floor(idx / 2) + 1
+                const sem = (idx % 2) + 1
+                return (
+                  <div key={idx} className="semester-card border p-4 rounded shadow">
+                    <h4 className="font-semibold mb-2">Year {year} Sem {sem}</h4>
+                    <ul className="list-disc pl-5 text-sm">
+                      {semester.map((mod, modIdx) => (
+                        <li key={`${mod}-${modIdx}`}>{mod}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              })}
             </div>
             <div className="button-container">
               <button

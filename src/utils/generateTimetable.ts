@@ -94,9 +94,11 @@ function getYearFromSemester(sem: number): number {
   return Math.floor(sem / 2) + 1;
 }
 
-function extractLevelFromModuleCode(code: string): number {
-  const match = code.match(/\d+/); // Extract number part
-  if (!match) return 1; // Default to Year 1 if no match
+function extractLevelFromModuleCode(code: string | undefined): number {
+  if (!code || typeof code !== 'string') return 1; 
+
+  const match = code.match(/\d+/);
+  if (!match) return 1;
 
   const firstDigit = parseInt(match[0][0]);
   return Math.min(Math.max(firstDigit, 1), 5);
@@ -154,7 +156,9 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     console.log("Completed modules (Set):", Array.from(completedModules))
 
     //modules = modules.filter(mod => !completedModules.has(mod)) // filter out exempted modules 
-    modules = shuffleArray(allModules.filter(mod => !completedModules.has(mod)));
+    modules = shuffleArray(
+      allModules.filter(mod => typeof mod === 'string' && !completedModules.has(mod))
+    );
     console.log("Modules after filtering completed ones:", modules);
 
     const moduleInfos: Record<string, ModuleData> = {}; // to fetch module details from NUSMODs API
