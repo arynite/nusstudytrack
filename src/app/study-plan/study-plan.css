@@ -1,16 +1,22 @@
+body {
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
 .studyplan-container {
-    max-width: 600px;
+    max-width: 1000px;
     margin: 40px auto;
     padding: 32px;
     background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.75);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #17252a; 
   }
   
   .studyplan-title {
-    font-size: 28px;
+    font-size: 50px;
     font-weight: 700;
     margin-bottom: 24px;
     text-align: center;
@@ -20,11 +26,12 @@
   
   .studyplan-label {
     font-weight: 700;
+    font-size: 50px;
     color: #1e40af 
   }
   
   .studyplan-container p {
-    font-size: 16px;
+    font-size: 30px;
     margin-bottom: 16px;
     line-height: 1.5;
   }
@@ -41,49 +48,46 @@
 .button-container {
   display: flex;
   justify-content: center;
-  margin-top: 32px;
+  margin-top: 50px;
+  gap: 50px;
 }
 
 .view-timetable-button {
-  padding: 12px 24px;
+  padding: 50px 80px;
   background-color: #1e40af;
   color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: 16px;
+  font-size: 25px;
   font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.25s ease;
 }
 
 .view-timetable-button:hover {
-  background-color: #1e3a8a;
+  background-color: darkgoldenrod;
 }
 
 .button-container {
   display: flex;
   justify-content: center;
-  margin-top: 32px;
+  margin-top: 100px;
 }
 
 .Go-Back-button {
-  padding: 12px 24px;
+  padding: 50px 80px;
   background-color: #1e40af;
   color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: 16px;
+  font-size: 25px;
   font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.25s ease;
 }
 
 .Go-Back-button:hover {
-  background-color: #1e3a8a;
+  background-color: darkgoldenrod;
 }
 
 .timetable-container {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
   
   .semester-card {

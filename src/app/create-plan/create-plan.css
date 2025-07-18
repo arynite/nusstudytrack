@@ -107,11 +107,11 @@ body {
   }
   
   .selection:hover {
-    background-color: #2563eb;
+    background-color: #A8C4E8;
   }
   
   .selection-active {
-    background-color: #2563eb;
+    background-color: #A8C4E8;
   }
   
   /* Checkbox Section */
@@ -141,7 +141,7 @@ body {
   
   .submit-button {
     padding: 15px 20px;
-    background-color: #2563eb;
+    background-color: #1e40af;
     color: white;
     border: none;
     border-radius: 15px;
@@ -152,6 +152,6 @@ body {
   }
   
   .submit-button:hover {
-    background-color: #1e40af;
+    background-color: darkgoldenrod;
   }
   
