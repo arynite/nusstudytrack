@@ -119,7 +119,7 @@ const [exemptions, setExemptions] = useState({
         specialisations: selectedSpecialisations,
         //timetable: timetable,
       }],
-      { onConflict: ['user_id'] }
+      //{ onConflict: ['user_id'] }
     )
 
     if (upsertError) {
