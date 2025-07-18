@@ -1,4 +1,4 @@
-* {
+*{
   margin: 0;
   padding: 120;
   box-sizing: border-box;
@@ -36,7 +36,6 @@
   }
   
   hr {
-    border: none;
     height: 1px;
     background: #d1d5db; 
     margin-bottom: 0;
@@ -52,7 +51,6 @@
   padding: 12px 24px;
   background-color: #1e40af;
   color: white;
-  border: none;
   border-radius: 6px;
   font-size: 16px;
   font-weight: 600;
