@@ -154,7 +154,7 @@ export default function TimetablePage() {
 
       <div className="content-container">
         <div className="button-container">
-          <button className="Reshuffle-button" onClick={() => router.push('/create-plan')}>
+          <button className="Reshuffle-button" onClick={() => router.push('/study-plan')}>
             Reshuffle
           </button> 
           <button className="SaveTimetable-button" onClick={SaveTimetable}>
