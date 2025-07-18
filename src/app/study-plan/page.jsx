@@ -18,7 +18,7 @@ export default function StudyPlan() {
     exemptions: [],
   })
   const [mounted, setMounted] = useState(false)
-  const [loading, setLoading] = useState(false)
+  //const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchUserData = async () => {
