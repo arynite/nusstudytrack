@@ -142,15 +142,12 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     semesters: number,
     maxPerSemester: number,
     userId: string,
-    rcMods: Set<string> = new Set() /////////////////////////////////////////////
+    rcMods: Set<string> = new Set()
   ): Promise<string[][]> { // fetch all module information in parallel
 
     const allModules = [...new Set([...modules, ...rcMods])];
-
-    //const completedModules = await getExemptedModules(userId)
     const completedModules = await PolyOrNot(userId)
 
-    //modules = modules.filter(mod => !completedModules.has(mod)) // filter out exempted modules 
     modules = shuffleArray(
       allModules.filter(mod => typeof mod === 'string' && !completedModules.has(mod))
     );
@@ -174,7 +171,7 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
       })
     )
 
-    //// Separate modules with and without prerequisites, modulesWithPrereqs, modulesWithoutPrereqs
+    // Separate modules with and without prerequisites, modulesWithPrereqs, modulesWithoutPrereqs
     const [modulesWithPrereqs, modulesWithoutPrereqs] = modules.reduce(
       ([withPrereqs, withoutPrereqs], mod) => {
       const prereqs = parsePrerequisites(moduleInfos[mod].prereqTree);

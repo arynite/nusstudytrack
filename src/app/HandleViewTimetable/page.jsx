@@ -57,14 +57,11 @@ export default function TimetablePage() {
         exemptions = [],
       } = data
 
-      //console.log('Exemptions:', exemptions)
-
       const fv = { education, degreeLength, rc, specialisations, exemptions }
       setFormValues(fv)
 
       const rc_ge_Modules = await RCOrNoRC(user.id, rc)
       setRcMods(rc_ge_Modules)
-      //console.log('RC/GE Modules:', Array.from(rc_ge_Modules))
 
       const completedModules = await getExemptedModules(user.id)
       console.log('Completed bridging modules:', Array.from(completedModules))
