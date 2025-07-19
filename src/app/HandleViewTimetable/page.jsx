@@ -7,7 +7,7 @@ import { generateTimetable } from '../../utils/generateTimetable'
 import { specialisationModules, RCOrNoRC } from '../../utils/requirements'
 import { supabase } from '../../utils/supabaseClient'
 import './HandleViewTimetable.css'
-import '../../study-plan.css'
+import '../study-plan/study-plan.css' // ensures css is consistent
 
 import { getExemptedModules } from '../../utils/generateTimetable'
 
