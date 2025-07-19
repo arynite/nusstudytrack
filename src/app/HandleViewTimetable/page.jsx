@@ -73,7 +73,7 @@ export default function TimetablePage() {
       const flattened = flattenModules(specialisations, specialisationModules, exemptions, rc_ge_Modules) 
       const Actiul_Total = flattened.length + rc_ge_Modules.size - completedModules.size
 
-
+    /*
       if (degreeLength === 3 && 32 <= Actiul_Total <= 36){ // handles generateTimetable function from generateTimetable.ts
         timetable = await generateTimetable(flattened, degreeLength * 2, 6, user.id, rc_ge_Modules) 
       } else if (degreeLength === 3 && Actiul_Total <= 31) {
@@ -94,13 +94,27 @@ export default function TimetablePage() {
         timetable = await generateTimetable(flattened, degreeLength * 2, Actiul_Total/(degreeLength * 2), user.id, rc_ge_Modules) // original method
         console.log("its here")
       }
+ */
+
+      const totalSemesters = degreeLength * 2
+      let idealModulesPerSemester = Math.ceil(Actiul_Total / totalSemesters)
+
+      if (degreeLength === 3.5 || degreeLength === 4.5) { // Adjust ideal module count to avoid last semester underfilling
+        if (Actiul_Total % totalSemesters <= 2) {
+          idealModulesPerSemester -= 1 
+        }
+      }
+
+      if (idealModulesPerSemester < 5) idealModulesPerSemester = 5
+
+      timetable = await generateTimetable(flattened, totalSemesters, idealModulesPerSemester, user.id, rc_ge_Modules)
+
       setPlannedSemesters(timetable)
       setMounted(true)
     }
 
     fetchData()
   }, [])
-  
   
   const SaveTimetable = async () => {
     const {

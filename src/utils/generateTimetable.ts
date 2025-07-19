@@ -263,6 +263,17 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
         }
       }
 
+      if (modulesToSchedule.has("DTK1234")) { //ensure DTK1234 is completed within first year 
+        for (let sem = 0; sem < Math.min(2, semesters); sem++) {
+          if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
+            timetable[sem].push("DTK1234");
+            completedModules.add("DTK1234");
+            modulesToSchedule.delete("DTK1234");
+            break;
+          }
+        }
+      }
+
     const NUSC_NHTMods_and_Others = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213",
       'NPS2001A','NPS2001B','NPS2001C','NPS2001D','NPS2001E',
       'UTC2851', 'UTC2852', 'UTS2831', 'UTS2891',
@@ -277,6 +288,42 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
       "CG3207", "CS4222", "CS4225", "CS3237", "IT2002",
       "PC2020", 
     ]);
+
+    let selectedYearLongMod: string | null = null;
+
+    if (modulesToSchedule.has('EE4002R')) {
+      selectedYearLongMod = 'EE4002R';
+      modulesToSchedule.delete('EE4002D');
+    } else if (modulesToSchedule.has('EE4002D')) {
+      selectedYearLongMod = 'EE4002D';
+      modulesToSchedule.delete('EE4002R');
+    }
+    
+    if (selectedYearLongMod) {
+      let placed = false;
+      const startIdx = Math.max(0, timetable.length - 3); // e.g. 5 if timetable has 8
+      const endIdx = timetable.length - 2; // stop at second last to allow [i] and [i+1]
+    
+      for (let i = startIdx; i <= endIdx; i++) {
+        if (
+          timetable[i].length < MAX_MODULES_PER_SEMESTER &&
+          timetable[i + 1].length < MAX_MODULES_PER_SEMESTER
+        ) {
+          timetable[i].push(selectedYearLongMod);
+          timetable[i + 1].push(selectedYearLongMod);
+          completedModules.add(selectedYearLongMod);
+          modulesToSchedule.delete(selectedYearLongMod);
+          placed = true;
+          break;
+        }
+      }
+    
+      if (!placed) {
+        console.warn(
+          `Unable to place ${selectedYearLongMod} across 2 consecutive semesters — not enough space.`
+        );
+      }
+    }
 
     const last2Sems = semesters >= 4 ? [semesters -4, semesters - 3,semesters - 2, semesters - 1] : Array.from({length: semesters}, (_, a) => a);
     progress = true;
