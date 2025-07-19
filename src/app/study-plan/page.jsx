@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../utils/supabaseClient'
 
 import './study-plan.css'
+import '../study-plan/create-plan.css' // ensures css is consistent
 
 export default function StudyPlan() {
   const router = useRouter()
