@@ -64,23 +64,20 @@ export default function ViewPlans() {
 
   return (
     <div className="view-container">
-      <div
-          className="logo-container cursor-pointer"
-          onClick={() => router.push('/')}
-        >
-          <Image
-            src="/nusstlogo.png"
-            alt="NUStudyTrack logo"
-            width={250}
-            height={150}
-            className="logo"
-          />
+      
+    <div className="header-container">
+      <div className="create-header2">
+        <img src="/OrbitalLogo.jpg" alt="Orbital Logo 2" />
         </div>
+        <div className="create-header">
+          <img src="/nusstlogo.png" alt="Orbital Logo" />
+        </div>
+      </div>
 
       <div className="content-container">
         {timetable ? (
           <>
-            <h1 className="timetable-title">Your Saved Timetable</h1>
+            <h1 className="view-timetable-title">Your Saved Timetable</h1>
             <div className="grid grid-cols-2 gap-4 mt-4">
               {timetable.map((semester, idx) => {
                 const year = Math.floor(idx / 2) + 1
@@ -97,18 +94,19 @@ export default function ViewPlans() {
                 )
               })}
             </div>
-            <div className="button-container">
+            <div className='button-container'>
               <button
-                className="generate-timetable-button"
+                className='generate-timetable-button'
                 onClick={() => router.push('/study-plan')}
               >
-                Regenerate Timetable
+                Generate Timetable Again
               </button>
             </div>
           </>
         ) : (
           <>
-            <h1 className="no-timetable-yet-msg">
+          <div className='no-timetable-msg-container'>
+            <h1 className='no-timetable-yet-msg'>
               Oh no plans yet, generate table?
             </h1>
             <div className="button-container">
@@ -118,6 +116,12 @@ export default function ViewPlans() {
               >
                 Generate timetable!
               </button>
+
+              <button className ='go-back-button'
+              onClick = {() => router.push('/')}
+              >Go Back
+              </button>
+            </div>
             </div>
           </>
         )}
