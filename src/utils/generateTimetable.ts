@@ -349,7 +349,6 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
           console.log(`Cannot place ${mod}, missing prereq group(s):`, missing);
           continue;
         }
-        // NHT Courses:  && (mod !== "NHT2205" || "NHT2207"|| "NHT2208"|| "NHT2209"|| "NHT2210"|| "NHT2212" || "NHT2213")
 
         const isitFinalYearMod = info.level >= 4;
 
