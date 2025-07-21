@@ -13,7 +13,6 @@ export default function CreatePlan() {
   const [degreeLength, setDegreeLength] = useState('')
   const [rc, setRc] = useState('')
 
-// new state for mods
 const [generatedModules, setGeneratedModules] = useState([])
 const [exemptions, setExemptions] = useState({
     'PC1201': false,
@@ -117,9 +116,8 @@ const [exemptions, setExemptions] = useState({
         rc,
         exemptions: selectedExemptions,
         specialisations: selectedSpecialisations,
-        //timetable: timetable,
       }],
-      { onConflict: ['user_id'] } ///////////////////////////////////////////////////////////////////////////////////////
+      { onConflict: ['user_id'] }
     )
 
     if (upsertError) {

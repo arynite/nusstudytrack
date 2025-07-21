@@ -37,15 +37,11 @@ export function eeMajorRequirements(z) { // consisits of core, unrestricted elec
         'EE3408C','EE3331C','EE3431C','EE3731C' // TE
       ]
     },
-
-    // EE4113, EE4114 needs  EE3131C ||||| EE4110 needs EE3104C
   
     unrestrictedElectives: {
       label: 'Unrestricted Electives',
       note: 'Student must take sufficient UEMs to meet graduation MC requirements',
       choose: null // left flexible — will calculate based on total MCs taken
-
-
     },
 
     technicalElectives:{ // Number of TE depends on number of specialisations chosen
@@ -73,9 +69,9 @@ export function eeMajorRequirements(z) { // consisits of core, unrestricted elec
     }
 }}
 
-  const roboticsElectives = ['BN4203', 'BN4601', 'EE3305', 'EE4305', 'EE4308', 'EE4309','EE4705', 'EE4311','EE4312', 'EE4314', 'ME4242', 'ME4245', 'ME5406', 'MLE4228', 'RB4301']
+  const roboticsElectives = ['BN4203', 'BN4601', 'EE3305', 'EE4305', 'EE4308', 'EE4309','EE4705', 
+    'EE4311','EE4312', 'EE4314', 'ME4242', 'ME4245', 'ME5406', 'MLE4228', 'RB4301']
 
-//'EE3305' is 'EE3305/ME3243'
 
 export const specialisationModules = {  // consists of SPN
   'adv-electronics': {
@@ -84,7 +80,6 @@ export const specialisationModules = {  // consists of SPN
     electives: {
       choose: 3,
       from: ['EE4407', 'EE5507', 'EE4409', 'EE4435', 'EE4436', 'EE4437', 'EE4438']
-      //  haiyou EE4218, EE4415, CG3207
     }
   },
 
@@ -96,7 +91,8 @@ export const specialisationModules = {  // consists of SPN
     ],
     electives: {
       choose: 3,
-      from: ['EE4211', 'EE4212', 'EE4302', 'EE4307', 'EE4311', 'EE4312', 'EE4314', 'EE4315', 'ME3242', 'ME4262', 'ME4248', 'ME4246', 'ME5405', 'CN4227R', 'CN4221R', 'RB4301']
+      from: ['EE4211', 'EE4212', 'EE4302', 'EE4307', 'EE4311', 'EE4312', 'EE4314', 'EE4315', 
+        'ME3242', 'ME4262', 'ME4248', 'ME4246', 'ME5405', 'CN4227R', 'CN4221R', 'RB4301']
     }
   },
 
@@ -106,7 +102,7 @@ export const specialisationModules = {  // consists of SPN
     electives: {
       choose: 2,
       from: [
-        'CS4222', 'EE4204', 'EE4216', 'EE4218', 'CS3244', // CG4002
+        'CS4222', 'EE4204', 'EE4216', 'EE4218', 'CS3244',
         ['EE4002D', 'EE4002R', 'CP4106']
       ]
     }
@@ -170,12 +166,12 @@ export const specialisationModules = {  // consists of SPN
     }
   },
 
-  'data-eng': { // 'EE4802' is 'EE4802/IE4213'
+  'data-eng': {
     label: 'Minor in Data Engineering',
     core: ['EE3801', ['IT2002', 'CS2102'], 'EE4802', 'CS4225'],
     electives: {
       choose: 1,
-      from: ['EE4115', 'EE4704', 'EE5907', 'IE4210', 'IE4211', 'IE4243'] // BT4015
+      from: ['EE4115', 'EE4704', 'EE5907', 'IE4210', 'IE4211', 'IE4243']
     }
   }
 }
@@ -205,7 +201,8 @@ export async function RCOrNoRC(userId, rcSelection) {
   if (rc === 'CAPT') {
     const UTRC = pickMods(['UTW1001A', 'UTW1001C', 'UTW1001G', 'UTW1001I', 'UTW1001J', 'UTW1001K', 'UTW1001P', 'UTW1001Q', 'UTW1001T', 'UTW1001X'], 1);
     const CAPT_junior = pickMods(['UTC1409', 'UTC1416', 'UTC1412', 'UTC1422'], 1);
-    const CAPT_senior = pickMods(['UTC2400', 'UTC2402', 'UTC2408', 'UTC2410B', 'UTC2411', 'UTC2412', 'UTC2417', 'UTC2420A', 'UTS2400', 'UTS2402', 'UTS2406', 'UTS2408', 'UTS2409', 'UTS2414'], 2);
+    const CAPT_senior = pickMods(['UTC2400', 'UTC2402', 'UTC2408', 'UTC2410B', 'UTC2411', 'UTC2412', 'UTC2417', 'UTC2420A', 
+      'UTS2400', 'UTS2402', 'UTS2406', 'UTS2408', 'UTS2409', 'UTS2414'], 2);
     [UTRC, CAPT_junior, CAPT_senior].flat().forEach(mod => pickedMods.add(mod));
   }
 
@@ -232,8 +229,7 @@ export async function RCOrNoRC(userId, rcSelection) {
   }
 
   if (rc === 'NUSC') {
-    pickedMods.add('GEA1000N'); // quantitative reasoning with data
-
+    pickedMods.add('GEA1000N');
     const NUSC_group1 = pickMods(['NTW2007','NTW2010','NTW2032','NTW2033','NTW2035','NTW2036','NTW2037','NTW2038',
       'NSW2001A','NSW2001B','NSW2001C','NSW2001D','NSW2001E','NSW2001F','NSW2001G','NSW2001H','NSW2001I','NSW2001J',
       'NPS2001A','NPS2001B','NPS2001C','NPS2001D','NPS2001E'], 2);

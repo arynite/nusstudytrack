@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { supabase } from '../../utils/supabaseClient' //Changed from using path aliases @ to ../../
+import { supabase } from '../../utils/supabaseClient'
 import './auth.css'
 
 const isValidNusEmail = (email) => /^[\w.+-]+@u\.nus\.edu$/.test(email)

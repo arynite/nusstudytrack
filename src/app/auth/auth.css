@@ -50,7 +50,7 @@
   }
   
   .login-button:hover {
-    background-color: #1d4ed8;
+    background-color: darkgoldenrod;
   }
   
   .login-right {
@@ -72,8 +72,8 @@
     position: absolute;
     bottom: 3rem;
     color: white;
-    font-weight: 300;
-    font-size: 1.25rem;
+    font-weight: bold;
+    font-size: 1.5rem;
     color: black;
   }
   

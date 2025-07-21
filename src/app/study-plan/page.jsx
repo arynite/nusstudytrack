@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../utils/supabaseClient'
 
 import './study-plan.css'
+import '../create-plan/create-plan.css' // ensures css is consistent
 
 export default function StudyPlan() {
   const router = useRouter()
@@ -54,7 +55,7 @@ export default function StudyPlan() {
         
         await supabase
         .from('study_plans')
-        .upsert( //////////////////////////////////////////////////////////
+        .upsert(
         [{
         user_id: user.id,
         education: data.education,
@@ -63,7 +64,7 @@ export default function StudyPlan() {
         specialisations: data.specialisations,
         exemptions: data.exemptions,
       }],
-      { onConflict: ['user_id'] }////////////////////////////////////////////////////////////////////////////////////
+      { onConflict: ['user_id'] }
     )}
 
       setMounted(true)
