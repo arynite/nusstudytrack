@@ -119,9 +119,8 @@ const [exemptions, setExemptions] = useState({
       }],
       { onConflict: ['user_id'] }
     )
-
     if (upsertError) {
-      alert('Failed to save: ' + upsertError.message)
+      alert('Upsert Error: ' + upsertError.message)
       return
     }
 
