@@ -373,8 +373,6 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
           const moduleYear = info.level;
           const currentYear = getYearFromSemester(sem);
           if (currentYear + 1 < moduleYear) continue;
-          
-          //const offered = info.semesterData.some((s) => s.semester === sem + 1) // check for offered in semester
           if (timetable[sem].length < MAX_MODULES_PER_SEMESTER) {
             timetable[sem].push(mod)
             completedModules.add(mod)
