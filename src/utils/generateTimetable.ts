@@ -274,7 +274,8 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
     const NUSC_NHTMods_and_Others = new Set(["NHT2205","NHT2207","NHT2208","NHT2209","NHT2210","NHT2212","NHT2213",
       'NPS2001A','NPS2001B','NPS2001C','NPS2001D','NPS2001E',
       'UTC2851', 'UTC2852', 'UTS2831', 'UTS2891',
-      'UTC2400', 'UTC2402', 'UTC2408', 'UTC2410B', 'UTC2411', 'UTC2412', 'UTC2417', 'UTC2420A', 'UTS2400', 'UTS2402', 'UTS2406', 'UTS2408', 'UTS2409', 'UTS2414',
+      'UTC2400', 'UTC2402', 'UTC2408', 'UTC2410B', 'UTC2411', 'UTC2412', 'UTC2417', 'UTC2420A', 'UTS2400', 'UTS2402', 
+      'UTS2406', 'UTS2408', 'UTS2409', 'UTS2414',
       'UTC2700', 'UTC2704', 'UTS2706', 'UTS2716', 'UTC2722', 'UTC2723', 'UTC2728', 'UTC2729', 'UTC2734', 'UTC2737',
       'UTC2105', 'UTC2107', 'UTC2110', 'UTC2113', 'UTC2114',
       'NSS2001A','NSS2001B','NSS2001C','NSS2001D','NSS2001E','NSS2001F','NSS2001G','NSS2001H','NSS2001I','NSS2001J',
@@ -336,7 +337,6 @@ function parsePrerequisites(prereqTree: PrereqTree): PrereqGroup {
 
         let prereqsMet;
         if (NUSC_NHTMods_and_Others.has(mod)) {
-          // For NUSC/NHT modules, we trust prerequisites are fulfilled
           prereqsMet = true;
         } else {
           prereqsMet =
