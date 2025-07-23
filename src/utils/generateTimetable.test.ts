@@ -40,11 +40,11 @@ describe('generateTimetable', () => {
     });
 
     const result = await generateTimetable(
-      ['ES1000', 'ES1103', 'MA1301', 'PC1201'], // modules
+      ['ES1000', 'ES1103', 'MA1301', 'PC1201', 'EE1111A'], // modules
       2, // semesters
       5, // maxPerSemester
       '8c6d8133-6fe7-4a2b-9586-dd655807d870', // userId
-      new Set(['GEA1000']) // rcMods
+      new Set(['GEA1000', 'GESS1025', 'GEC1015', 'GEN2050X']) // rcMods
     );
 
     expect(result).toBeDefined();
