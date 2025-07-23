@@ -19,6 +19,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.27.1",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.0",
@@ -32,6 +33,7 @@
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "tailwindcss": "^4",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"

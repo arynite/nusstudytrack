@@ -6,6 +6,8 @@
 import type {Config} from 'jest';
 
 const config: Config = {
+  preset: "ts-jest",
+  testEnvironment: "node",
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -78,18 +80,22 @@ const config: Config = {
   // ],
 
   // An array of file extensions your modules use
-  // moduleFileExtensions: [
-  //   "js",
+  moduleFileExtensions: [
+     "js",
   //   "mjs",
   //   "cjs",
-  //   "jsx",
-  //   "ts",
+     "jsx",
+     "ts",
   //   "mts",
   //   "cts",
-  //   "tsx",
+     "tsx",
   //   "json",
   //   "node"
-  // ],
+   ],
+   testMatch: ["**/*.test.ts"],
+   transform: {
+    '^.+\\.tsx?$': 'ts-jest',
+   },
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   // moduleNameMapper: {},
