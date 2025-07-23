@@ -93,24 +93,27 @@ export default function StudyPlan() {
   if (!mounted) return null
 
   return (
-    <div className="studyplan-container">
-      <h2 className="studyplan-title">Your Study Plan</h2>
-      <div className="studyplan-summary">
-        <p><strong>Education:</strong> {formValues.education}</p>
-        <p><strong>Degree Length:</strong> {formValues.degreeLength} years</p>
-        <p><strong>RC:</strong> {formValues.rc}</p>
-        <p><strong>Specialisations:</strong> {formValues.specialisations.join(', ') || 'None'}</p>
-        <p><strong>Exemptions:</strong> {formValues.exemptions.join(', ') || 'None'}</p>
-      </div>
+    <>
+        <title>View Plans - NUStudyTrack</title>
+      <div className="studyplan-container">
+        <h2 className="studyplan-title">Your Study Plan</h2>
+        <div className="studyplan-summary">
+          <p><strong>Education:</strong> {formValues.education}</p>
+          <p><strong>Degree Length:</strong> {formValues.degreeLength} years</p>
+          <p><strong>RC:</strong> {formValues.rc}</p>
+          <p><strong>Specialisations:</strong> {formValues.specialisations.join(', ') || 'None'}</p>
+          <p><strong>Exemptions:</strong> {formValues.exemptions.join(', ') || 'None'}</p>
+        </div>
 
-      <div className="button-container">
-        <button className="Go-Back-button" onClick={GoBack}>
-          Go Back
-        </button>
-        <button className="view-timetable-button" onClick={HandleViewTimetableF}>
-          View Timetable
-        </button>
+        <div className="button-container">
+          <button className="Go-Back-button" onClick={GoBack}>
+            Go Back
+          </button>
+          <button className="view-timetable-button" onClick={HandleViewTimetableF}>
+            View Timetable
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

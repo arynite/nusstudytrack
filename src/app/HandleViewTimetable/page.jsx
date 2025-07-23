@@ -145,6 +145,8 @@ export default function TimetablePage() {
   const nonEmptySemesters = plannedSemesters.filter(sem => sem.length > 0)
 
   return (
+    <>
+      <title>View Timetable - NUStudyTrack</title>
     <div className="studyplan-container">
       <h2 className="studyplan-title">Suggested Semester Plan</h2>
       
@@ -177,6 +179,7 @@ export default function TimetablePage() {
       </div>
 
     </div>
+    </>
   )
 }
 

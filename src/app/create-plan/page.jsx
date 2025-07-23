@@ -128,6 +128,8 @@ const [exemptions, setExemptions] = useState({
   }
 
   return (
+    <>
+    <title>Create Plan - NUStudyTrack</title>
   <div className="create-container">
     <div className="header-container">
       <div className="create-header2">
@@ -244,5 +246,6 @@ const [exemptions, setExemptions] = useState({
         </div>
       </form>
     </div>
+    </>
   )
 }

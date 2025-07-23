@@ -64,6 +64,7 @@ export default function ViewPlans() {
 
   return (
     <>
+    <title>View Plans - NUStudyTrack</title>
       <div id="img-container" ref={captureRef}>
         <div className="view-container">
           <div className="header-container">

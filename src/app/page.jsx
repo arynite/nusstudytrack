@@ -51,6 +51,8 @@ export default function Home() {
   }
 
   return (
+    <>
+    <title>Home - NUStudyTrack</title>
     <div className="home-container">
       <button className="home-button logout-button" onClick={handleLogout}>
         Logout
@@ -72,5 +74,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   )
 }

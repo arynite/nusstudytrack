@@ -69,6 +69,8 @@ export default function LoginPage() {
   }
 
   return (
+    <>
+    <title> NUStudyTrack</title>
     <div className="login-container">
       <div className="login-left">
         <h2 className="login-heading">Welcome to NUStudyTrack</h2>
@@ -110,5 +112,6 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }
