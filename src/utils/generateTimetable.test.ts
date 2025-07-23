@@ -44,7 +44,7 @@ describe('generateTimetable', () => {
       2, // semesters
       5, // maxPerSemester
       '8c6d8133-6fe7-4a2b-9586-dd655807d870', // userId
-      new Set() // rcMods
+      new Set(['GEA1000']) // rcMods
     );
 
     expect(result).toBeDefined();
