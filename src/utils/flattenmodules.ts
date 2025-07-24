@@ -2,13 +2,11 @@
 // takes user inputs like specialisations
 // outputs a list of mods that are required for graduation
 
-import { eeMajorRequirements, specialisationModules, RCOrNoRC } from './requirements';
+import { eeMajorRequirements, specialisationModules} from './requirements';
 
 export function flattenModules(
   specialisations: string[],
   specialisationModulesData: typeof specialisationModules,
-  selectedExemptions: string[] = [],
-  z: number,
   rcMods: Set<string> | null = null
 ): string[] {
   const TECount = specialisations.length
