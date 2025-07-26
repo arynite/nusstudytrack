@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { supabase } from '../../utils/supabaseClient'
 import './auth.css'
+import '../create-plan/create-plan.css' // ensures css is consistent
+import '../view-plans/view-plans.css' // ensures css is consistent
 
 const isValidNusEmail = (email) => /^[\w.+-]+@u\.nus\.edu$/.test(email)
 
