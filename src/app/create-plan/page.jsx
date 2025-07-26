@@ -6,6 +6,7 @@ import { supabase } from '../../utils/supabaseClient'
 import './create-plan.css'
 import '../create-plan/create-plan.css' // ensures css is consistent
 import '../view-plans/view-plans.css' // ensures css is consistent
+import '../study-plan/study-plan.css' // ensures css is consistent
 import { flattenModules } from '../../utils/flattenmodules'
 import { eeMajorRequirements, specialisationModules, RCOrNoRC} from '../../utils/requirements'
 
