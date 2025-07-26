@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react'
 import { supabase } from '../../utils/supabaseClient'
 import html2canvas from 'html2canvas'
 import './view-plans.css'
+import '../create-plan/create-plan.css' // ensures css is consistent
+import '../view-plans/view-plans.css' // ensures css is consistent
 
 export default function ViewPlans() {
   const router = useRouter()

@@ -8,6 +8,8 @@ import { specialisationModules, RCOrNoRC } from '../../utils/requirements'
 import { supabase } from '../../utils/supabaseClient'
 import './HandleViewTimetable.css'
 import '../study-plan/study-plan.css' // ensures css is consistent
+import '../create-plan/create-plan.css' // ensures css is consistent
+import '../view-plans/view-plans.css' // ensures css is consistent
 
 import { getExemptedModules } from '../../utils/generateTimetable'
 
